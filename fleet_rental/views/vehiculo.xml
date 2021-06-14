@@ -57,11 +57,9 @@
                 <field name="tag_ids" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
-                <field name="license_plate" position="after">
-                    <field name="entidad" string="Entidad de Placas" />
-                </field>
                 <field name="company_id" position="after">
                     <field name="depr" attrs="{'invisible':[('tipo','==','carga')]}"/>
+                    <field name="entidad" string="Entidad de Placas" />
                 </field>
                 <field name="transmission" position="before">
                     <field name="serie_motor" string="Numero de Serie Motor" />
