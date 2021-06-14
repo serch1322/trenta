@@ -51,9 +51,9 @@
                     </button>
                 </field>
                 <field name="model_year" position="after">
-                    <field name="categoria"/>
+                    <field name="categoria" required="1"/>
                     <field name="tipo"/>
-                    <field name="carga" attrs="{'invisible': [('tipo', '!=', 'carga')]}"/>
+                    <field name="carga" attrs="{'required':[('tipo','==','carga')],'invisible': [('tipo', '!=', 'carga')]}"/>
                 </field>
                 <field name="tag_ids" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -61,11 +61,11 @@
                 </field>
                 <field name="company_id" position="after">
                     <field name="depr" attrs="{'invisible':[('tipo','==','carga')]}"/>
-                    <field name="entidad" string="Entidad de Placas" />
-                    <div class="o_row">
+                    <field name="entidad" string="Entidad de Placas" required="1"/>
+                    <label for="tiempo_de_depreciacion">
                         <field name="tiempo_de_depreciacion"/>
                         <field name="periodo_de_depreciacion" nolabel="1"/>
-                    </div>
+                    </label>
                 </field>
                 <field name="transmission" position="before">
                     <field name="serie_motor" string="Numero de Serie Motor" />
