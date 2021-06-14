@@ -14,7 +14,7 @@
                             <group>
                                 <field name="name"/>
                             </group>
-                            <group>
+                            <group string="Depreciación Fiscal">
                                 <field name="activo"/>
                                 <field name="amortizacion"/>
                                 <field name="gasto"/>
@@ -42,7 +42,7 @@
         </record>
 
         <record id="action_tools_categoria" model="ir.actions.act_window">
-            <field name="name">CategoriaAdit</field>
+            <field name="name">Categoria Aditamento</field>
             <field name="res_model">tools.categoria</field>
             <field name="view_mode">tree,form</field>
         </record>

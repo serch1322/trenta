@@ -38,23 +38,6 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="heredar_formato_modelo_vehiculo">
-            <field name="name">heredar.formato.modelo.vehiculo</field>
-            <field name="model">fleet.vehicle.model</field>
-            <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form"/>
-            <field name="arch" type="xml">
-                <page name="vendors" position="after">
-                    <page string="Checklist">
-                        <field name="linea_checklist" >
-                            <tree editable="bottom">
-                                <field name="name"/>
-                            </tree>
-                        </field>
-                    </page>
-                </page>
-            </field>
-        </record>
-
         <record id="car_rental_contract_form_view" model="ir.ui.view">
             <field name="name">car.contract.result.form</field>
             <field name="model">car.rental.contract</field>
