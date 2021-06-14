@@ -41,7 +41,7 @@
              'views/factura_contrato.xml',
              'views/servicios.xml',
              'views/categoria_vehiculo.xml',
-             'views/product_template_1_view.xml',
+             'views/product_template.xml',
              'views/tools_category.xml',
              'views/tools_categoria.xml',
              'views/vehiculo.xml',
