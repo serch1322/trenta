@@ -35,9 +35,6 @@
                     <field name="rental_check_availability" invisible="1"/>
                     <field name="rental_reserved_time" invisible="1"/>
                 </field>
-                <field name="color" position="replace">
-                    <field name="color"/>
-                </field>
             </field>
         </record>
 
