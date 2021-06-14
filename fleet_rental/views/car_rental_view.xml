@@ -102,9 +102,10 @@
                         <group>
                             <separator string="Contract Details " colspan="4" />
                             <group>
-                                <field name="customer_id"  string="Customer" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="customer_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="approved_driver"/>
+                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}" widget="daterange" options="{'related_end_date': 'rent_end_date'}"/>
+                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}" widget="daterange" options="{'related_start_date': 'rent_start_date'}"/>
                                 <field name="vehicle_id" domain="[('insurance_count','!=',0)],[('rental_check_availability','=',True),
                                 ('state_id.name','!=','Inactive')]"
                                    options="{'no_create': True}"/>

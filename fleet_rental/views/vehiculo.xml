@@ -24,9 +24,12 @@
                             <field name="insurance_count" widget="statinfo" string="Seguros"/>
                     </button>
                 </xpath>
-                <xpath expr="//field[@name='future_driver_id']" position="before">
-                    <field name="future_driver" string="Conductores Aprobados"/>
+                <xpath expr="//field[@name='future_driver_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
                 </xpath>
+                <field name="state_id" position="before">
+                    <attribute name="clickable">False</attribute>
+                </field>
                 <field name="state_id" position="before">
                     <button name="depreciacion" string="Depreciar Vehiculo" type="object" class="btn-primary"/>
                     <button name="return_actions_to_open_venta_vehiculo"
@@ -57,6 +60,17 @@
                     <field name="serie_motor" string="Numero de Serie Motor" />
                     <field name="numero_cilindros" string="Numero de Cilindros" />
                 </field>
+            </field>
+        </record>
+
+        <record id="kanban_vehiculo" model="ir.ui.view">
+            <field name="name">kanban_vehiculo</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="	fleet.fleet_vehicle_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="records_draggable">false</attribute>
+                </xpath>
             </field>
         </record>
 
