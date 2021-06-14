@@ -67,7 +67,7 @@
                         <button name="action_confirm" string="Confirmar" type="object"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight"/>
                         <button name="draft" string="Cambiar a Borrador" type="object"
-                                attrs="{'invisible': [('state', '!=', 'draft'),('state', '!=', 'cancel')]}" class="oe_highlight"/>
+                                attrs="{'invisible': ['|',('state', '=', 'draft'),('state', '=', 'cancel'),('state', '=', 'done')]}" class="oe_highlight"/>
                         <button name="action_run" string="Rentado" type="object"
                                 attrs="{'invisible': [('state', '!=', 'reserved'),('state', '!=', 'service')]}" class="oe_highlight"/>
                         <button name="service" string="Servicio" type="object"
