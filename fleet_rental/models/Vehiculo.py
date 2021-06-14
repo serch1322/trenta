@@ -2,6 +2,9 @@
 
 from odoo import models, fields, api, _
 
+from datetime import date
+
+
 class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle']
 
@@ -15,6 +18,9 @@ class EntidadMatricula(models.Model):
     depr = fields.Selection([('total', 'Depreciación Total'), ('parcial', 'Depreciación Parcial')],string="Tipo de Depreciación",default=False)
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
+    tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
+    periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación', default='1')
+
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
@@ -88,37 +94,40 @@ class EntidadMatricula(models.Model):
         valores_activo.update({
             'name': self.license_plate,
             'original_value': self.net_car_value,
-            'acquisition_date': self.acquisition_date,
-            'salvage_value': 0,
+
+            'acquisition_date': date.today(),
             'method': 'linear',
-            'method_period': 1,
+            'method_period': '1',
             'first_depreciation_date': date.today(),
-            'company_id': 1,
             'account_asset_id': self.categoria.activo.id,
             'account_depreciation_id': self.categoria.amortizacion.id,
             'account_depreciation_expense_id': self.categoria.gasto.id,
-            'journal_id': 3,
+            'journal_id': self.categoria.diario.id,
             'state': 'open',
         })
         if self.tipo == 'carga':
             valores_activo.update({
-                'method_number': 48,
+                'method_number': '48',
+
             })
         else:
             if self.depr == 'total':
                 valores_activo.update({
-                    'method_number': 1,
+                    'method_number': '1',
+
                 })
             else:
                 if self.net_car_value > '175000':
                     valores_activo.update({
                         'salvage_value': self.net_car_value - 175000,
-                        'method_number': 48,
+
+                        'method_number': '48',
                     })
                 elif self.net_car_value <= '175000':
                     valores_activo.update({
-                        'salvage_value': 0,
-                        'method_number': 48,
+                        'salvage_value': 0.00,
+                        'method_number': '48',
+
                     })
         activo_creado = activo.create(valores_activo)
 
@@ -136,7 +145,8 @@ class ventaVehiculo(models.Model):
 
     venta = fields.Selection([('sin', 'Sin Accesorios/Aditamentos'), ('con', 'Con Accesorios/Aditamentos')], string="Tipo de Venta", copy=False)
     name = fields.Many2one('fleet.vehicle',string="Vehículo", required=True, domain="[('insurance_count','=','0')]")
-    numero_bastidor = fields.Char(string="Numero de Bastidor", required=True)
+    numero_bastidor = fields.Char(string="Numero de Serie de Vehículo", required=True)
+
 
     def vender(self, cr, uid, ids, context=None):
         tools = self.env['car.tools'].search([])
