@@ -63,6 +63,7 @@
                     <field name="supplier"/>
                     <field name="invoice_date"/>
                     <field name="inciso"/>
+
                     <field name="end_date"/>
                     <field name="state"/>
                 </tree>
