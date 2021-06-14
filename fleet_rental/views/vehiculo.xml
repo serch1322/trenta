@@ -28,7 +28,7 @@
                     <attribute name="invisible">True</attribute>
                 </xpath>
                 <field name="state_id" position="attributes">
-                    <attribute name="clickable">False</attribute>
+                    <attribute name="clickable">0</attribute>
                 </field>
                 <field name="state_id" position="before">
                     <button name="depreciacion" string="Depreciar Vehiculo" type="object" class="btn-primary"/>
