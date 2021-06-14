@@ -20,21 +20,12 @@
                                 <field name="name"/>
                                 <field name="tipo"/>
                             </group>
-                            <group>
+                            <group string="Depreciación Fiscal">
                                 <field name="activo"/>
                                 <field name="amortizacion"/>
                                 <field name="gasto"/>
                             </group>
                         </group>
-                        <!--<notebook>
-                            <page string="Categoria de Vehiculo">
-                                <field name="lineas_ids">
-                                    <tree editable="bottom">
-                                        <field name="car"/>
-                                    </tree>
-                                </field>
-                            </page>
-                        </notebook>-->
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -57,7 +48,7 @@
         </record>
 
         <record id="action_fleet_car_category" model="ir.actions.act_window">
-            <field name="name">Categoria</field>
+            <field name="name">Categoria de Vehiculo</field>
             <field name="res_model">car.category</field>
             <field name="view_mode">tree,form</field>
         </record>

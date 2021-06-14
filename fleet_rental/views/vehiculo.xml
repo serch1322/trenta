@@ -30,6 +30,12 @@
                 <field name="plan_to_change_car" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
+                <field name="next_assignation_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="location" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
                 <field name="state_id" position="attributes">
                     <attribute name="clickable">0</attribute>
                 </field>
@@ -82,7 +88,14 @@
             <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form"/>
             <field name="arch" type="xml">
                 <page name="vendors" position="after">
-                    <page name="cuentas" string="Cuentas">
+                    <page string="Checklist">
+                        <field name="linea_checklist" >
+                            <tree editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="cuentas" string="Depreciación Contable">
                         <group>
                             <field name="activo"/>
                             <field name="amortizacion"/>
