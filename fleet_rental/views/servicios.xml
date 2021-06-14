@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="heredar_formato_servicio_vehiculo">
+            <field name="name">heredar.formato.servicio.vehiculo</field>
+            <field name="model">fleet.vehicle.log.services</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="crear_factura_servicio" string="Crear Factura" type="object"
+                            attrs="{'invisible': [('state', '!=', 'running')]}" class="oe_highlight"/>
+                </header>
+                <field name="vehicle_id" position="after">
+                    <field name="ubicacion"/>
+                    <field name="mecanico"/>
+                </field>
+                <field name="vendor_id" position="attributes">
+                    <attribute name="attrs">{'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="heredar_arbol_servicio_vehiculo">
+            <field name="name">heredar.arbol.servicio.vehiculo</field>
+            <field name="model">fleet.vehicle.log.services</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="amount" position="after">
+                    <field name="state"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

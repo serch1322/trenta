@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="producto_con_tipo">
+            <field name="name">producto.con.tipo</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="tipo_product"/>
+                    <field name="modelo" attrs="{'invisible':[('tipo_product','!=','vehiculo')]}"/>
+                    <field name="categoria" attrs="{'invisible':[('tipo_product','!=','vehiculo')]}"/>
+                    <field name="marca" attrs="{'invisible':[('tipo_product','!=','aditamento')]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="registrar_producto">
+            <field name="name">registro.producto</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <button name="button_validate" position="after">
+                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':[('state','!=','done')]}"/>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>
