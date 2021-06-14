@@ -14,7 +14,7 @@
                     <field name="sexo" attrs="{'invisible': [('company_type', '==', 'company')]}"/>
                     <field name="edad" attrs="{'invisible': [('company_type', '==', 'company')]}"/>
                     <field name="tipo_sangre" attrs="{'invisible': [('company_type', '==', 'company')]}"/>
-                    <field name="numero_emergencia" attrs="{'invisible': [('company_type', '==', 'company')]}"/>
+                    <field name="numero_emergencia" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
                 </field>
             </field>
         </record>
