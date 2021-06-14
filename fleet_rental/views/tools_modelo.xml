@@ -47,7 +47,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_tools_category" parent="menu_car_parent" name="Modelo Aditamento"
+        <menuitem id="menu_tools_category" parent="fleet_configuration" name="Modelo Aditamento"
                   action="action_tools_category" sequence="6"/>
     </data>
 </odoo>

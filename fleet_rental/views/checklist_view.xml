@@ -84,7 +84,7 @@
             <field name="act_window_id" ref="action_fleet_rent_checklist"/>
         </record>
 
-        <menuitem id="menu_car_checklist" parent="menu_car_parent" name="Checklist"
+        <menuitem id="menu_car_checklist" parent="fleet_configuration" name="Checklist"
                   action="action_fleet_rent_checklist" sequence="2"/>
     </data>
 </odoo>
