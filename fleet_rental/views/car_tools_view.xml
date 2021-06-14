@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="car_rental_contract_tools_form_view" model="ir.ui.view">
+            <field name="name">car_rental_contract_tools_form_view.form</field>
+            <field name="model">car.tools</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Accesorios/Herramientas">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="disponible,reservado,renta"/>
+                        <button name="vendido" string="Vender" type="object" class="oe_highlight"/>
+                        <button name="cambiar_disponible" string="Cambiar a Disponible" type="object"
+                                attrs="{'invisible': [('state', '==', 'disponible')]}" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="marca" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                                <field name="costo"/>
+                                <field name="descripcion"/>
+                                <field name="tipo"/>
+                            </group>
+                            <group>
+                                <field name="modelo" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                                <field name="categoria" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                                <field name="car"/>
+                                <field name="date_compra" attrs="{'invisible': [('tipo', '=', 'aditamento')]}"/>
+                                <field name="date_fabric" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                                <field name="num_serie" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                                <field name="rent_price" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="car_rental_contract_tools_tree_view" model="ir.ui.view">
+            <field name="name">car_rental_contract_tools_tree_view.tree</field>
+            <field name="model">car.tools</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Accesorios/Herramientas" create="false" delete="false">
+                    <field name="name"/>
+                    <field name="car"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_fleet_car_tools" model="ir.actions.act_window">
+            <field name="name">Accessories/Tools</field>
+            <field name="res_model">car.tools</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_car_tools" parent="menu_car_parent" name="Accessories/Tools"
+                  action="action_fleet_car_tools" sequence="3"/>
+    </data>
+</odoo>
