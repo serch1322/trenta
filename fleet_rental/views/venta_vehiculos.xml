@@ -49,7 +49,7 @@
             <field name="context">{'search_default_open': 1}</field>
         </record>
 
-        <menuitem id="menu_venta_vehiculos" parent="menu_car_parent" name="Venta Vehiculos"
+        <menuitem id="menu_venta_vehiculos" parent="fleet.fleet_vehicles" name="Venta Vehiculos"
                   action="action_venta_vehiculos" sequence="8"/>
     </data>
 </odoo>
