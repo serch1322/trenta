@@ -26,6 +26,7 @@
                 </xpath>
                 <field name="future_driver_id" position="attributes">
                     <attribute name="invisible">1</attribute>
+                    <attribute name="nolabel">1</attribute>
                 </field>
                 <field name="plan_to_change_car" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -56,10 +57,15 @@
                 </field>
                 <field name="tag_ids" position="attributes">
                     <attribute name="invisible">1</attribute>
+                    <attribute name="nolabel">1</attribute>
                 </field>
                 <field name="company_id" position="after">
                     <field name="depr" attrs="{'invisible':[('tipo','==','carga')]}"/>
                     <field name="entidad" string="Entidad de Placas" />
+                    <div class="o_row">
+                        <field name="tiempo_de_depreciacion"/>
+                        <field name="periodo_de_depreciacion" nolabel="1"/>
+                    </div>
                 </field>
                 <field name="transmission" position="before">
                     <field name="serie_motor" string="Numero de Serie Motor" />

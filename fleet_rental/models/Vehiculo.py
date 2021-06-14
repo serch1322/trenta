@@ -15,6 +15,8 @@ class EntidadMatricula(models.Model):
     depr = fields.Selection([('total', 'Depreciación Total'), ('parcial', 'Depreciación Parcial')],string="Tipo de Depreciación",default=False)
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
+    tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
+    periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Número de Periodo', default='1')
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """

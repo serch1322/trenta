@@ -53,7 +53,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_car_category" parent="fleet.fleet_configuration" name="Categoria"
+        <menuitem id="menu_car_category" parent="fleet.fleet_configuration" name="Categoria de Vehiculo"
                   action="action_fleet_car_category" sequence="5"/>
     </data>
 </odoo>
