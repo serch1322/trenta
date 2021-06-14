@@ -24,9 +24,6 @@
                             <field name="insurance_count" widget="statinfo" string="Seguros"/>
                     </button>
                 </xpath>
-                <xpath expr="//field[@name='future_driver_id']" position="attributes">
-                    <attribute name="invisible">True</attribute>
-                </xpath>
                 <field name="state_id" position="attributes">
                     <attribute name="clickable">0</attribute>
                 </field>
@@ -44,9 +41,6 @@
                     <field name="categoria"/>
                     <field name="tipo"/>
                     <field name="carga" attrs="{'invisible': [('tipo', '!=', 'carga')]}"/>
-                </field>
-                <field name="future_driver_id" position="attributes">
-                    <attribute name="attrs">{'invisible':[('active','==',True)]}</attribute>
                 </field>
                 <field name="tag_ids" position="attributes">
                     <attribute name="attrs">{'invisible':[('active','==',True)]}</attribute>

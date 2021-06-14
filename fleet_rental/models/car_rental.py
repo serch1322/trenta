@@ -124,7 +124,7 @@ class CarRentalContract(models.Model):
                                    track_visibility='always')
     deposito = fields.Float(string="Deposito en Garantia", required=True)
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
-                                     domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+                                     domain="[('company_id', '=', False)]")
 
 
 
