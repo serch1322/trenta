@@ -23,7 +23,9 @@
 		                        <field name="end_date" widget="daterange" options="{'related_start_date': 'invoice_date'}"  attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
                             </group>
                             <group>
-                                <field name="emergency_phone" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
+                                <field name="siniestro" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
+                                <field name="atencion_clientes" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
+                                <field name="grua" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
                                 <field name="inciso" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
                             </group>
                         </group>
