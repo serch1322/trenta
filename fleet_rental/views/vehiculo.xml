@@ -27,7 +27,7 @@
                 <xpath expr="//field[@name='future_driver_id']" position="attributes">
                     <attribute name="invisible">True</attribute>
                 </xpath>
-                <field name="state_id" position="before">
+                <field name="state_id" position="attributes">
                     <attribute name="clickable">False</attribute>
                 </field>
                 <field name="state_id" position="before">
