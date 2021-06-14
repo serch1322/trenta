@@ -17,7 +17,7 @@ class EntidadMatricula(models.Model):
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
     tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
-    periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Número de Periodo', default='1')
+    periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación', default='1')
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
@@ -93,7 +93,7 @@ class EntidadMatricula(models.Model):
             'original_value': self.net_car_value,
             'acquisition_date': date.today(),
             'method': 'linear',
-            'method_period': 1,
+            'method_period': '1',
             'first_depreciation_date': date.today(),
             'account_asset_id': self.categoria.activo.id,
             'account_depreciation_id': self.categoria.amortizacion.id,
@@ -103,23 +103,23 @@ class EntidadMatricula(models.Model):
         })
         if self.tipo == 'carga':
             valores_activo.update({
-                'method_number': 48,
+                'method_number': '48',
             })
         else:
             if self.depr == 'total':
                 valores_activo.update({
-                    'method_number': 1,
+                    'method_number': '1',
                 })
             else:
                 if self.net_car_value > '175000':
                     valores_activo.update({
                         'salvage_value': self.net_car_value - 175000,
-                        'method_number': 48,
+                        'method_number': '48',
                     })
                 elif self.net_car_value <= '175000':
                     valores_activo.update({
                         'salvage_value': 0.00,
-                        'method_number': 48,
+                        'method_number': '48',
                     })
         activo_creado = activo.create(valores_activo)
 

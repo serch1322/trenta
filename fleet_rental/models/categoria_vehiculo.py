@@ -13,7 +13,7 @@ class CarCategory(models.Model):
     activo = fields.Many2one('account.account', string="Cuenta de Activo", required=True)
     amortizacion = fields.Many2one('account.account', string="Cuenta de Amortizacion", required=True)
     gasto = fields.Many2one('account.account', string="Cuenta de Gasto", required=True)
-    diario = fields.Many2one('account.journal', string="Diario", required=True)
+    diario = fields.Many2one('account.journal', string="Diario", required=True, domain="[('type', '=', 'general'),('company_id', '=', company_id)]")
 
 
 
