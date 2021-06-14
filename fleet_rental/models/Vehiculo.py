@@ -6,9 +6,6 @@ class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle']
 
     entidad = fields.Many2one('res.country.state', string="Entidad de Matricula")
-    future_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, help='Next Driver of the vehicle',
-                                       copy=False,
-                                       domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     serie_motor = fields.Char(string="Numero de Serie Motor")
     numero_cilindros = fields.Float(string="Numero de Cilindros")
     seats = fields.Integer(string="Numero de Pasajeros", help='Number of seats of the vehicle')

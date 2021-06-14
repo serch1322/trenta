@@ -123,6 +123,8 @@ class CarRentalContract(models.Model):
     sales_person = fields.Many2one('res.users', string='Encargado de Ventas', default=lambda self: self.env.uid,
                                    track_visibility='always')
     deposito = fields.Float(string="Deposito en Garantia", required=True)
+    approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
+                                     domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
 
 
 
