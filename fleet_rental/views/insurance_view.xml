@@ -73,7 +73,7 @@
             <field name="context">{'search_default_open': 1}</field>
         </record>
 
-        <menuitem id="menu_car_insurance" parent="menu_car_parent" name="Seguros"
+        <menuitem id="menu_car_insurance" parent="fleet_vehicles" name="Seguros"
                   action="action_fleet_car_insurance" sequence="4"/>
     </data>
 </odoo>
