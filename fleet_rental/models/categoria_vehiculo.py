@@ -17,6 +17,7 @@ class CarCategory(models.Model):
 
 
 
+
     def conteo_de_vehiculos(self):
         conteo = self.env['fleet.vehicle']
         for record in self:

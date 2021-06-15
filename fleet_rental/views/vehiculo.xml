@@ -64,6 +64,7 @@
                     <field name="entidad" string="Entidad de Placas" required="1"/>
                     <field name="tiempo_de_depreciacion"/>
                     <field name="periodo_de_depreciacion" nolabel="1"/>
+
                 </field>
                 <field name="transmission" position="before">
                     <field name="serie_motor" string="Numero de Serie Motor" />
