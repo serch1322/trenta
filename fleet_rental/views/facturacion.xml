@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="vehiculo_en_factura" model="ir.ui.view">
-            <field name="name">vehiculo.en.factura</field>
-            <field name="model">account.move</field>
-            <field name="inherit_id" ref="account.view_move_form"/>
-            <field name="arch" type="xml">
-                <field name="partner_bank_id" position="after">
-                    <field name="renta" readonly="1" force_save="1"/>
-                    <field name="vehiculo" readonly="1" force_save="1"/>
+    <data>
+        <record id="vehiculo_en_factura" model="ir.ui.view">
+                <field name="name">vehiculo.en.factura</field>
+                <field name="model">account.move</field>
+                <field name="inherit_id" ref="account.view_move_form"/>
+                <field name="arch" type="xml">
+                    <field name="partner_bank_id" position="after">
+                        <field name="renta" readonly="1" force_save="1"/>
+                        <field name="vehiculo" readonly="1" force_save="1"/>
+                    </field>
                 </field>
-            </field>
-    </record>
+        </record>
+    </data>
 </odoo>
