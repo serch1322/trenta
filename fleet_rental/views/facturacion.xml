@@ -10,5 +10,5 @@
                     <field name="vehiculo" readonly="1" force_save="1"/>
                 </field>
             </field>
-
+    </record>
 </odoo>
