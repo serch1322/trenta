@@ -59,6 +59,28 @@ class CarRentalContract(models.Model):
             contract.total_concepts = total_concepts
             contract.grand_total = total_concepts + contract.total
 
+    def _total_facturado(self):
+        self.total_facturado = 0
+        if not self.ids:
+            return True
+
+        rentas = {}
+        todas_rentas = []
+        for renta in self.filtered('id'):
+            rentas[renta] = self.with_context(active_test=False).search(
+                [('id', '=', renta.id)]).ids
+            todas_rentas += rentas[renta]
+
+        domain = [
+            ('renta', 'in', todas_rentas),
+            ('state', 'not in', ['draft', 'cancel']),
+            ('move_type', 'in', ('out_invoice', 'out_refund')),
+        ]
+        price_totals = self.env['account.invoice.report'].read_group(domain, ['price_subtotal'], ['partner_id'])
+        for renta in rentas.items():
+            renta.total_facturado = sum(
+                price['price_subtotal'] for price in price_totals if price['renta'][0])
+
 
 
     grand_total = fields.Float(string="Total",readonly=True, store=True)
@@ -125,6 +147,8 @@ class CarRentalContract(models.Model):
     deposito = fields.Float(string="Deposito en Garantia", required=True)
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
+    total_facturado = fields.Monetary(compute='_total_facturado', string="Total Facturado",
+                                     groups='account.group_account_invoice,account.group_account_readonly')
 
 
 
