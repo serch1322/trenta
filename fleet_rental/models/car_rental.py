@@ -134,7 +134,47 @@ class CarRentalContract(models.Model):
         #         'service_type_id': 7,
         #     })
         #         self.checklist_line.write({'name': self.name})
+    def ver_rentas_vehiculo(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
+        action['domain'] = [
+            ('move_type', 'in', ('out_invoice', 'out_refund')),
+            ('renta', '=', self.name),
+        ]
+        action['context'] = {'default_move_type': 'out_invoice', 'move_type': 'out_invoice', 'journal_type': 'sale',
+                             'search_default_unpaid': 1}
+        return action
 
+    def action_view_invoice(self):
+        inv_obj = self.env['account.move'].search([('invoice_origin', '=', self.name)])
+        inv_ids = []
+        for each in inv_obj:
+            inv_ids.append(each.id)
+        view_id = self.env.ref('account.view_move_form').id
+        if inv_ids:
+            if len(inv_ids) <= 1:
+                value = {
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'res_model': 'account.move',
+                    'view_id': view_id,
+                    'type': 'ir.actions.act_window',
+                    'name': _('Invoice'),
+                    'res_id': inv_ids and inv_ids[0]
+                }
+            else:
+                value = {
+                    'domain': str([('id', 'in', inv_ids)]),
+                    'view_type': 'form',
+                    'view_mode': 'tree,form',
+                    'res_model': 'account.move',
+                    'view_id': False,
+                    'type': 'ir.actions.act_window',
+                    'name': _('Invoice'),
+                    'res_id': inv_ids
+                }
+
+            return value
 
     def action_run(self):
         self.state = 'running'
@@ -508,37 +548,6 @@ class CarRentalContract(models.Model):
 
     def force_checking(self):
         self.state = "checking"
-
-    def action_view_invoice(self):
-        inv_obj = self.env['account.move'].search([('invoice_origin', '=', self.name)])
-        inv_ids = []
-        for each in inv_obj:
-            inv_ids.append(each.id)
-        view_id = self.env.ref('account.view_move_form').id
-        if inv_ids:
-            if len(inv_ids) <= 1:
-                value = {
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'res_model': 'account.move',
-                    'view_id': view_id,
-                    'type': 'ir.actions.act_window',
-                    'name': _('Invoice'),
-                    'res_id': inv_ids and inv_ids[0]
-                }
-            else:
-                value = {
-                    'domain': str([('id', 'in', inv_ids)]),
-                    'view_type': 'form',
-                    'view_mode': 'tree,form',
-                    'res_model': 'account.move',
-                    'view_id': False,
-                    'type': 'ir.actions.act_window',
-                    'name': _('Invoice'),
-                    'res_id': inv_ids
-                }
-
-            return value
 
     def action_invoice_create(self):
         for each in self:

@@ -60,7 +60,7 @@
                     <attribute name="nolabel">1</attribute>
                 </field>
                 <field name="company_id" position="after">
-                    <field name="depr" attrs="{'invisible':[('tipo','==','carga')]}"/>
+                    <field name="depr" attrs="{'required':[('tipo','!=','carga')],'invisible': [('tipo', '==', 'carga')]}"/>
                     <field name="entidad" string="Entidad de Placas" required="1"/>
                     <field name="tiempo_de_depreciacion"/>
                     <field name="periodo_de_depreciacion" nolabel="1"/>
