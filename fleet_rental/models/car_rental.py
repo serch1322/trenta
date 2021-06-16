@@ -59,27 +59,27 @@ class CarRentalContract(models.Model):
             contract.total_concepts = total_concepts
             contract.grand_total = total_concepts + contract.total
 
-    def _total_facturado(self):
-        self.total_facturado = 0
-        if not self.ids:
-            return True
-
-        rentas = {}
-        todas_rentas = []
-        for renta in self.filtered('id'):
-            rentas[renta] = self.with_context(active_test=False).search(
-                [('id', '=', renta.id)]).ids
-            todas_rentas += rentas[renta]
-
-        domain = [
-            ('renta', 'in', todas_rentas),
-            ('state', 'not in', ['draft', 'cancel']),
-            ('move_type', 'in', ('out_invoice', 'out_refund')),
-        ]
-        price_totals = self.env['account.invoice.report'].read_group(domain, ['price_subtotal'], ['partner_id'])
-        for renta in rentas.items():
-            renta.total_facturado = sum(
-                price['price_subtotal'] for price in price_totals if price['renta'][0])
+    # def _total_facturado(self):
+    #     self.total_facturado = 0
+    #     if not self.ids:
+    #         return True
+    #
+    #     rentas = {}
+    #     todas_rentas = []
+    #     for renta in self.filtered('id'):
+    #         rentas[renta] = self.with_context(active_test=False).search(
+    #             [('id', '=', renta.id)]).ids
+    #         todas_rentas += rentas[renta]
+    #
+    #     domain = [
+    #         ('renta', 'in', todas_rentas),
+    #         ('state', 'not in', ['draft', 'cancel']),
+    #         ('move_type', 'in', ('out_invoice', 'out_refund')),
+    #     ]
+    #     price_totals = self.env['account.invoice.report'].read_group(domain, ['price_subtotal'], ['partner_id'])
+    #     for renta in rentas.items():
+    #         renta.total_facturado = sum(
+    #             price['price_subtotal'] for price in price_totals if price['renta'][0])
 
 
 
@@ -147,8 +147,8 @@ class CarRentalContract(models.Model):
     deposito = fields.Float(string="Deposito en Garantia", required=True)
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
-    total_facturado = fields.Monetary(compute='_total_facturado', string="Total Facturado",
-                                     groups='account.group_account_invoice,account.group_account_readonly')
+    #total_facturado = fields.Monetary(compute='_total_facturado', string="Total Facturado",
+                                     #groups='account.group_account_invoice,account.group_account_readonly')
 
 
 
@@ -158,16 +158,16 @@ class CarRentalContract(models.Model):
         #         'service_type_id': 7,
         #     })
         #         self.checklist_line.write({'name': self.name})
-    def ver_rentas_vehiculo(self):
-        self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
-        action['domain'] = [
-            ('move_type', 'in', ('out_invoice', 'out_refund')),
-            ('renta', '=', self.name),
-        ]
-        action['context'] = {'default_move_type': 'out_invoice', 'move_type': 'out_invoice', 'journal_type': 'sale',
-                             'search_default_unpaid': 1}
-        return action
+    # def ver_rentas_vehiculo(self):
+    #     self.ensure_one()
+    #     action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
+    #     action['domain'] = [
+    #         ('move_type', 'in', ('out_invoice', 'out_refund')),
+    #         ('renta', '=', self.name),
+    #     ]
+    #     action['context'] = {'default_move_type': 'out_invoice', 'move_type': 'out_invoice', 'journal_type': 'sale',
+    #                          'search_default_unpaid': 1}
+    #     return action
 
     def action_view_invoice(self):
         inv_obj = self.env['account.move'].search([('invoice_origin', '=', self.name)])
