@@ -169,15 +169,8 @@
                             </page>
                             <page string="Facturas Recurrentes" attrs="{'invisible': [('cost_frequency','in',[None,False,'no'])]}">
                                 <field name="recurring_line" mode="tree">
-                                    <tree string="Fleet Reccurring Lines"
-                                          colors="#0b7a35:payment_info=='paid';#f20b07:payment_info!='paid'">
-                                        <field name="date_today"/>
-                                        <field name="date_due"/>
-                                        <field name="name"/>
-                                        <field name="account_info"/>
-                                        <field name="recurring_amount"/>
-                                        <field name="payment_info"/>
-                                        <field name="invoice_ref"/>
+                                    <tree string="Fleet Recurring Lines">
+                                        <field name="_compute_count_all"/>
                                     </tree>
                                 </field>
                             </page>

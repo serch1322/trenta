@@ -640,22 +640,12 @@ class CarRentalContract(models.Model):
 class FleetRentalLine(models.Model):
     _name = 'fleet.rental.line'
 
-    name = fields.Char('Description')
-    date_today = fields.Date('Date')
-    account_info = fields.Char('Account')
-    recurring_amount = fields.Float('Amount')
     rental_number = fields.Many2one('car.rental.contract', string='Rental Number')
-    payment_info = fields.Char(compute='paid_info', string='Payment Stage', default='draft')
-    invoice_number = fields.Integer(string='Invoice ID')
-    invoice_ref = fields.Many2one('account.move', string='Invoice Ref')
-    date_due = fields.Date(string='Due Date', related='invoice_ref.invoice_date_due')
 
-    def paid_info(self):
-        for each in self:
-            if self.env['account.move'].browse(each.invoice_number):
-                each.payment_info = self.env['account.move'].browse(each.invoice_number).state
-            else:
-                each.payment_info = 'Record Deleted'
+    def _compute_count_all(self):
+        facturas = self.env['account.move']
+        for record in self:
+            record.factura_count = facturas.search_count([('rental_number', '=', record.renta.id)])
 
 class RentConcepts(models.Model):
     _name = 'rent.concepts.line'
