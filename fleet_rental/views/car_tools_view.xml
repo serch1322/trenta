@@ -6,7 +6,7 @@
             <field name="model">car.tools</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Accesorios/Herramientas">
+                <form string="Aditamentos/Accesorios">
                     <header>
                         <field name="state" widget="statusbar" statusbar_visible="disponible,reservado,renta"/>
                         <button name="vendido" string="Vender" type="object" class="oe_highlight"/>
@@ -48,7 +48,7 @@
             <field name="model">car.tools</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Accesorios/Herramientas" create="false" delete="false">
+                <tree string="Aditamentos/Accesorios" create="false" delete="false">
                     <field name="name"/>
                     <field name="car"/>
                     <field name="state"/>
@@ -57,12 +57,12 @@
         </record>
 
         <record id="action_fleet_car_tools" model="ir.actions.act_window">
-            <field name="name">Accessories/Tools</field>
+            <field name="name">Aditamentos/Accesorios</field>
             <field name="res_model">car.tools</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_car_tools" parent="menu_car_parent" name="Accessories/Tools"
+        <menuitem id="menu_car_tools" parent="menu_car_parent" name="Aditamentos/Accesorios"
                   action="action_fleet_car_tools" sequence="3"/>
     </data>
 </odoo>

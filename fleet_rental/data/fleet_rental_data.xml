@@ -3,14 +3,14 @@
 
     <data noupdate="0">
 
-        <record id="vehicle_state_active" model="fleet.vehicle.state">
-            <field name="name">Disponible</field>
-            <field name="sequence">2</field>
-        </record>
-
         <record id="vehicle_state_inventory" model="fleet.vehicle.state">
             <field name="name">Almacén</field>
             <field name="sequence">1</field>
+        </record>
+
+        <record id="vehicle_state_active" model="fleet.vehicle.state">
+            <field name="name">Disponible</field>
+            <field name="sequence">2</field>
         </record>
 
         <record id="vehicle_state_inactive" model="fleet.vehicle.state">
@@ -75,6 +75,11 @@
             <field name="name">Asociar Vehiculo</field>
             <field name="icon">fa-car</field>
             <field name="res_model_id" ref="model_car_tools"/>
+        </record>
+
+        <record id="mantenimiento" model="fleet.service.type">
+            <field name="name">Mantenimiento</field>
+            <field name="category">service</field>
         </record>
 
     </data>

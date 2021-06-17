@@ -68,16 +68,6 @@
                         <field name="state" widget="statusbar" statusbar_visible="draft,running,done"/>
                     </header>
                     <sheet>
-                        <!--div name="button_box" position="inside">
-                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="ver_rentas_vehiculo" context="{'default_renta': name}">
-                                <div class="o_form_field o_stat_info">
-                                    <span class="o_stat_value">
-                                        <field name="total_invoiced" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    </span>
-                                    <span class="o_stat_text">Facturado</span>
-                                </div>
-                            </button>
-                        </div-->
                         <div class="oe_button_box" name="buttons">
                             <button name='action_view_invoice' class="oe_stat_button" type="object" icon="fa-money">
                                 <field string="Invoice" name="invoice_count" widget="statinfo" />
@@ -117,15 +107,7 @@
                                 <field name="deposito"/>
                                 <field name="account_type" invisible="1"/>
                                 <field name="cost" invisible="1"/>
-                                <label for="cost_generated"/>
-                                    <div>
-                                        <field name="cost_frequency" class="oe_inline"
-                                               attrs="{'readonly': [('state','!=','draft')]}"/>
-                                        <field name="cost_generated" style="width:142px;"
-                                               attrs="{'invisible': [('cost_frequency','=','no')],
-                                                       'readonly': [('state','!=','draft')],
-                                                       'required': [('cost_frequency','not in',[None,False,'no'])]}"/>
-                                    </div>
+                                <field name="cost_frequency" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
                             </group>
                         </group>
                         <notebook>

@@ -106,10 +106,8 @@ class CarRentalContract(models.Model):
          ('checking', 'Revisando'), ('invoice', 'Factura'), ('done', 'Hecho')], string="State",
         default="draft", copy=False, track_visibility='onchange')
     notes = fields.Text(string="Notas")
-    cost_generated = fields.Float(string='Costo Recurrente',
-                                  help="Costs paid at regular intervals, depending on the cost frequency")
     cost_frequency = fields.Selection([('no', 'No'), ('daily', 'Diario'), ('weekly', 'Semanal'), ('monthly', 'Mensual'),
-                                       ('yearly', 'Anual')], string="Recurrencia",
+                                       ('yearly', 'Anual')], string="Intervalo de Factura",
                                       help='Frequency of the recurring cost', required=True)
     journal_type = fields.Many2one('account.journal', 'Journal',
                                    default=lambda self: self.env['account.journal'].search([('id', '=', 1)]))
@@ -147,27 +145,7 @@ class CarRentalContract(models.Model):
     deposito = fields.Float(string="Deposito en Garantia", required=True)
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
-    #total_facturado = fields.Monetary(compute='_total_facturado', string="Total Facturado",
-                                     #groups='account.group_account_invoice,account.group_account_readonly')
 
-
-
-        # if self.vehicle_id == self.checklist_line.name.car:
-        #     tools.update({
-        #         'name': self.vehicle_id.id,
-        #         'service_type_id': 7,
-        #     })
-        #         self.checklist_line.write({'name': self.name})
-    # def ver_rentas_vehiculo(self):
-    #     self.ensure_one()
-    #     action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
-    #     action['domain'] = [
-    #         ('move_type', 'in', ('out_invoice', 'out_refund')),
-    #         ('renta', '=', self.name),
-    #     ]
-    #     action['context'] = {'default_move_type': 'out_invoice', 'move_type': 'out_invoice', 'journal_type': 'sale',
-    #                          'search_default_unpaid': 1}
-    #     return action
 
     def action_view_invoice(self):
         inv_obj = self.env['account.move'].search([('invoice_origin', '=', self.name)])
@@ -210,7 +188,7 @@ class CarRentalContract(models.Model):
         valores_servicio = {}
         valores_servicio.update({
             'vehicle_id': self.vehicle_id.id,
-            'service_type_id': 7,
+            'service_type_id': 1,
         })
         servicio_creado = servicio.create(valores_servicio)
 
@@ -264,13 +242,13 @@ class CarRentalContract(models.Model):
             self.vehicle_id.write({'state_id': state_id})
         elif self.state == "invoice":
             self.rent_end_date = fields.Date.today()
-            state_id = self.env.ref('fleet_rental.vehicle_state_active').id
+            state_id = self.env.ref('fleet_rental.vehicle_state_rent').id
             self.vehicle_id.write({'state_id': state_id})
         elif self.state == "reserved":
             state_id = self.env.ref('fleet_rental.vehicle_state_inactive').id
             self.vehicle_id.write({'state_id': state_id})
         elif self.state == "done":
-            state_id = self.env.ref('fleet_rental.vehicle_state_inshop').id
+            state_id = self.env.ref('fleet_rental.vehicle_state_active').id
             self.vehicle_id.write({'state_id': state_id})
         elif self.state == "service":
             state_id = self.env.ref('fleet_rental.vehicle_state_inshop').id
@@ -322,7 +300,6 @@ class CarRentalContract(models.Model):
             'date_today': rent_date,
             'account_info': income_account.name,
             'rental_number': self.id,
-            'recurring_amount': self.cost_generated,
             'invoice_number': inv_id.id,
             'invoice_ref': inv_id.id,
         }
@@ -330,7 +307,6 @@ class CarRentalContract(models.Model):
         inv_line_data = {
             'name': self.vehicle_id.name,
             'account_id': income_account.id,
-            'price_unit': self.cost_generated,
             'quantity': 1,
             'product_id': product_id.id,
             'move_id': inv_id.id,
@@ -410,7 +386,6 @@ class CarRentalContract(models.Model):
                         'date_today': today,
                         'account_info': income_account.name,
                         'rental_number': records.id,
-                        'recurring_amount': records.cost_generated,
                         'invoice_number': inv_id.id,
                         'invoice_ref': inv_id.id,
                     }
@@ -418,7 +393,6 @@ class CarRentalContract(models.Model):
                     inv_line_data = {
                         'name': records.vehicle_id.name,
                         'account_id': income_account.id,
-                        'price_unit': records.cost_generated,
                         'quantity': 1,
                         'product_id': product_id.id,
                         'move_id': inv_id.id,
