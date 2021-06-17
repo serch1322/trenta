@@ -113,8 +113,6 @@ class CarRentalContract(models.Model):
                                    default=lambda self: self.env['account.journal'].search([('id', '=', 1)]))
     account_type = fields.Many2one('account.account', 'Account',
                                    default=lambda self: self.env['account.account'].search([('id', '=', 17)]))
-    recurring_line = fields.One2many('fleet.rental.line', 'rental_number', readonly=True, help="Recurring Invoices",
-                                     copy=False)
     rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', readonly=False)
     total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True)
     first_payment = fields.Float(string='Anticipo',
