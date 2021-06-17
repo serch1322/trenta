@@ -167,13 +167,6 @@
                                             class="oe_subtotal_footer oe_right oe_highlight"/>
                                 </div>
                             </page>
-                            <page string="Facturas Recurrentes" attrs="{'invisible': [('cost_frequency','in',[None,False,'no'])]}">
-                                <field name="recurring_line" mode="tree">
-                                    <tree string="Fleet Recurring Lines">
-                                        <field name="_compute_count_all"/>
-                                    </tree>
-                                </field>
-                            </page>
                         </notebook>
                         <group class="oe_subtotal_footer oe_right">
                             <field name="grand_total"/>

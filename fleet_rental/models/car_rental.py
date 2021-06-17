@@ -636,17 +636,6 @@ class CarRentalContract(models.Model):
         else:
             raise Warning("Please enter advance amount to make first payment")
 
-
-class FleetRentalLine(models.Model):
-    _name = 'fleet.rental.line'
-
-    rental_number = fields.Many2one('car.rental.contract', string='Rental Number')
-
-    def _compute_count_all(self):
-        facturas = self.env['account.move']
-        for record in self:
-            record.factura_count = facturas.search_count([('rental_number', '=', record.renta.id)])
-
 class RentConcepts(models.Model):
     _name = 'rent.concepts.line'
 
