@@ -49,6 +49,7 @@ class RentContract(models.Model):
         })
         lista_factu = []
         lineas_factu = {
+             'product_id': product_id.id,
              'name': product_id.name,
              'quantity': 1,
              'price_unit': self.total_concepts,
