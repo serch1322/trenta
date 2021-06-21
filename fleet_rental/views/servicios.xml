@@ -19,6 +19,7 @@
                 <field name="vehicle_id" position="after">
                     <field name="ubicacion"/>
                     <field name="mecanico" attrs="{'required':[('ubicacion','==','interno')],'invisible': [('ubicacion', '!=', 'interno')]}"/>
+                    <field name="paga_cliente"/>
                 </field>
                 <field name="vendor_id" position="attributes">
                     <attribute name="attrs">{'required':[('ubicacion','==','externo')],'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
