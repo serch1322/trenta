@@ -8,7 +8,7 @@ class ServicioaFactura(models.Model):
     state = fields.Selection([('borrador','Borrador'),('proceso','En Proceso'),('facturado','Facturado')],string="Estado",default="borrador",copy=False)
     ubicacion = fields.Selection([('interno','Interno'),('externo','Externo')],string="Ubicacion de Servicio")
     mecanico = fields.Many2one('res.partner', string="Mecanico")
-    paga_cliente = fields.Boolean(string="Servicio pagado por Cliente",default=False)
+    paga_cliente = fields.Boolean(string="Servicio pagado por Cliente",default=False, copy=False)
 
     def validar(self):
         self.state = 'proceso'
@@ -22,9 +22,9 @@ class ServicioaFactura(models.Model):
             factu_prov = self.env['account.move']
             valores_factu_prov = {}
             valores_factu_prov.update({
-                'partner_id': self.supplier.id,
-                'invoice_date': self.invoice_date,
-                'ref': self.name,
+                'partner_id': self.vendor_id.id,
+                'invoice_date': self.date,
+                'ref': self.description,
                 'move_type': 'in_invoice',
             })
             lista_factu = []

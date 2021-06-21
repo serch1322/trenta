@@ -24,6 +24,9 @@
                 <field name="vendor_id" position="attributes">
                     <attribute name="attrs">{'required':[('ubicacion','==','externo')],'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
                 </field>
+                <field name="description" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
             </field>
         </record>
 
