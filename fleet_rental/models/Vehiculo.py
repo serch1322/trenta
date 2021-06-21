@@ -89,7 +89,7 @@ class EntidadMatricula(models.Model):
 
     def depreciacion(self):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
-        self.vehicle_id.write({'state_id': state_id})
+        self.write({'state_id': state_id})
         self.ensure_one()
         activo = self.env['account.asset']
         valores_activo = {}
