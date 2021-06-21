@@ -39,7 +39,7 @@ class RentContract(models.Model):
         self.state = 'corriendo'
         self.ensure_one()
         factu_prov = self.env['account.move']
-        product_id = self.env['product.product'].search([("id", "=", "seguro_vehiculo")])
+        product_id = self.env['product.product'].search([("name", "=", "Póliza de Seguro")])
         valores_factu_prov = {}
         valores_factu_prov.update({
          'partner_id': self.supplier.id,
