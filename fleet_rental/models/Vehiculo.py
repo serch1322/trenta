@@ -15,7 +15,7 @@ class EntidadMatricula(models.Model):
     carga= fields.Float(string="Capacidad de Carga")
     categoria = fields.Many2one('car.category',string="Categoria de Vehiculo")
     tipo = fields.Selection(related='categoria.tipo')
-    depr = fields.Selection([('total', 'Depreciación Total (100%'), ('parcial', 'Depreciación Parcial ($175,000)')],string="Tipo de Depreciación Fiscal",default=False)
+    depr = fields.Selection([('total', 'Depreciación Total (100%)'), ('parcial', 'Depreciación Parcial ($175,000)')],string="Tipo de Depreciación Fiscal",default=False)
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
     tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
@@ -88,13 +88,14 @@ class EntidadMatricula(models.Model):
             record.tools_count = tools.search_count([('car', '=', record.id)])
 
     def depreciacion(self):
+        state_id = self.env.ref('fleet_rental.vehicle_state_active').id
+        self.vehicle_id.write({'state_id': state_id})
         self.ensure_one()
         activo = self.env['account.asset']
         valores_activo = {}
         valores_activo.update({
             'name': self.license_plate,
             'original_value': self.net_car_value,
-
             'acquisition_date': date.today(),
             'method': 'linear',
             'method_period': '1',
