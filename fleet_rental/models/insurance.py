@@ -2,6 +2,7 @@
 
 from datetime import datetime, date, timedelta
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError, Warning
 #
 # class RentContract(models.Model):
 #     _name = 'fleet.car.insurance'
@@ -38,6 +39,7 @@ class RentContract(models.Model):
         self.state = 'corriendo'
         self.ensure_one()
         factu_prov = self.env['account.move']
+        product_id = self.env['product.product'].search([("id", "=", "seguro_vehiculo")])
         valores_factu_prov = {}
         valores_factu_prov.update({
          'partner_id': self.supplier.id,
@@ -46,15 +48,12 @@ class RentContract(models.Model):
          'move_type': 'in_invoice',
         })
         lista_factu = []
-        if self.lineas_ids:
-         for linea in self.lineas_ids:
-             if linea.car:
-                 lineas_factu = {
-                     'name': linea.car.license_plate,
-                     'quantity': linea.qty,
-                     'price_unit': linea.price,
-                 }
-                 lista_factu.append((0, 0, lineas_factu))
+        lineas_factu = {
+             'name': product_id.name,
+             'quantity': 1,
+             'price_unit': self.total_concepts,
+         }
+        lista_factu.append((0, 0, lineas_factu))
         if lista_factu:
          valores_factu_prov.update({
              'invoice_line_ids': lista_factu,

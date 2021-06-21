@@ -82,6 +82,11 @@
             <field name="category">service</field>
         </record>
 
+        <record model="product.template" id="seguro_vehiculo">
+            <field name="name">Póliza de Seguro</field>
+            <field name="type">service</field>
+        </record>
+
     </data>
 
 </odoo>
