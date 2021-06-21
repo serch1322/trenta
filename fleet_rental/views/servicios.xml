@@ -17,26 +17,15 @@
                     <attribute name="statusbar_visible">borrador,proceso,facturado</attribute>
                 </field>
                 <field name="vehicle_id" position="after">
-                    <field name="ubicacion"/>
-                    <field name="mecanico" attrs="{'required':[('ubicacion','==','interno')],'invisible': [('ubicacion', '!=', 'interno')]}"/>
-                    <field name="paga_cliente"/>
+                    <field name="ubicacion" attrs="{'readonly': [('state', '!=', 'borrador')]}"/>
+                    <field name="mecanico" attrs="{'required':[('ubicacion','==','interno')],'invisible': [('ubicacion', '!=', 'interno')], 'readonly': [('state', '!=', 'borrador')]}"/>
+                    <field name="paga_cliente" attrs="{'readonly': [('state', '!=', 'borrador')]}"/>
                 </field>
                 <field name="vendor_id" position="attributes">
-                    <attribute name="attrs">{'required':[('ubicacion','==','externo')],'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
+                    <attribute name="attrs">{'required':[('ubicacion','==','externo')],'invisible': [('ubicacion', '!=', 'externo')],'readonly': [('state', '!=', 'borrador')]}</attribute>
                 </field>
                 <field name="description" position="attributes">
                     <attribute name="required">1</attribute>
-                </field>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="heredar_arbol_servicio_vehiculo">
-            <field name="name">heredar.arbol.servicio.vehiculo</field>
-            <field name="model">fleet.vehicle.log.services</field>
-            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_tree"/>
-            <field name="arch" type="xml">
-                <field name="amount" position="after">
-                    <field name="state"/>
                 </field>
             </field>
         </record>

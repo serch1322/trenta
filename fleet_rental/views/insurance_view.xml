@@ -19,8 +19,8 @@
                             <group>
                                 <field name="name" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
                                 <field name="supplier" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
-                                <field name="invoice_date" widget="daterange" options="{'related_end_date': 'end_date'}"  attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
-		                        <field name="end_date" widget="daterange" options="{'related_start_date': 'invoice_date'}"  attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
+                                <field name="invoice_date" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
+		                        <field name="end_date" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
                             </group>
                             <group>
                                 <field name="siniestro" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>

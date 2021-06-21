@@ -84,10 +84,10 @@
                             <group>
                                 <field name="customer_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="approved_driver"/>
-                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}" widget="daterange" options="{'related_end_date': 'rent_end_date'}"/>
-                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}" widget="daterange" options="{'related_start_date': 'rent_start_date'}"/>
+                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="vehicle_id" domain="[('insurance_count','!=',0)],[('rental_check_availability','=',True),
-                                ('state_id.name','!=','Inactive')]"
+                                ('state_id.name','==','Disponible')]"
                                    options="{'no_create': True}"/>
                                 <field name="journal_type" invisible="1" />
                                 <field name="check_verify" invisible="1" />

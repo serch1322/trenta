@@ -29,7 +29,7 @@ class ServicioaFactura(models.Model):
             })
             lista_factu = []
             lineas_factu = {
-                'name': self.service_type_id.id,
+                'name': self.service_type_id.name,
                 'quantity': 1,
                 'price_unit': self.amount,
             }
