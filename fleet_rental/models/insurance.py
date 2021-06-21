@@ -53,7 +53,7 @@ class RentContract(models.Model):
             'name': product_id.name,
             'quantity': 1,
             'price_unit': self.total_concepts,
-            'tax_ids': product_id.supplier_taxes_id.id,
+            'tax_ids': product_id.supplier_taxes_id,
          }
         lista_factu.append((0, 0, lineas_factu))
         if lista_factu:
