@@ -10,12 +10,15 @@
                     <button name="crear_factura_servicio" string="Crear Factura" type="object"
                             attrs="{'invisible': [('state', '!=', 'running')]}" class="oe_highlight"/>
                 </header>
+                <field name="state" position="attributes">
+                    <attribute name="clickable">false</attribute>
+                </field>
                 <field name="vehicle_id" position="after">
                     <field name="ubicacion"/>
-                    <field name="mecanico"/>
+                    <field name="mecanico" attrs="{'required':[('ubicacion','==','interno')],'invisible': [('ubicacion', '!=', 'interno')]}"/>
                 </field>
                 <field name="vendor_id" position="attributes">
-                    <attribute name="attrs">{'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
+                    <attribute name="attrs">{'required':[('ubicacion','==','externo')],'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
                 </field>
             </field>
         </record>

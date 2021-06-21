@@ -9,8 +9,8 @@
                 <form string="Seguros">
                     <header>
                         <button name="accion_aprobado" string="Confirmar" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'nuevo')]}"/>
-                        <button name="accion_cancelado" string="Cancelar" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ('nuevo', 'cancelado'))]}"/>
                         <button name="accion_borrador" string="Cambiar a Borrador" type="object" class="btn-primary" attrs="{'invisible': [('state', 'in', ('nuevo', 'cancelado'))]}"/>
+                        <button name="accion_cancelado" string="Cancelar" type="object" class="btn-danger" attrs="{'invisible': [('state', 'in', ('nuevo', 'cancelado'))]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="nuevo,corriendo,terminado"/>
                     </header>
                     <sheet>
