@@ -5,11 +5,13 @@ from odoo import models, fields, api, _
 class ServicioaFactura(models.Model):
     _inherit = ['fleet.vehicle.log.services']
 
-    state = fields.Selection([('borrador','Borrador'),('facturado','Facturado'),('confirmado','Confirmado')],string="Estado",default="borrador",copy=False)
+    state = fields.Selection([('borrador','Borrador'),('proceso','En Proceso'),('facturado','Facturado'),('confirmado','Confirmado')],string="Estado",default="borrador",copy=False)
     ubicacion = fields.Selection([('interno','Interno'),('externo','Externo')],string="Ubicacion de Servicio")
     mecanico = fields.Many2one('res.partner', string="Mecanico", required=True)
     paga_cliente = fields.Boolean(string="Servicio pagado por Cliente",default=False)
 
+    def validar(self):
+        self.state = 'proceso'
 
     def crear_factura_servicio(self):
         if self.paga_cliente == True:
@@ -20,21 +22,18 @@ class ServicioaFactura(models.Model):
             factu_prov = self.env['account.move']
             valores_factu_prov = {}
             valores_factu_prov.update({
-                'partner_id': self.vendor_id.id,
-                'invoice_date': self.date,
-                'ref': self.inv_ref,
-                'type': 'in_invoice',
+                'partner_id': self.supplier.id,
+                'invoice_date': self.invoice_date,
+                'ref': self.name,
+                'move_type': 'in_invoice',
             })
             lista_factu = []
-            if self.cost_ids:
-                for linea in self.cost_ids:
-                    if linea.cost_subtype_id:
-                        lineas_factu = {
-                            'name': linea.cost_subtype_id.name,
-                            'quantity': 1,
-                            'price_unit': linea.amount,
-                        }
-                        lista_factu.append((0, 0, lineas_factu))
+            lineas_factu = {
+                'name': self.service_type_id.id,
+                'quantity': 1,
+                'price_unit': self.amount,
+            }
+            lista_factu.append((0, 0, lineas_factu))
             if lista_factu:
                 valores_factu_prov.update({
                     'invoice_line_ids': lista_factu,
