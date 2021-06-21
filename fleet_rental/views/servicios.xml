@@ -14,6 +14,7 @@
                 </header>
                 <field name="state" position="attributes">
                     <attribute name="clickable">false</attribute>
+                    <attribute name="statusbar_visible">borrador,proceso,facturado</attribute>
                 </field>
                 <field name="vehicle_id" position="after">
                     <field name="ubicacion"/>

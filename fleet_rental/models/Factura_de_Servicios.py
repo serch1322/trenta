@@ -5,7 +5,7 @@ from odoo import models, fields, api, _
 class ServicioaFactura(models.Model):
     _inherit = ['fleet.vehicle.log.services']
 
-    state = fields.Selection([('borrador','Borrador'),('proceso','En Proceso'),('facturado','Facturado'),('confirmado','Confirmado')],string="Estado",default="borrador",copy=False)
+    state = fields.Selection([('borrador','Borrador'),('proceso','En Proceso'),('facturado','Facturado')],string="Estado",default="borrador",copy=False)
     ubicacion = fields.Selection([('interno','Interno'),('externo','Externo')],string="Ubicacion de Servicio")
     mecanico = fields.Many2one('res.partner', string="Mecanico", required=True)
     paga_cliente = fields.Boolean(string="Servicio pagado por Cliente",default=False)
