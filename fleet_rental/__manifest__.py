@@ -42,6 +42,7 @@
              'views/servicios.xml',
              'views/categoria_vehiculo.xml',
              'views/product_template.xml',
+             'views/activos.xml',
              'views/tools_modelo.xml',
              'views/tools_categoria.xml',
              'views/vehiculo.xml',

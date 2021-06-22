@@ -33,6 +33,7 @@ from . import Factura_contrato
 from . import product_template_1
 from . import categoria_tools
 from . import facturacion
+from . import activos
 
 
 

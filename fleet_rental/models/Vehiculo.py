@@ -20,7 +20,9 @@ class EntidadMatricula(models.Model):
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
     tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
     periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación', default='1')
-
+    depreciacion_contable =  fields.Many2one('account.asset',string="Depreciación Contable")
+    depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal")
+    net_car_value = fields.Float(string="Valor de la Compra")
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
