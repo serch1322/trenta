@@ -89,7 +89,7 @@ class EntidadMatricula(models.Model):
                 [('lineas_ids.car', '=', record.id), ('state', '=', 'corriendo')])
             record.tools_count = tools.search_count([('car', '=', record.id)])
 
-    def depreciacion_fiscal(self):
+    def crear_depreciacion_fiscal(self):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
         self.write({'state_id': state_id})
         self.ensure_one()
