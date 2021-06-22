@@ -2,9 +2,7 @@
 
 from datetime import datetime, date, timedelta
 from odoo import models, fields, api, _
-#
-# class RentContract(models.Model):
-#     _name = 'fleet.car.insurance'
+
 
 class RentContract(models.Model):
     _name = 'car.insurance'
