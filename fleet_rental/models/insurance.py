@@ -13,11 +13,11 @@ class RentContract(models.Model):
 
     @api.depends('lineas_ids.subtotal')
     def _obtener_totales(self):
-        self.total_concepts = 0.0
         for insurance in self:
+            total_concepts = 0.0
             for line in insurance.lineas_ids:
                 total_concepts = total_concepts + line.subtotal
-            insurance.total_concepts = self.total_concepts
+            insurance.total_concepts = total_concepts
 
     total_concepts = fields.Float(string="Total", compute="_obtener_totales", store=True)
     name = fields.Char(string="Numero de Poliza",  required =True)
