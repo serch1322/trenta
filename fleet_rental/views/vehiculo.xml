@@ -63,8 +63,18 @@
                     <field name="depr" attrs="{'required':[('tipo','!=','carga')],'invisible': [('tipo', '==', 'carga')]}"/>
                     <field name="entidad" string="Entidad de Placas" required="1"/>
                     <field name="tiempo_de_depreciacion"/> <field name="periodo_de_depreciacion" nolabel="1"/>
-                    <field name="depreciacion_contable" readonly="1" force_save="1"/>
-                    <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
+                    <t t-if="depreciacion_contable.state == 'draft'">
+                        <field name="depreciacion_contable" style="background-color:red;" readonly="1" force_save="1"/>
+                    </t>
+                    <t t-else="">
+                        <field name="depreciacion_contable" readonly="1" force_save="1"/>
+                    </t>
+                    <t t-if="depreciacion_fiscal.state == 'draft'">
+                        <field name="depreciacion_fiscal" style="background-color:red;" readonly="1" force_save="1"/>
+                    </t>
+                    <t t-else="">
+                        <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
+                    </t>
                     <field name="depreciado" invisible="1"/>
                 </field>
                 <field name="transmission" position="before">
