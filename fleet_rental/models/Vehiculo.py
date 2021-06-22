@@ -111,16 +111,16 @@ class EntidadMatricula(models.Model):
             'vehiculo': self.id,
         })
         if self.tipo == 'carga':
-            valores_activo['method_number'] = 48,
+            valores_activo['method_number'] = '48',
         else:
             if self.depr == 'total':
-                valores_activo['method_number'] = 1,
+                valores_activo['method_number'] = '1',
             else:
                 if self.net_car_value > 175000:
                     valores_activo['salvage_value'] = self.net_car_value - 175000,
-                    valores_activo['method_number'] =  48,
+                    valores_activo['method_number'] =  '48',
                 elif self.net_car_value <= '175000':
-                    valores_activo['method_number'] = 48,
+                    valores_activo['method_number'] = '48',
         activo_creado = activo.create(valores_activo)
         self.depreciacion_fiscal = activo_creado.id
         self.depreciado = True
