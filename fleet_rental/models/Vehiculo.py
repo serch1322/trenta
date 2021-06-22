@@ -195,6 +195,7 @@ class EntidadMatricula(models.Model):
     activo = fields.Many2one('account.account', string="Cuenta de Activo", required=True)
     amortizacion = fields.Many2one('account.account', string="Cuenta de Amortizacion", required=True)
     gasto = fields.Many2one('account.account', string="Cuenta de Gasto", required=True)
+    diario = fields.Many2one('account.journal', string="Diario", required=True, domain="[('type', '=', 'general')]")
 
 class ventaVehiculo(models.Model):
     _name = 'venta.vehiculo'
