@@ -3,9 +3,7 @@
 from datetime import datetime, date, timedelta
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
-#
-# class RentContract(models.Model):
-#     _name = 'fleet.car.insurance'
+
 
 class RentContract(models.Model):
     _name = 'car.insurance'
@@ -14,8 +12,8 @@ class RentContract(models.Model):
 
     @api.depends('lineas_ids.subtotal')
     def _obtener_totales(self):
-        total_concepts = 0.0
         for insurance in self:
+            total_concepts = 0.0
             for line in insurance.lineas_ids:
                 total_concepts = total_concepts + line.subtotal
             insurance.total_concepts = total_concepts
