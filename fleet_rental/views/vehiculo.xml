@@ -65,6 +65,7 @@
                     <field name="tiempo_de_depreciacion"/> <field name="periodo_de_depreciacion" nolabel="1"/>
                     <field name="depreciacion_contable" readonly="1" force_save="1"/>
                     <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
+                    <field name="depreciado" invisible="1"/>
                 </field>
                 <field name="transmission" position="before">
                     <field name="serie_motor" string="Numero de Serie Motor" />
