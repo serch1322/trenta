@@ -167,6 +167,26 @@ class EntidadMatricula(models.Model):
             })
         activo_creado = activo.create(valores_activo)
         self.depreciacion_fiscal = activo_creado.id
+        valores_contable={}
+        valores_contable.update({
+            'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+            'original_value': self.net_car_value,
+            'acquisition_date': date.today(),
+            'method': 'linear',
+            'method_period': self.periodo_de_depreciacion,
+            'first_depreciation_date': date.today(),
+            'account_asset_id': self.model_id.activo.id,
+            'account_depreciation_id': self.model_id.amortizacion.id,
+            'account_depreciation_expense_id': self.model_id.gasto.id,
+            'journal_id': self.model_id.diario.id,
+            'state': 'draft',
+            'salvage_value': self.net_car_value * .15,
+            'asset_type': 'purchase',
+            'method_number': self.tiempo_de_depreciacion,
+            'vehiculo': self.id,
+        })
+        contable_creado = activo.create(valores_contable)
+        self.depreciacion_contable = contable_creado.id
         self.depreciado = True
 
 class EntidadMatricula(models.Model):
