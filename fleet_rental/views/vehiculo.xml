@@ -41,7 +41,7 @@
                     <attribute name="clickable">0</attribute>
                 </field>
                 <field name="state_id" position="before">
-                    <button name="depreciacion" string="Depreciar Vehiculo" type="object" class="btn-primary" attrs="{'invisible': [('depreciado','==',True)]}"/>
+                    <button name="depreciacion" string="Depreciar Vehiculo" type="object" confirm="¿Estás seguro que quieres empezar a rentar y depreciar el equipo?" class="btn-primary" attrs="{'invisible': [('depreciado','==',True)]}"/>
                     <button name="return_actions_to_open_venta_vehiculo"
                             type="object"
                             class="btn-primary"
