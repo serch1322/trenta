@@ -23,6 +23,7 @@ class EntidadMatricula(models.Model):
     depreciacion_contable =  fields.Many2one('account.asset',string="Depreciación Contable")
     depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal")
     car_value = fields.Float(string="Valor de la Compra (IVA incluido)")
+    depreciado = fields.Boolean(string="¿Depreciado?",default=False,copy=False)
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
@@ -132,6 +133,7 @@ class EntidadMatricula(models.Model):
                     })
         activo_creado = activo.create(valores_activo)
         self.depreciacion_fiscal = activo_creado.id
+        self.depreciado = True
 
 class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle.model']
