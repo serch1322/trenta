@@ -14,8 +14,8 @@ class HeredadContacto(models.Model):
     tipo_sangre = fields.Selection([('o+', 'O+'), ('o-', 'O-'), ('a+', 'A+'), ('a-', 'A-'), ('b+', 'B+'),
                                     ('b-', 'B-'), ('ab+', 'AB+'), ('ab-', 'AB-')], string="Tipo de Sangre", copy=False)
     numero_emergencia = fields.Char(string="Numero de Emergencia")
-    curp = fields.Char(string="CURP de Chofer")
-    rfc = fields.Char(string="RFC de Chofer")
+    #curp = fields.Char(string="CURP de Chofer")
+    #rfc = fields.Char(string="RFC de Chofer")
 
 
 
