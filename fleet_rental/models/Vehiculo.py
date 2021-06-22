@@ -96,33 +96,75 @@ class EntidadMatricula(models.Model):
         self.ensure_one()
         activo = self.env['account.asset']
         valores_activo = {}
-        valores_activo.update({
-            'name': '%s %s %s' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
-            'original_value': self.net_car_value,
-            'acquisition_date': date.today(),
-            'method': 'linear',
-            'method_period': '1',
-            'first_depreciation_date': date.today(),
-            'account_asset_id': self.categoria.activo.id,
-            'account_depreciation_id': self.categoria.amortizacion.id,
-            'account_depreciation_expense_id': self.categoria.gasto.id,
-            'journal_id': self.categoria.diario.id,
-            'state': 'open',
-            'asset_type': 'purchase',
-            'method_number': 48,
-            'vehiculo': self.id,
+        if self.tipo == 'carga':
+            valores_activo.update({
+                'name': '%s %s %s' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
+                'original_value': self.net_car_value,
+                'acquisition_date': date.today(),
+                'method': 'linear',
+                'method_period': '1',
+                'first_depreciation_date': date.today(),
+                'account_asset_id': self.categoria.activo.id,
+                'account_depreciation_id': self.categoria.amortizacion.id,
+                'account_depreciation_expense_id': self.categoria.gasto.id,
+                'journal_id': self.categoria.diario.id,
+                'state': 'draft',
+                'asset_type': 'purchase',
+                'method_number': 48,
+                'vehiculo': self.id,
         })
-        # if self.tipo == 'carga':
-        #     valores_activo['method_number'] = '48',
-        # else:
-        #     if self.depr == 'total':
-        #         valores_activo['method_number'] = '1',
-        #     else:
-        #         if self.net_car_value > 175000:
-        #             valores_activo['salvage_value'] = self.net_car_value - 175000,
-        #             valores_activo['method_number'] =  '48',
-        #         elif self.net_car_value <= '175000':
-        #             valores_activo['method_number'] = '48',
+        elif self.depr == 'total':
+            valores_activo.update({
+                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+                'original_value': self.net_car_value,
+                'acquisition_date': date.today(),
+                'method': 'linear',
+                'method_period': '1',
+                'first_depreciation_date': date.today(),
+                'account_asset_id': self.categoria.activo.id,
+                'account_depreciation_id': self.categoria.amortizacion.id,
+                'account_depreciation_expense_id': self.categoria.gasto.id,
+                'journal_id': self.categoria.diario.id,
+                'state': 'draft',
+                'asset_type': 'purchase',
+                'method_number': 1,
+                'vehiculo': self.id,
+            })
+        elif self.depr == 'parcial' and self.net_car_value > 175000:
+            valores_activo.update({
+                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+                'original_value': self.net_car_value,
+                'acquisition_date': date.today(),
+                'method': 'linear',
+                'method_period': '1',
+                'first_depreciation_date': date.today(),
+                'account_asset_id': self.categoria.activo.id,
+                'account_depreciation_id': self.categoria.amortizacion.id,
+                'account_depreciation_expense_id': self.categoria.gasto.id,
+                'journal_id': self.categoria.diario.id,
+                'state': 'draft',
+                'asset_type': 'purchase',
+                'method_number': 48,
+                'salvage_value': self.net_car_value - 175000,
+                'vehiculo': self.id,
+            })
+        else:
+            valores_activo.update({
+                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+                'original_value': self.net_car_value,
+                'acquisition_date': date.today(),
+                'method': 'linear',
+                'method_period': '1',
+                'first_depreciation_date': date.today(),
+                'account_asset_id': self.categoria.activo.id,
+                'account_depreciation_id': self.categoria.amortizacion.id,
+                'account_depreciation_expense_id': self.categoria.gasto.id,
+                'journal_id': self.categoria.diario.id,
+                'state': 'draft',
+                'asset_type': 'purchase',
+                'method_number': 48,
+                'vehiculo': self.id,
+            })
         activo_creado = activo.create(valores_activo)
         self.depreciacion_fiscal = activo_creado.id
         self.depreciado = True
