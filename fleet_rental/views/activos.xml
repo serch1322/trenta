@@ -7,9 +7,9 @@
             <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
             <field name="arch" type="xml">
                 <field name="book_value" position="after">
-                    <field name="vehiculo"/>
+                    <field name="vehiculo" readonly="1"/>
                     <!-- attrs="{'invisible': [('vehiculo', '==', False)]}" -->
-                    <field name="aditamento"/>
+                    <field name="aditamento" readonly="1"/>
                 </field>
             </field>
         </record>

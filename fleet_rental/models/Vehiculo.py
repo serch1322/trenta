@@ -22,7 +22,7 @@ class EntidadMatricula(models.Model):
     periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación', default='1')
     depreciacion_contable =  fields.Many2one('account.asset',string="Depreciación Contable")
     depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal")
-    net_car_value = fields.Float(string="Valor de la Compra")
+    car_value = fields.Float(string="Valor de la Compra (IVA incluido)")
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
@@ -89,14 +89,14 @@ class EntidadMatricula(models.Model):
                 [('lineas_ids.car', '=', record.id), ('state', '=', 'corriendo')])
             record.tools_count = tools.search_count([('car', '=', record.id)])
 
-    def depreciacion(self):
+    def depreciacion_fiscal(self):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
         self.write({'state_id': state_id})
         self.ensure_one()
         activo = self.env['account.asset']
         valores_activo = {}
         valores_activo.update({
-            'name': self.license_plate,
+            'name': '%s %s %s' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
             'original_value': self.net_car_value,
             'acquisition_date': date.today(),
             'method': 'linear',
@@ -107,32 +107,31 @@ class EntidadMatricula(models.Model):
             'account_depreciation_expense_id': self.categoria.gasto.id,
             'journal_id': self.categoria.diario.id,
             'state': 'open',
+            'vehiculo': self.id,
         })
         if self.tipo == 'carga':
-            valores_activo.update({
-                'method_number': '48',
-
+            valores_activo.append({
+                'method_number': 48,
             })
         else:
             if self.depr == 'total':
-                valores_activo.update({
+                valores_activo.append({
                     'method_number': '1',
-
                 })
             else:
                 if self.net_car_value > '175000':
-                    valores_activo.update({
+                    valores_activo.append({
                         'salvage_value': self.net_car_value - 175000,
-
-                        'method_number': '48',
+                        'method_number': 48,
                     })
                 elif self.net_car_value <= '175000':
-                    valores_activo.update({
+                    valores_activo.append({
                         'salvage_value': 0.00,
-                        'method_number': '48',
+                        'method_number': 48,
 
                     })
         activo_creado = activo.create(valores_activo)
+        self.depreciacion_fiscal = activo_creado.id
 
 class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle.model']
