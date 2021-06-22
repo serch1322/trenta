@@ -15,8 +15,8 @@
                     <field name="edad" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
                     <field name="tipo_sangre" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
                     <field name="numero_emergencia" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
-                    <field name="rfc" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
-                    <field name="curp" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
+                    <!--<field name="rfc" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>
+                    <field name="curp" attrs="{'required':[('company_type','==','person')],'invisible': [('company_type', '==', 'company')]}"/>-->
                 </field>
             </field>
         </record>
