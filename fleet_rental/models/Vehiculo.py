@@ -108,6 +108,7 @@ class EntidadMatricula(models.Model):
             'account_depreciation_expense_id': self.categoria.gasto.id,
             'journal_id': self.categoria.diario.id,
             'state': 'open',
+            'asset_type': 'purchase',
             'method_number': 48,
             'vehiculo': self.id,
         })
