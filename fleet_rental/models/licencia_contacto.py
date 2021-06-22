@@ -10,7 +10,7 @@ class HeredadContacto(models.Model):
                                         string="Tipo de Licencia")
     vigencia = fields.Date(string="Vigencia de Licencia")
     sexo = fields.Selection([('masculino', 'Masculino'), ('femenino', 'Femenino')], string="Sexo", copy=False)
-    edad = fields.Float(string="Edad de Conductor", required= True)
+    edad = fields.Integer(string="Edad de Conductor", required= True)
     tipo_sangre = fields.Selection([('o+', 'O+'), ('o-', 'O-'), ('a+', 'A+'), ('a-', 'A-'), ('b+', 'B+'),
                                     ('b-', 'B-'), ('ab+', 'AB+'), ('ab-', 'AB-')], string="Tipo de Sangre", copy=False)
     numero_emergencia = fields.Char(string="Numero de Emergencia", required=True)
