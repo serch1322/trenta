@@ -66,13 +66,13 @@
                     <t t-if="depreciacion_contable.state == 'draft'">
                         <field name="depreciacion_contable" style="background-color:red;" readonly="1" force_save="1"/>
                     </t>
-                    <t t-else="">
+                    <t t-else="depreciacion_contable.state != 'draft'">
                         <field name="depreciacion_contable" readonly="1" force_save="1"/>
                     </t>
                     <t t-if="depreciacion_fiscal.state == 'draft'">
                         <field name="depreciacion_fiscal" style="background-color:red;" readonly="1" force_save="1"/>
                     </t>
-                    <t t-else="">
+                    <t t-else="depreciacion_fiscal.state != 'draft'">
                         <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
                     </t>
                     <field name="depreciado" invisible="1"/>
