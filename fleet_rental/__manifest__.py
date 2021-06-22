@@ -30,7 +30,7 @@
     'author': 'Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'depends': ['base', 'account', 'fleet', 'mail'],
+    'depends': ['base', 'account', 'fleet', 'mail','account_asset'],
     'data': ['security/rental_security.xml',
              'security/ir.model.access.csv',
              'views/car_rental_view.xml',
