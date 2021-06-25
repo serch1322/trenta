@@ -10,9 +10,9 @@
                         <field name="renta" readonly="1" force_save="1" attrs="{'invisible': [('renta', '=', False)]}"/>
                     </field>
                     <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
-                    <field name="vehiculo" attrs="{'column_invisible': [('parent.renta', '=', False)]}" force_save="1"/>
-                    <field name="aditamento" attrs="{'column_invisible': [('parent.renta', '=', False)]}" force_save="1"/>
-                </xpath>
+                        <field name="vehiculo" attrs="{'column_invisible': [('parent.renta', '=', False)]}" force_save="1"/>
+                        <field name="aditamento" attrs="{'column_invisible': [('parent.renta', '=', False)]}" force_save="1"/>
+                    </xpath>
                 </field>
         </record>
     </data>
