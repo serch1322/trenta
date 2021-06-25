@@ -49,7 +49,7 @@ class EntidadMatricula(models.Model):
             res = self.env['ir.actions.act_window']._for_xml_id('fleet_rental.%s' % xml_id)
             res.update(
                 context=dict(self.env.context, default_vehicle_id=self.id, group_by=False),
-                domain=[('vehiculo', '=', self.id),('state','=','posted'),('move_type','=','out_invoice')]
+                domain=[('vehiculo', '=', self.id),('state','=','posted'),('move_id.move_type','=','out_invoice')]
             )
             return res
         return False
@@ -105,7 +105,7 @@ class EntidadMatricula(models.Model):
             record.insurance_count = insurance.search_count(
                 [('lineas_ids.car', '=', record.id), ('state', '=', 'corriendo')])
             record.tools_count = tools.search_count([('car', '=', record.id)])
-            record.facturas_count = facturas.search_count([('vehiculo', '=', record.id),('state','=','posted'),('move_type','=','out_invoice')])
+            record.facturas_count = facturas.search_count([('vehiculo', '=', record.id),('state','=','posted'),('move_id.move_type','=','out_invoice')])
 
     def depreciacion(self):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
