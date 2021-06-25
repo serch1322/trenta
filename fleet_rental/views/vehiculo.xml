@@ -19,7 +19,7 @@
                             type="object"
                             class="oe_stat_button"
                             icon="fa-shield"
-                            context="{'default_vehiculo': active_id}"
+                            context="{'xml_id':'action_fleet_car_insurance'}"
                             help="Muestra seguro para este vehiculo">
                             <field name="insurance_count" widget="statinfo" string="Seguros"/>
                     </button>
@@ -27,7 +27,7 @@
                             type="object"
                             class="oe_stat_button"
                             icon="fa-pencil-square-o"
-                            context="{'xml_id':'account.action_move_out_invoice_type'}"
+                            context="{'default_vehiculo':active_id}"
                             help="Muestra los registros líneas en facturas generadas">
                             <field name="facturas_count" widget="statinfo" string="Facturas"/>
                     </button>
