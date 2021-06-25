@@ -49,7 +49,7 @@ class EntidadMatricula(models.Model):
             res = self.env['ir.actions.act_window']._for_xml_id('%s' % xml_id)
             res.update(
                 context=dict(self.env.context, default_vehicle_id=self.id, group_by=False),
-                domain=[('vehiculo', '=', self.id),('move_id.state','=','posted'),('move_id.move_type','=','out_invoice')]
+                domain=[('invoice_line_ids.vehiculo', '=', self.id),('state','=','posted'),('move_type','=','out_invoice')]
             )
             return res
         return False
