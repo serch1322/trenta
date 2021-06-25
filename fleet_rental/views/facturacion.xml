@@ -13,6 +13,10 @@
                         <field name="vehiculo" attrs="{'column_invisible': [('parent.renta', '=', False)]}" force_save="1"/>
                         <field name="aditamento" attrs="{'column_invisible': [('parent.renta', '=', False)]}" force_save="1"/>
                     </xpath>
+                    <xpath expr="//field[@name='line_ids']/tree" position="inside">
+                        <field name="vehiculo" invisible="1"/>
+                        <field name="aditamento" invisible="1"/>
+                    </xpath>
                 </field>
         </record>
     </data>

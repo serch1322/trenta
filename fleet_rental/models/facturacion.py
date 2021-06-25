@@ -10,5 +10,5 @@ class FacturacionporRenta(models.Model):
 class FacturacionporVehiculo(models.Model):
     _inherit = ['account.move.line']
 
-    vehiculo = fields.Many2one('fleet.vehicle',string="Vehiculo", store=True, copy=False)
-    aditamento = fields.Many2one('car.tools',string="Aditamentos/Accesorios", store=True, copy=False)
+    vehiculo = fields.Many2one('fleet.vehicle',string="Vehiculo",readonly=True,store=True,copy=False)
+    aditamento = fields.Many2one('car.tools',string="Aditamentos/Accesorios",readonly=True,store=True,copy=False)
