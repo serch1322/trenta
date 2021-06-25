@@ -46,7 +46,7 @@ class EntidadMatricula(models.Model):
         xml_id = self.env.context.get('xml_id')
         if xml_id:
 
-            res = self.env['ir.actions.act_window']._for_xml_id('fleet_rental.%s' % xml_id)
+            res = self.env['ir.actions.act_window']._for_xml_id('%s' % xml_id)
             res.update(
                 context=dict(self.env.context, default_vehicle_id=self.id, group_by=False),
                 domain=[('vehiculo', '=', self.id),('move_id.state','=','posted'),('move_id.move_type','=','out_invoice')]
