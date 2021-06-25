@@ -18,6 +18,7 @@ class EntidadMatricula(models.Model):
     depr = fields.Selection([('total', 'Depreciación Total (100%)'), ('parcial', 'Depreciación Parcial ($175,000)')],string="Tipo de Depreciación Fiscal",default=False)
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
+    facturas_count = fields.Integer(compute="_compute_count_all", string="Facturas", store=True)
     tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
     periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación', default='1')
     depreciacion_contable =  fields.Many2one('account.asset',string="Depreciación Contable")
@@ -35,6 +36,20 @@ class EntidadMatricula(models.Model):
             res.update(
                 context=dict(self.env.context, default_vehicle_id=self.id, group_by=False),
                 domain=[('state', '=', 'corriendo'), ('lineas_ids.car', '=', self.id)]
+            )
+            return res
+        return False
+
+    def return_actions_to_open_factura(self):
+        """ This opens the xml view specified in xml_id for the current vehicle """
+        self.ensure_one()
+        xml_id = self.env.context.get('xml_id')
+        if xml_id:
+
+            res = self.env['ir.actions.act_window']._for_xml_id('fleet_rental.%s' % xml_id)
+            res.update(
+                context=dict(self.env.context, default_vehicle_id=self.id, group_by=False),
+                domain=[('vehiculo', '=', self.id),('state','=','posted'),('move_type','=','out_invoice')]
             )
             return res
         return False
@@ -79,6 +94,7 @@ class EntidadMatricula(models.Model):
         LogContract = self.env['fleet.vehicle.log.contract']
         insurance = self.env['car.insurance']
         tools = self.env['car.tools']
+        facturas = self.env['account.move.line']
         for record in self:
             record.odometer_count = Odometer.search_count([('vehicle_id', '=', record.id)])
             record.service_count = LogService.search_count([('vehicle_id', '=', record.id)])
@@ -89,6 +105,7 @@ class EntidadMatricula(models.Model):
             record.insurance_count = insurance.search_count(
                 [('lineas_ids.car', '=', record.id), ('state', '=', 'corriendo')])
             record.tools_count = tools.search_count([('car', '=', record.id)])
+            record.facturas_count = facturas.search_count([('vehiculo', '=', record.id),('state','=','posted'),('move_type','=','out_invoice')])
 
     def depreciacion(self):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
@@ -98,7 +115,7 @@ class EntidadMatricula(models.Model):
         valores_activo = {}
         if self.tipo == 'carga':
             valores_activo.update({
-                'name': '%s %s %s' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
+                'name': '%s %s %s Fiscal' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
                 'original_value': self.net_car_value,
                 'acquisition_date': date.today(),
                 'method': 'linear',
@@ -115,7 +132,7 @@ class EntidadMatricula(models.Model):
         })
         elif self.depr == 'total':
             valores_activo.update({
-                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+                'name': '%s %s %s Fiscal' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
                 'original_value': self.net_car_value,
                 'acquisition_date': date.today(),
                 'method': 'linear',
@@ -132,7 +149,7 @@ class EntidadMatricula(models.Model):
             })
         elif self.depr == 'parcial' and self.net_car_value > 175000:
             valores_activo.update({
-                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+                'name': '%s %s %s Fiscal' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
                 'original_value': self.net_car_value,
                 'acquisition_date': date.today(),
                 'method': 'linear',
@@ -150,7 +167,7 @@ class EntidadMatricula(models.Model):
             })
         else:
             valores_activo.update({
-                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+                'name': '%s %s %s Fiscal' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
                 'original_value': self.net_car_value,
                 'acquisition_date': date.today(),
                 'method': 'linear',
@@ -169,7 +186,7 @@ class EntidadMatricula(models.Model):
         self.depreciacion_fiscal = activo_creado.id
         valores_contable={}
         valores_contable.update({
-            'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+            'name': '%s %s %s Contable' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
             'original_value': self.net_car_value,
             'acquisition_date': date.today(),
             'method': 'linear',

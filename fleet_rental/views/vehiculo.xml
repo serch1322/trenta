@@ -12,7 +12,7 @@
                             class="oe_stat_button"
                             icon="fa-puzzle-piece"
                             context="{'xml_id':'action_fleet_car_tools'}"
-                            help="show the tools for this vehicle">
+                            help="Muestra accesorios y aditamentos de este vehiculo">
                             <field name="tools_count" widget="statinfo" string="Accesorios/Aditamentos"/>
                     </button>
                     <button name="return_actions_to_open_seguro"
@@ -20,8 +20,16 @@
                             class="oe_stat_button"
                             icon="fa-shield"
                             context="{'xml_id':'action_fleet_car_insurance'}"
-                            help="show the insurance for this vehicle">
+                            help="Muestra seguro para este vehiculo">
                             <field name="insurance_count" widget="statinfo" string="Seguros"/>
+                    </button>
+                    <button name="return_actions_to_open_factura"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            context="{'xml_id':'action_fleet_car_account_move'}"
+                            help="Muestra los registros líneas en facturas generadas">
+                            <field name="facturas_count" widget="statinfo" string="Facturas"/>
                     </button>
                 </xpath>
                 <field name="future_driver_id" position="attributes">
