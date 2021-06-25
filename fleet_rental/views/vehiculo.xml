@@ -19,7 +19,7 @@
                             type="object"
                             class="oe_stat_button"
                             icon="fa-shield"
-                            context="{'xml_id':'action_fleet_car_insurance'}"
+                            context="{'default_vehiculo': active_id}"
                             help="Muestra seguro para este vehiculo">
                             <field name="insurance_count" widget="statinfo" string="Seguros"/>
                     </button>
