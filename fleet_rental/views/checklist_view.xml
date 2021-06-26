@@ -30,7 +30,6 @@
                                     <tree string="Fleet Checklist Lines" create="false" editable="bottom">
                                         <field name="name"/>
                                         <field name="checklist_active"/>
-                                        <field name="price"/>
                                     </tree>
                                 </field>
                                 <div>
