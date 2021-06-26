@@ -59,29 +59,6 @@ class CarRentalContract(models.Model):
             contract.total_concepts = total_concepts
             contract.grand_total = total_concepts + contract.total
 
-    # def _total_facturado(self):
-    #     self.total_facturado = 0
-    #     if not self.ids:
-    #         return True
-    #
-    #     rentas = {}
-    #     todas_rentas = []
-    #     for renta in self.filtered('id'):
-    #         rentas[renta] = self.with_context(active_test=False).search(
-    #             [('id', '=', renta.id)]).ids
-    #         todas_rentas += rentas[renta]
-    #
-    #     domain = [
-    #         ('renta', 'in', todas_rentas),
-    #         ('state', 'not in', ['draft', 'cancel']),
-    #         ('move_type', 'in', ('out_invoice', 'out_refund')),
-    #     ]
-    #     price_totals = self.env['account.invoice.report'].read_group(domain, ['price_subtotal'], ['partner_id'])
-    #     for renta in rentas.items():
-    #         renta.total_facturado = sum(
-    #             price['price_subtotal'] for price in price_totals if price['renta'][0])
-
-
 
     grand_total = fields.Float(string="Total",readonly=True, store=True)
     image = fields.Binary(related='vehicle_id.image_128', string="Image of Vehicle")
@@ -99,7 +76,7 @@ class CarRentalContract(models.Model):
     cost = fields.Float(string="Costo de Renta", help="This fields is to determine the cost of rent", required=True)
     rent_start_date = fields.Date(string="Fecha de Inicio", required=True, default=str(date.today()),
                                   help="Start date of contract", track_visibility='onchange')
-    rent_end_date = fields.Date(string="Fecha Final", required=True, help="End date of contract",
+    rent_end_date = fields.Date(string="Fecha Final", help="End date of contract",
                                 track_visibility='onchange')
     state = fields.Selection(
         [('draft', 'Borrador'), ('reserved', 'Reservado'), ('running', 'Corriendo'), ('cancel', 'Cancelar'), ('service','Servicio'),
@@ -122,11 +99,12 @@ class CarRentalContract(models.Model):
                                  required=True)
     first_payment_inv = fields.Many2one('account.move', copy=False)
     first_invoice_created = fields.Boolean(string="First Invoice Created", invisible=True, copy=False)
-    attachment_ids = fields.Many2many('ir.attachment', 'car_rent_checklist_ir_attachments_rel',
-                                      'rental_id', 'attachment_id', string="Attachments",
-                                      help="Images of the vehicle before contract/any attachments")
     checklist_line = fields.One2many('car.rental.checklist', 'checklist_number', string="Checklist",
                                      help="Facilities/Accessories, That should verify when closing the contract.",
+                                     states={'invoice': [('readonly', True)],
+                                             'done': [('readonly', True)],
+                                             'cancel': [('readonly', True)]})
+    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos",
                                      states={'invoice': [('readonly', True)],
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
@@ -143,6 +121,51 @@ class CarRentalContract(models.Model):
     deposito = fields.Float(string="Deposito en Garantia", required=True)
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
+
+    @api.onchange('vehicle_id')
+    def modificar_accesorios(self):
+        for record in self:
+            accesorios = self.env['car.tools'].search([('car', '=', record.vehicle_id)])
+            for accesorio in accesorios:
+                lista_valores = []
+                valores ={}
+                valores.update({
+                    'name': accesorio.name,
+                    'num_eco': accesorio.num_serie,
+                    'price': accesorio.rent_price
+                })
+                lista_valores.append((0,0,valores))
+            self.tools_line = lista_valores
+
+
+
+    def crear_factura(self):
+        self.ensure_one()
+        factu_clien = self.env['account.move']
+        valores_factu_clien = {}
+        valores_factu_clien.update({
+            'partner_id': self.customer_id.id,
+            'invoice_date': date.today(),
+            'ref': self.name,
+            'move_type': 'out_invoice',
+        })
+        lista_factu = []
+        if self.rent_concepts:
+            for linea in self.rent_concepts:
+                if linea.name:
+                    lineas_factu = {
+                        'product_id': linea.name,
+                        'quantity': linea.qty,
+                        'price_unit': linea.price,
+                    }
+                    lista_factu.append((0, 0, lineas_factu))
+        if lista_factu:
+            valores_factu_clien.update({
+                'invoice_line_ids': lista_factu,
+            })
+        factura_creada = factu_clien.create(valores_factu_clien)
+
+
 
 
     def action_view_invoice(self):
@@ -655,32 +678,11 @@ class RentConcepts(models.Model):
             self.price = self.name.lst_price
 
 
-class ContratoRentaFactura(models.Model):
-    _inherit = ['car.rental.contract']
+class CarRentalChecklist(models.Model):
+    _name = 'car.rental.tools'
 
-    def crear_factura(self):
-        self.ensure_one()
-        factu_prov = self.env['account.move']
-        valores_factu_prov = {}
-        valores_factu_prov.update({
-            'partner_id': self.customer_id.id,
-            'invoice_date': date.today(),
-            'ref': self.name,
-            'move_type': 'out_invoice',
-        })
-        lista_factu = []
-        if self.rent_concepts:
-            for linea in self.rent_concepts:
-                if linea.name:
-                    lineas_factu = {
-                        'product_id': linea.name,
-                        'quantity': linea.qty,
-                        'price_unit': linea.price,
-                    }
-                    lista_factu.append((0, 0, lineas_factu))
-        if lista_factu:
-            valores_factu_prov.update({
-                'invoice_line_ids': lista_factu,
-            })
-        factura_creada = factu_prov.create(valores_factu_prov)
+    name = fields.Many2one('car.tools', string="Accesorio")
+    accesorios = fields.Many2one('car.rental.contract',string="Accesorios")
+    num_eco = fields.Char(string="Número Económico")
+    price = fields.Float(string="Precio de Renta por Día")
 

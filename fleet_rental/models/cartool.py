@@ -10,12 +10,12 @@ class CarTools(models.Model):
     name = fields.Char(string="Nombre" , required=True)
     num_serie = fields.Char(string="Número de Serie")
     costo = fields.Float(string="Costo")
-    state = fields.Selection([('disponible','Disponible'),('reservado','Reservado'),('renta','Renta'),('vendido','Vendido'),('servicio','Servicio')],
-                             string="Estado",default='disponible',copy=False)
+    state = fields.Selection([('almacen','Almacén'),('disponible','Disponible'),('reservado','Reservado'),('renta','Renta'),('vendido','Vendido'),('servicio','Servicio')],
+                             string="Estado",default='almacen',copy=False)
     user_id = fields.Many2one('res.users', 'Responsable', default=lambda self: self.env.user, index=True)
 
     marca = fields.Char(string="Marca")
-    rent_price = fields.Float(string="Precio de Renta")
+    rent_price = fields.Float(string="Precio de Renta por Día")
     modelo = fields.Many2one('tools.category',string="Modelo")
     categoria = fields.Many2one('tools.categoria', string="Categoria")
     date_compra = fields.Date(string="Año de Compra")

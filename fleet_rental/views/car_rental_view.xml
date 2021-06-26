@@ -4,7 +4,7 @@
         <record id="sequence_car_rental" model="ir.sequence">
             <field name="name">Car Rental Sequence</field>
             <field name="code">car.rental.sequence</field>
-            <field name="prefix">RENT/%(range_year)s/</field>
+            <field name="prefix">RENTA/%(range_year)s/</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field eval="True" name="use_date_range"/>
@@ -50,9 +50,9 @@
                         <button name="action_confirm" string="Confirmar" type="object"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight"/>
                         <button name="draft" string="Cambiar a Borrador" type="object"
-                                attrs="{'invisible': ['|',('state', '==', 'draft'),('state', '==', 'cancel'),('state', '==', 'done')]}" class="oe_highlight"/>
+                                attrs="{'invisible': ['|','|',('state', '=', 'draft'),('state', '=', 'cancel'),('state', '=', 'done')]}" class="oe_highlight"/>
                         <button name="action_run" string="Rentado" type="object"
-                                attrs="{'invisible': [('state', '!=', 'reserved'),('state', '!=', 'service')]}" class="oe_highlight"/>
+                                attrs="{'invisible': ['|',('state', '!=', 'reserved'),('state', '!=', 'service')]}" class="oe_highlight"/>
                         <button name="service" string="Servicio" type="object"
                                 attrs="{'invisible': [('state', '!=', 'running')]}" class="oe_highlight"/>
                         <button name="action_cancel" string="Cancelar" type="object"
@@ -128,24 +128,18 @@
                             <page string="Accesorios/Aditamentos">
                                 <group>
                                     <group>
-                                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
-                                    </group>
-                                    <group>
                                         <field name="damage_cost" attrs="{'invisible': [('state','!=','checking')]}"/>
                                     </group>
                                 </group>
-                                <field name="checklist_line">
+                                <field name="tools_line">
                                     <tree string="Fleet Checklist Lines" editable="bottom">
                                         <field name="name" domain="[('car','=',parent.vehicle_id)]"/>
-                                        <field name="num_serie"/>
-                                        <field name="checklist_active" invisible="True"/>
-                                        <field name="checklist_number" invisible="True"/>
+                                        <field name="num_eco"/>
                                         <field name="price"/>
                                     </tree>
                                     <form>
                                         <sheet>
                                             <group>
-                                                <field name="name"/>
                                                 <field name="checklist_active" invisible="1"/>
                                                 <field name="checklist_number" invisible="1"/>
                                             </group>
