@@ -50,14 +50,18 @@ class CarRentalContract(models.Model):
                 else:
                     i.write({'rental_check_availability': True})
 
-    @api.depends('rent_concepts.subtotal')
+    @api.depends('rent_concepts.subtotal','tools_line.subtotal')
     def _obtener_totales(self):
-        total_concepts = 0.0
         for contract in self:
+            total_concepts = 0.0
+            total_tools = 0.0
             for line in contract.rent_concepts:
                 total_concepts = total_concepts + line.subtotal
+            for line in contract.tools_line:
+                total_tools = total_tools + line.subtotal
             contract.total_concepts = total_concepts
-            contract.grand_total = total_concepts + contract.total
+            contract.total_tools = total_tools
+            contract.grand_total = total_concepts + total_tools
 
 
     grand_total = fields.Float(string="Total",readonly=True, store=True)
@@ -92,6 +96,7 @@ class CarRentalContract(models.Model):
                                    default=lambda self: self.env['account.account'].search([('id', '=', 17)]))
     rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', readonly=False)
     total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True)
+    total_tools = fields.Float(string="Total (Accesorios/Aditamentos)", compute="_obtener_totales", store=True)
     first_payment = fields.Float(string='Anticipo',
                                  help="Transaction/Office/Contract charge amount, must paid by customer side other "
                                       "than recurrent payments",
@@ -108,7 +113,6 @@ class CarRentalContract(models.Model):
                                      states={'invoice': [('readonly', True)],
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
-    total = fields.Float(string="Total (Accesorios/Aditamentos)", readonly=True, copy=False, store=True)
     tools_missing_cost = fields.Float(string="Costo Perdido", readonly=True, copy=False,
                                       help='This is the total amount of missing tools/accessories')
     damage_cost = fields.Float(string="Costo de Daños", copy=False)
@@ -670,7 +674,7 @@ class RentConcepts(models.Model):
 
     name = fields.Many2one('product.product', string="Producto")
     description = fields.Char(string="Descripción")
-    price = fields.Float(string="Precio")
+    price = fields.Float(string="Precio de Renta por Día")
     qty = fields.Float(string="Cantidad", default=1)
     subtotal = fields.Float(string="Subtotal", compute="_get_subtotal", store=True)
     sale_order_id = fields.Many2one('car.rental.contract',string="Orden de Renta")
@@ -680,12 +684,24 @@ class RentConcepts(models.Model):
         if self.name:
             self.price = self.name.lst_price
 
+    @api.onchange('name')
+    def _get_descripcion(self):
+        for line in self:
+            line.description = line.name.description_sale
 
 class CarRentalChecklist(models.Model):
     _name = 'car.rental.tools'
+
+    @api.depends('qty', 'price')
+    def _get_subtotal(self):
+        for line in self:
+            line.subtotal = line.qty * line.price
 
     name = fields.Many2one('car.tools', string="Accesorio")
     accesorios = fields.Many2one('car.rental.contract',string="Accesorios")
     num_eco = fields.Char(string="Número Económico")
     price = fields.Float(string="Precio de Renta por Día")
+    qty = fields.Float(string="Cantidad", default=1)
+    subtotal = fields.Float(string="Subtotal", compute="_get_subtotal", store=True)
+
 
