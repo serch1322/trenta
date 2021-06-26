@@ -142,7 +142,7 @@
                                 </field>
                                 <div>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <field name="total"/>
+                                        <field name="total_tools"/>
                                         <field name="tools_missing_cost" invisible="True"/>
                                         <field name="damage_cost_sub" invisible="True"/>
                                         <field name="total_cost" class="oe_subtotal_footer_separator" invisible="True"/>
