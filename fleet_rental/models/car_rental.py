@@ -125,7 +125,7 @@ class CarRentalContract(models.Model):
     @api.onchange('vehicle_id')
     def modificar_accesorios(self):
         for record in self:
-            accesorios = self.env['car.tools'].search([('car', '=', record.vehicle_id)])
+            accesorios = self.env['car.tools'].search([('car', '=', record.vehicle_id.id)])
             for accesorio in accesorios:
                 lista_valores = []
                 valores ={}
