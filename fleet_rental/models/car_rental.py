@@ -127,14 +127,13 @@ class CarRentalContract(models.Model):
         for record in self:
             accesorios = self.env['car.tools'].search([('car', '=', record.vehicle_id.id)])
             lista_accesorios={}
+            lista_valores = []
             for accesorio in accesorios:
-                lista_valores = []
-                valores ={}
-                valores.update({
+                valores = {
                     'name': accesorio.name,
                     'num_eco': accesorio.num_serie,
                     'price': accesorio.rent_price
-                })
+                }
                 lista_valores.append((0,0,valores))
             lista_accesorios.update({
                 'tools_line': lista_valores,
