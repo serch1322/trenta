@@ -137,14 +137,6 @@
                                         <field name="num_eco"/>
                                         <field name="price"/>
                                     </tree>
-                                    <form>
-                                        <sheet>
-                                            <group>
-                                                <field name="checklist_active" invisible="1"/>
-                                                <field name="checklist_number" invisible="1"/>
-                                            </group>
-                                        </sheet>
-                                    </form>
                                 </field>
                                 <div>
                                     <group class="oe_subtotal_footer oe_right">
