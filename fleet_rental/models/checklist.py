@@ -5,5 +5,6 @@ from odoo import models, fields, api, _
 class CarRentalChecklist(models.Model):
     _name = 'car.rental.checklist'
 
+    name = fields.Char(string="Checklist")
     checklist_active = fields.Boolean(string="Disponible", default=True)
     checklist_number = fields.Many2one('car.rental.contract', string="Checklist Number")

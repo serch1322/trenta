@@ -26,7 +26,8 @@
                             <group>
                                 <field name="modelo" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="categoria" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
-                                <field name="car" attrs="{'invisible': [('state', '=', 'almacen')],'required': [('state', '!=', 'almacen')]}"/>
+                                <field name="car" attrs="{'invisible': [('state', '=', 'almacen')],
+                                'required': [('state', '!=', 'almacen')], 'readonly': [('state', '!=', 'disponible')]}"/>
                                 <field name="date_compra" attrs="{'invisible': [('tipo', '=', 'aditamento')]}"/>
                                 <field name="date_fabric" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="num_serie" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
