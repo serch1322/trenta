@@ -130,7 +130,7 @@ class CarRentalContract(models.Model):
             lista_valores = []
             for accesorio in accesorios:
                 valores = {
-                    'name': accesorio.name.id,
+                    'name': accesorio.id,
                     'num_eco': accesorio.num_serie,
                     'price': accesorio.rent_price
                 }
