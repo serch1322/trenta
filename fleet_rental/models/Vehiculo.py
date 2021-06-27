@@ -118,8 +118,8 @@ class EntidadMatricula(models.Model):
             record.tools_count = tools.search_count([('car', '=', record.id)])
             record.facturas_count = facturas.search_count([('vehiculo', '=', record.id),('move_id.state','=','posted'),('move_id.move_type','=','out_invoice')])
 
-    def depreciacion(self,vals):
-        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
+    def depreciacion(self):
+        vals = self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
         self.write({'state_id': state_id})
         self.ensure_one()
@@ -217,7 +217,7 @@ class EntidadMatricula(models.Model):
         contable_creado = activo.create(valores_contable)
         self.depreciacion_contable = contable_creado.id
         self.depreciado = True
-        return super(models.Model, self).create(vals)
+        self.num_eco = vals
 
 
 
