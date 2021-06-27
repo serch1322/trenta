@@ -54,7 +54,7 @@
                     <field name="num_eco"/>
                     <field name="name"/>
                     <field name="car"/>
-                    <field name="state"/>
+                    <field name="state" widget="badge"/>
                 </tree>
             </field>
         </record>
