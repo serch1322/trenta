@@ -34,7 +34,7 @@ class CarTools(models.Model):
 
     def unlink(self):
         if self.id == True:
-            raise UserError('No se puede eliminar ningun Accesorio o Aditamento registrado!'
+            raise UserError('No se puede eliminar ningun Accesorio o Aditamento registrado!')
         return super(CarTools, self).unlink()
 
 
