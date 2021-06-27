@@ -109,6 +109,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="attributes">
                     <attribute name="delete">false</attribute>
+                    <attribute name="create">false</attribute>
                 </xpath>
                 <field name="state_id" position="attributes">
                     <attribute name="string">Estado</attribute>
