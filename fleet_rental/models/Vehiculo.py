@@ -195,9 +195,8 @@ class EntidadMatricula(models.Model):
                 'method_number': 48,
                 'vehiculo': self.id,
             })
-        activo_creado = activo.create(valores_activo)
+        activo_creado = activo.create(valores_activo).validate()
         self.depreciacion_fiscal = activo_creado.id
-        self.depreciacion_fiscal.validate()
         valores_contable={}
         valores_contable.update({
             'name': '%s %s %s Contable' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
@@ -216,9 +215,8 @@ class EntidadMatricula(models.Model):
             'method_number': self.tiempo_de_depreciacion,
             'vehiculo': self.id,
         })
-        contable_creado = activo.create(valores_contable)
+        contable_creado = activo.create(valores_contable).validate()
         self.depreciacion_contable = contable_creado.id
-        self.depreciacion_contable.validate()
         self.depreciado = True
         self.num_eco = vals
 
