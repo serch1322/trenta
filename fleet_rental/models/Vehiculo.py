@@ -34,7 +34,7 @@ class EntidadMatricula(models.Model):
                                   ('petrol', 'Petrol')],
                                  'Fuel Type', help='Fuel Used by the vehicle')
     color = fields.Char(string='Color', default='#FFFFFF')
-    residual_value = fields.Monetary(related='depreciacion_contable.salvage_value',string="Valor residual")
+    residual_value = fields.Monetary(related='depreciacion_contable.book_value',string="Valor residual")
     _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
                         ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
 
@@ -138,7 +138,7 @@ class EntidadMatricula(models.Model):
                 'account_depreciation_id': self.categoria.amortizacion.id,
                 'account_depreciation_expense_id': self.categoria.gasto.id,
                 'journal_id': self.categoria.diario.id,
-                'state': 'draft',
+                'state': 'open',
                 'asset_type': 'purchase',
                 'method_number': 48,
                 'vehiculo': self.id,
@@ -155,7 +155,7 @@ class EntidadMatricula(models.Model):
                 'account_depreciation_id': self.categoria.amortizacion.id,
                 'account_depreciation_expense_id': self.categoria.gasto.id,
                 'journal_id': self.categoria.diario.id,
-                'state': 'draft',
+                'state': 'open',
                 'asset_type': 'purchase',
                 'method_number': 1,
                 'vehiculo': self.id,
@@ -172,7 +172,7 @@ class EntidadMatricula(models.Model):
                 'account_depreciation_id': self.categoria.amortizacion.id,
                 'account_depreciation_expense_id': self.categoria.gasto.id,
                 'journal_id': self.categoria.diario.id,
-                'state': 'draft',
+                'state': 'open',
                 'asset_type': 'purchase',
                 'method_number': 48,
                 'salvage_value': self.net_car_value - 175000,
@@ -190,13 +190,12 @@ class EntidadMatricula(models.Model):
                 'account_depreciation_id': self.categoria.amortizacion.id,
                 'account_depreciation_expense_id': self.categoria.gasto.id,
                 'journal_id': self.categoria.diario.id,
-                'state': 'draft',
+                'state': 'open',
                 'asset_type': 'purchase',
                 'method_number': 48,
                 'vehiculo': self.id,
             })
         activo_creado = activo.create(valores_activo)
-        activo_creado.validate()
         self.depreciacion_fiscal = activo_creado.id
         valores_contable={}
         valores_contable.update({
@@ -210,14 +209,13 @@ class EntidadMatricula(models.Model):
             'account_depreciation_id': self.model_id.amortizacion.id,
             'account_depreciation_expense_id': self.model_id.gasto.id,
             'journal_id': self.model_id.diario.id,
-            'state': 'draft',
+            'state': 'open',
             'salvage_value': self.net_car_value * .15,
             'asset_type': 'purchase',
             'method_number': self.tiempo_de_depreciacion,
             'vehiculo': self.id,
         })
         contable_creado = activo.create(valores_contable)
-        contable_creado.validate()
         self.depreciacion_contable = contable_creado.id
         self.depreciado = True
         self.num_eco = vals
