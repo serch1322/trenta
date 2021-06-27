@@ -94,7 +94,7 @@ class CarRentalContract(models.Model):
                                    default=lambda self: self.env['account.journal'].search([('id', '=', 1)]))
     account_type = fields.Many2one('account.account', 'Account',
                                    default=lambda self: self.env['account.account'].search([('id', '=', 17)]))
-    rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', readonly=False)
+    rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', states={'draft': [('readonly',False)] })
     total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True)
     total_tools = fields.Float(string="Total (Accesorios/Aditamentos)", compute="_obtener_totales", store=True)
     first_payment = fields.Float(string='Anticipo',
@@ -109,10 +109,8 @@ class CarRentalContract(models.Model):
                                      states={'invoice': [('readonly', True)],
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
-    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos", ondelete='cascade'
-                                     states={'invoice': [('readonly', True)],
-                                             'done': [('readonly', True)],
-                                             'cancel': [('readonly', True)]})
+    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos", ondelete='cascade',
+                                     states={'new': [('readonly',False)] })
     tools_missing_cost = fields.Float(string="Costo Perdido", readonly=True, copy=False,
                                       help='This is the total amount of missing tools/accessories')
     damage_cost = fields.Float(string="Costo de Daños", copy=False)
