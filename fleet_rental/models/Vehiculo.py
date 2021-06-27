@@ -123,7 +123,7 @@ class EntidadMatricula(models.Model):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
         self.write({'state_id': state_id})
         self.ensure_one()
-        activo = self.env['account.asset']
+        activo = self.env['account.asset'].ref("account_asset.view_account_asset_form")
         valores_activo = {}
         if self.tipo == 'carga':
             valores_activo.update({
@@ -221,7 +221,7 @@ class EntidadMatricula(models.Model):
 
 
 
-class EntidadMatricula(models.Model):
+class DepreciacionModelos(models.Model):
     _inherit = ['fleet.vehicle.model']
 
     activo = fields.Many2one('account.account', string="Cuenta de Activo", required=True)
