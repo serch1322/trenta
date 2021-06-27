@@ -36,6 +36,7 @@ class RentContract(models.Model):
     def unlink(self):
         if self.state == 'corriendo' or self.state == 'terminado':
             raise UserError('No se puede eliminar ningun seguro corriendo o terminado!')
+        return super(RentContract, self).unlink()
 
     def accion_aprobado(self):
         self.state = 'corriendo'

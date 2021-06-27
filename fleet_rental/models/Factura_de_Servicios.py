@@ -17,6 +17,7 @@ class ServicioaFactura(models.Model):
     def unlink(self):
         if self.state == 'proceso' or self.state == 'facturado':
             raise UserError('No se puede eliminar ningun servicio facturado!')
+        return super(ServicioaFactura, self).unlink()
 
 
     def crear_factura_servicio(self):

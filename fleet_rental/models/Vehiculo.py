@@ -44,6 +44,7 @@ class EntidadMatricula(models.Model):
     def unlink(self):
         if self.id == True:
             raise UserError('No se puede eliminar ningun Vehículo registrado!')
+        return super(EntidadMatricula, self).unlink()
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
