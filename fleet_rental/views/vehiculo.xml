@@ -6,6 +6,10 @@
             <field name="model">fleet.vehicle</field>
             <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="delete">false</attribute>
+                    <attribute name="create">false</attribute>
+                </xpath>
                 <xpath expr="//button[@name='return_action_to_open']" position="after">
                     <button name="return_actions_to_open"
                             type="object"
@@ -95,6 +99,23 @@
                 <xpath expr="//t[@t-name='kanban-box']//field[@name='license_plate']" position="before">
                     <field name="num_eco"/>
                 </xpath>
+            </field>
+        </record>
+
+        <record id="tree_vehiculo" model="ir.ui.view">
+            <field name="name">tree_vehiculo</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="delete">false</attribute>
+                </xpath>
+                <field name="state_id" position="attributes">
+                    <attribute name="string">Estado</attribute>
+                </field>
+                <field name="license_plate" position="before">
+                    <field name="num_eco"/>
+                </field>
             </field>
         </record>
 

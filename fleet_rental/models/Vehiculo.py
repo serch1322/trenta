@@ -37,17 +37,6 @@ class EntidadMatricula(models.Model):
     _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
                         ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
 
-    @api.model
-    def create(self,vals):
-        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
-        return super(models.Model,self).create(vals)
-
-
-    def unlink(self):
-        if self.id == True:
-            raise UserError('No se puede eliminar ningun Vehículo registrado!')
-        return models.Model.unlink(self)
-
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
         self.ensure_one()
@@ -129,7 +118,7 @@ class EntidadMatricula(models.Model):
             record.tools_count = tools.search_count([('car', '=', record.id)])
             record.facturas_count = facturas.search_count([('vehiculo', '=', record.id),('move_id.state','=','posted'),('move_id.move_type','=','out_invoice')])
 
-    def depreciacion(self):
+    def depreciacion(self,vals):
         state_id = self.env.ref('fleet_rental.vehicle_state_active').id
         self.write({'state_id': state_id})
         self.ensure_one()
@@ -227,6 +216,8 @@ class EntidadMatricula(models.Model):
         contable_creado = activo.create(valores_contable)
         self.depreciacion_contable = contable_creado.id
         self.depreciado = True
+        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
+        return super(models.Model, self).create(vals)
 
 
 class EntidadMatricula(models.Model):
