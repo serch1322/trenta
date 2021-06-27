@@ -34,7 +34,7 @@ class EntidadMatricula(models.Model):
                                   ('petrol', 'Petrol')],
                                  'Fuel Type', help='Fuel Used by the vehicle')
     color = fields.Char(string='Color', default='#FFFFFF')
-    residual_value = fields.Monetary(related='depreciacion_contable.salvage_value',string="Valor residual",store=True)
+    residual_value = fields.Monetary(related='depreciacion_contable.salvage_value',string="Valor residual")
     _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
                         ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
 
@@ -195,7 +195,8 @@ class EntidadMatricula(models.Model):
                 'method_number': 48,
                 'vehiculo': self.id,
             })
-        activo_creado = activo.create(valores_activo).validate()
+        activo_creado = activo.create(valores_activo)
+        activo_creado.validate()
         self.depreciacion_fiscal = activo_creado.id
         valores_contable={}
         valores_contable.update({
@@ -215,7 +216,8 @@ class EntidadMatricula(models.Model):
             'method_number': self.tiempo_de_depreciacion,
             'vehiculo': self.id,
         })
-        contable_creado = activo.create(valores_contable).validate()
+        contable_creado = activo.create(valores_contable)
+        contable_creado.validate()
         self.depreciacion_contable = contable_creado.id
         self.depreciado = True
         self.num_eco = vals
