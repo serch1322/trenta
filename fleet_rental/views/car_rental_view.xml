@@ -179,15 +179,14 @@
         </record>
 
         <record id="action_car_rental_contract" model="ir.actions.act_window">
-            <field name="name">Rental Contract</field>
+            <field name="name">Contratos de Renta</field>
             <field name="res_model">car.rental.contract</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Fleet Rental" id="fleet.menu_root" sequence="115" groups="fleet.fleet_group_user"
-                  web_icon="fleet,static/description/icon.png"/>
-        <menuitem id="menu_car_parent" sequence="1" name="Rental Management" parent="fleet.menu_root"/>
-        <menuitem id="menu_car_rental_contract" parent="menu_car_parent" name="Rental Contract"
+        <menuitem name="Fleet Rental" id="fleet.menu_root" sequence="115" groups="fleet.fleet_group_user"/>
+        <menuitem id="menu_car_parent" sequence="1" name="Gestion de Rentas" parent="fleet.menu_root"/>
+        <menuitem id="menu_car_rental_contract" parent="menu_car_parent" name="Contratos de Renta"
                   action="action_car_rental_contract" sequence="1"/>
     </data>
 </odoo>
