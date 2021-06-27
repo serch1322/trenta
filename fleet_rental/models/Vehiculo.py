@@ -39,13 +39,14 @@ class EntidadMatricula(models.Model):
 
     @api.model
     def create(self,vals):
-        vals['num_eco']=self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
-        return super(EntidadMatricula, self).create(vals)
+        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
+        return super(FleetVehicle, self).create(vals)
+
 
     def unlink(self):
         if self.id == True:
             raise UserError('No se puede eliminar ningun Vehículo registrado!')
-        return super(EntidadMatricula, self).unlink()
+        return super(FleetVehicle, self).unlink()
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
@@ -226,6 +227,7 @@ class EntidadMatricula(models.Model):
         contable_creado = activo.create(valores_contable)
         self.depreciacion_contable = contable_creado.id
         self.depreciado = True
+
 
 class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle.model']
