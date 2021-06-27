@@ -129,6 +129,7 @@ class CarRentalContract(models.Model):
     @api.onchange('vehicle_id')
     def modificar_accesorios(self):
         for record in self:
+            record.write({'tools_line':[(5,0,0)]})
             accesorios = self.env['car.tools'].search([('car', '=', record.vehicle_id.id)])
             lista_accesorios={}
             lista_valores = []
