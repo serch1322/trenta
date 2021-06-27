@@ -74,9 +74,7 @@
                     <field name="entidad" string="Entidad de Placas" required="1"/>
                     <field name="tiempo_de_depreciacion"/> <field name="periodo_de_depreciacion" nolabel="1"/>
                     <field name="depreciacion_contable" readonly="1" force_save="1"/>
-                    <span style="color:red;" attrs="{'invisible': [('depreciacion_contable', '==', True)]}">No Contabilizado</span>
                     <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
-                    <span style="color:red;" attrs="{'invisible': [('depreciacion_fiscal', '==', True)]}">No Contabilizado</span>
                     <field name="depreciado" invisible="1"/>
                 </field>
                 <field name="transmission" position="before">
