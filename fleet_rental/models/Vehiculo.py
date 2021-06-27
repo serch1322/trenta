@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-
+from odoo.exceptions import UserError
 from datetime import date
 
 
@@ -26,11 +26,24 @@ class EntidadMatricula(models.Model):
     depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal")
     car_value = fields.Float(string="Valor de la Compra (IVA incluido)")
     depreciado = fields.Boolean(string="¿Depreciado?",default=False,copy=False)
+    fuel_type = fields.Selection([('gasoline', 'Gasoline'),
+                                  ('diesel', 'Diesel'),
+                                  ('electric', 'Electric'),
+                                  ('hybrid', 'Hybrid'),
+                                  ('petrol', 'Petrol')],
+                                 'Fuel Type', help='Fuel Used by the vehicle')
+    color = fields.Char(string='Color', default='#FFFFFF')
+    _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
+                        ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
 
     @api.model
     def create(self,vals):
         vals['num_eco']=self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
         return super(EntidadMatricula, self).create(vals)
+
+    def unlink(self):
+        if self.id == True:
+            raise UserError('No se puede eliminar ningun Vehículo registrado!')
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """

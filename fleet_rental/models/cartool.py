@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class CarTools(models.Model):
     _name = 'car.tools'
@@ -24,12 +25,16 @@ class CarTools(models.Model):
     descripcion = fields.Char(string="Descripcion")
     tipo = fields.Selection([('aditamento', 'Aditamento'), ('accesorio', 'Accesorio')],
                             string="Tipo", copy=False, required=True)
-    car = fields.Many2one('fleet.vehicle', string="Vehículo Asociado", ondelete="cascade")
+    car = fields.Many2one('fleet.vehicle', string="Vehículo Asociado")
 
     @api.model
     def create(self, vals):
         vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.aditamentos')
         return super(CarTools, self).create(vals)
+
+    def unlink(self):
+        if self.id == True:
+            raise UserError('No se puede eliminar ningun Accesorio o Aditamento registrado!')
 
 
     def vendido(self):

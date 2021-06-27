@@ -33,6 +33,10 @@ class RentContract(models.Model):
         default="nuevo", copy=False)
     lineas_ids = fields.One2many('line.car.insurance','asegurado',readonly=False)
 
+    def unlink(self):
+        if self.state == 'corriendo' or self.state == 'terminado':
+            raise UserError('No se puede eliminar ningun seguro corriendo o terminado!')
+
     def accion_aprobado(self):
         self.state = 'corriendo'
         self.ensure_one()

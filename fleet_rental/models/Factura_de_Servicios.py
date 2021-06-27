@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class ServicioaFactura(models.Model):
     _inherit = ['fleet.vehicle.log.services']
@@ -12,6 +13,11 @@ class ServicioaFactura(models.Model):
 
     def validar(self):
         self.state = 'proceso'
+
+    def unlink(self):
+        if self.state == 'proceso' or self.state == 'facturado':
+            raise UserError('No se puede eliminar ningun servicio facturado!')
+
 
     def crear_factura_servicio(self):
         if self.paga_cliente == True:

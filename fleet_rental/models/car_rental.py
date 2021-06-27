@@ -104,12 +104,12 @@ class CarRentalContract(models.Model):
                                  required=True)
     first_payment_inv = fields.Many2one('account.move', copy=False)
     first_invoice_created = fields.Boolean(string="First Invoice Created", invisible=True, copy=False)
-    checklist_line = fields.One2many('car.rental.checklist', 'checklist_number', string="Checklist",
+    checklist_line = fields.One2many('car.rental.checklist', 'checklist_number', string="Checklist", ondelete='cascade',
                                      help="Facilities/Accessories, That should verify when closing the contract.",
                                      states={'invoice': [('readonly', True)],
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
-    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos",
+    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos", ondelete='cascade'
                                      states={'invoice': [('readonly', True)],
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
@@ -673,7 +673,7 @@ class RentConcepts(models.Model):
         for line in self:
             line.subtotal = line.qty * line.price
 
-    name = fields.Many2one('product.product', string="Producto")
+    name = fields.Many2one('product.product', string="Producto", domain="[('sale_ok', '=', True)]")
     description = fields.Char(string="Descripción")
     price = fields.Float(string="Precio de Renta por Día")
     qty = fields.Float(string="Cantidad", default=1)
