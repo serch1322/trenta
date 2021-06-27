@@ -5,7 +5,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 
 
-class RentContract(models.Model):
+class Seguros(models.Model):
     _name = 'car.insurance'
     _description = 'Seguros'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -36,7 +36,7 @@ class RentContract(models.Model):
     def unlink(self):
         if self.state == 'corriendo' or self.state == 'terminado':
             raise UserError('No se puede eliminar ningun seguro corriendo o terminado!')
-        return super(RentContract, self).unlink()
+        return super(Seguros, self).unlink()
 
     def accion_aprobado(self):
         self.state = 'corriendo'

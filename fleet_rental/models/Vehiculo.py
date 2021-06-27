@@ -40,13 +40,13 @@ class EntidadMatricula(models.Model):
     @api.model
     def create(self,vals):
         vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
-        return super(FleetVehicle, self).create(vals)
+        return super(models.Model,self).create(vals)
 
 
     def unlink(self):
         if self.id == True:
             raise UserError('No se puede eliminar ningun Vehículo registrado!')
-        return super(FleetVehicle, self).unlink()
+        return models.Model.unlink(self)
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """

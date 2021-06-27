@@ -27,10 +27,6 @@ class CarTools(models.Model):
                             string="Tipo", copy=False, required=True)
     car = fields.Many2one('fleet.vehicle', string="Vehículo Asociado")
 
-    @api.model
-    def create(self, vals):
-        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.aditamentos')
-        return super(CarTools, self).create(vals)
 
     def unlink(self):
         if self.id == True:
@@ -43,6 +39,8 @@ class CarTools(models.Model):
 
     def cambiar_disponible(self):
         self.state = 'disponible'
+        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.aditamentos')
+        return super(CarTools, self).create(vals)
 
 
     def _get_responsible_for_approval(self):
