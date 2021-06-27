@@ -8,6 +8,7 @@ class CarTools(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Nombre" , required=True)
+    num_eco = fields.Char(string="Número Económico")
     num_serie = fields.Char(string="Número de Serie")
     costo = fields.Float(string="Costo")
     state = fields.Selection([('almacen','Almacén'),('disponible','Disponible'),('reservado','Reservado'),('renta','Renta'),('vendido','Vendido'),('servicio','Servicio')],
@@ -24,6 +25,11 @@ class CarTools(models.Model):
     tipo = fields.Selection([('aditamento', 'Aditamento'), ('accesorio', 'Accesorio')],
                             string="Tipo", copy=False, required=True)
     car = fields.Many2one('fleet.vehicle', string="Vehículo Asociado", ondelete="cascade")
+
+    @api.model
+    def create(self, vals):
+        vals['num_eco'] = self.env['ir.sequence'].next_by_code('secuencia.aditamentos')
+        return super(CarTools, self).create(vals)
 
 
     def vendido(self):

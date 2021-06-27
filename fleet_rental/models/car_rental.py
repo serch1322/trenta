@@ -546,7 +546,7 @@ class CarRentalContract(models.Model):
         else:
             raise Warning('Sorry This vehicle is already booked by another customer')
         self.state = "reserved"
-        sequence_code = 'car.rental.sequence'
+        sequence_code = 'secuencia.renta.de.carro'
         order_date = self.create_date
         order_date = str(order_date)[0:10]
         self.name = self.env['ir.sequence'] \

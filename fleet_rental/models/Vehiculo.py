@@ -8,6 +8,7 @@ from datetime import date
 class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle']
 
+    num_eco = fields.Char(string="Número Económico")
     entidad = fields.Many2one('res.country.state', string="Entidad de Matricula")
     serie_motor = fields.Char(string="Numero de Serie Motor")
     numero_cilindros = fields.Float(string="Numero de Cilindros")
@@ -25,6 +26,11 @@ class EntidadMatricula(models.Model):
     depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal")
     car_value = fields.Float(string="Valor de la Compra (IVA incluido)")
     depreciado = fields.Boolean(string="¿Depreciado?",default=False,copy=False)
+
+    @api.model
+    def create(self,vals):
+        vals['num_eco']=self.env['ir.sequence'].next_by_code('secuencia.vehiculos')
+        return super(EntidadMatricula, self).create(vals)
 
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """

@@ -17,6 +17,7 @@
                         <group>
                             <group>
                                 <field name="name"/>
+                                <field name="num_eco"/>
                                 <field name="user_id"/>
                                 <field name="marca" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="costo"/>
