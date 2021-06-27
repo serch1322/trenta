@@ -93,7 +93,7 @@
                 <xpath expr="//kanban" position="attributes">
                     <attribute name="records_draggable">false</attribute>
                 </xpath>
-                <xpath expr="//t[@name='kanban-box']//field[@name='license_plate']" position="before">
+                <xpath expr="//t[@t-name='kanban-box']//field[@name='license_plate']" position="before">
                     <field name="num_eco"/>
                 </xpath>
             </field>
