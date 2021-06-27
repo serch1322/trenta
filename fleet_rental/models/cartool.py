@@ -8,8 +8,8 @@ class CarTools(models.Model):
     _description = 'Accesorios/Aditamentos'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string="Nombre" , required=True)
-    num_eco = fields.Char(string="Número Económico", copy=False, readonly=True, index=True)
+    name = fields.Char(string="Nombre", required=True)
+    num_eco = fields.Char(string="Número Económico", copy=False, index=True)
     num_serie = fields.Char(string="Número de Serie")
     costo = fields.Float(string="Costo")
     state = fields.Selection([('almacen','Almacén'),('disponible','Disponible'),('reservado','Reservado'),('renta','Renta'),('vendido','Vendido'),('servicio','Servicio')],
