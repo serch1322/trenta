@@ -132,7 +132,7 @@ class CarRentalContract(models.Model):
         today = date.today()
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         valores_fact = {}
-        dias_a_facturar = int(self.rent_end_date - self.rent_start_date)
+        dias_a_facturar = self.rent_end_date - self.rent_start_date
         valores_fact.update({
             'partner_id': record.customer_id.id,
             'invoice_date': today,
@@ -157,7 +157,7 @@ class CarRentalContract(models.Model):
                 lineas_accesorios = {
                     'product_id': accesorio,
                     'name': linea.name.name,
-                    'quantity': dias_a_facturar,
+                    'quantity': '%s'%(dias_a_facturar),
                     'price_unit': linea.price,
                     'tax_ids': accesorio.taxes_id,
                     'aditamento': linea.name.id,
@@ -332,10 +332,12 @@ class CarRentalContract(models.Model):
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
+            start_date = datetime.strptime(str(record.rent_start_date), '%Y-%m-%d').date()
+            end_date = datetime.strptime(str(record.rent_end_date), '%Y-%m-%d').date()
             if record.state == 'running':
                 if record.cost_frequency == 'no':
                     if record.rent_end_date == today:
-                        dias_a_facturar = int(record.rent_end_date - record.rent_start_date)
+                        dias_a_facturar = end_date - start_date
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
@@ -349,7 +351,7 @@ class CarRentalContract(models.Model):
                                 lineas_conceptos = {
                                     'product_id': linea.name,
                                     'name': linea.description,
-                                    'quantity': dias_a_facturar,
+                                    'quantity': '%s'%(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': linea.name.taxes_id,
                                     'vehiculo': record.vehicle_id.id,
@@ -360,7 +362,7 @@ class CarRentalContract(models.Model):
                                 lineas_accesorios = {
                                     'product_id': accesorio,
                                     'name': linea.name.name,
-                                    'quantity': dias_a_facturar,
+                                    'quantity': '%s'%(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': accesorio.taxes_id,
                                     'aditamento': linea.name.id,
