@@ -25,7 +25,6 @@
                                 <field name="amortizacion"/>
                                 <field name="gasto"/>
                                 <field name="diario"/>
-
                             </group>
                         </group>
                     </sheet>
