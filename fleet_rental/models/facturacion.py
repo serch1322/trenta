@@ -5,7 +5,7 @@ from odoo import models, fields, api, _
 class FacturacionporRenta(models.Model):
     _inherit = ['account.move']
 
-    renta = fields.Many2one('car.rental.contract,',string="Renta de Vehiculo", store=True, copy=False)
+    renta = fields.Many2one('car.rental.contract',string="Renta de Vehiculo", store=True, copy=False)
 
 class FacturacionporVehiculo(models.Model):
     _inherit = ['account.move.line']
