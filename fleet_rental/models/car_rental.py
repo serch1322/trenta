@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import datetime
+from datetime import datetime, date, timedelta
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import calendar
@@ -58,7 +58,7 @@ class CarRentalContract(models.Model):
                                 related='vehicle_id.model_id.brand_id', store=True, readonly=True)
     car_color = fields.Char(string="Color Vehiculo", size=50, related='vehicle_id.color', store=True, copy=False,
                             default='#FFFFFF', readonly=True)
-    rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=datetime.datetime.today(),
+    rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=str(date.today()),
                                   help="Start date of contract", track_visibility='onchange', readonly=True, states={'draft': [('readonly', False)]})
     rent_end_date = fields.Date(string="Fecha Fin de Renta", help="End date of contract",
                                 track_visibility='onchange')
@@ -129,15 +129,15 @@ class CarRentalContract(models.Model):
     def crear_factura(self):
         self.ensure_one()
         inv_obj = self.env['account.move']
-        today = datetime.datetime.today()
+        today = date.today()
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self:
             if not record.siguiente_fecha_de_factura:
                 start_date = record.rent_start_date
                 start_date_day = start_date.day
-                next_month = datetime.datetime(start_date.year, start_date.month + 1, 1)
-                end_date_month = datetime.datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
+                next_month = datetime(start_date.year, start_date.month + 1, 1)
+                end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
                 end_date_day = end_date_month.day
                 if record.state == 'running':
                     if record.cost_frequency == 'monthly':
@@ -181,8 +181,8 @@ class CarRentalContract(models.Model):
             else:
                 start_date = record.siguiente_fecha_de_factura
                 start_date_day = start_date.day
-                next_month = datetime.datetime(start_date.year, start_date.month + 1, 1)
-                end_date_month = datetime.datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
+                next_month = datetime(start_date.year, start_date.month + 1, 1)
+                end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
                 end_date_day = end_date_month.day
                 if record.state == 'running':
                     if record.cost_frequency == 'monthly':
@@ -386,15 +386,15 @@ class CarRentalContract(models.Model):
     @api.model
     def fleet_scheduler(self):
         inv_obj = self.env['account.move']
-        today = datetime.datetime.today()
+        today = date.today()
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
             if not record.siguiente_fecha_de_factura:
                 start_date = record.rent_start_date
                 start_date_day = start_date.day
-                next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
-                end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
+                next_month = datetime(start_date.year, start_date.month+1, 1)
+                end_date_month = datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
                 end_date_day = end_date_month.day
                 if record.state == 'running':
                     if record.cost_frequency == 'monthly':
@@ -438,8 +438,8 @@ class CarRentalContract(models.Model):
             else:
                 start_date = record.siguiente_fecha_de_factura
                 start_date_day = start_date.day
-                next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
-                end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
+                next_month = datetime(start_date.year, start_date.month+1, 1)
+                end_date_month = datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
                 end_date_day = end_date_month.day
                 if record.state == 'running':
                     if record.cost_frequency == 'monthly':
