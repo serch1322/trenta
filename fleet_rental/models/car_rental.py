@@ -89,7 +89,7 @@ class CarRentalContract(models.Model):
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
     tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos", ondelete='cascade',
-                                     states={'new': [('readonly',False)] })
+                                     states={'draft': [('readonly',False)] })
     tools_missing_cost = fields.Float(string="Costo Perdido", readonly=True, copy=False,
                                       help='This is the total amount of missing tools/accessories')
     damage_cost = fields.Float(string="Costo de Daños", copy=False)
@@ -261,20 +261,6 @@ class CarRentalContract(models.Model):
         elif self.state == "service":
             state_id = self.env.ref('fleet_rental.vehicle_state_inshop').id
             self.vehicle_id.write({'state_id': state_id})
-
-    @api.constrains('checklist_line', 'damage_cost')
-    def total_updater(self):
-        total = 0.0
-        tools_missing_cost = 0.0
-        for records in self.checklist_line:
-            total += records.price
-            if not records.checklist_active:
-                tools_missing_cost += records.price
-        self.total = total
-        self.tools_missing_cost = tools_missing_cost
-        self.damage_cost_sub = self.damage_cost
-        self.total_cost = tools_missing_cost + self.damage_cost
-        self.grand_total = self.total_concepts + total
 
     def fleet_scheduler1(self, rent_date):
         inv_obj = self.env['account.move']
