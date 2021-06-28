@@ -33,7 +33,7 @@ class CarTools(models.Model):
                                             context="{'form_view_ref':'account_asset.view_account_asset_form'}")
     depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal",
                                           context="{'form_view_ref':'account_asset.view_account_asset_form'}")
-    residual_value = fields.Float(related='depreciacion_contable.book_value',string="Valor residual")
+    residual_value = fields.Monetary(related='depreciacion_contable.book_value',string="Valor residual")
 
 
     def unlink(self):

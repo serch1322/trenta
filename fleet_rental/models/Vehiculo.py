@@ -34,7 +34,7 @@ class EntidadMatricula(models.Model):
                                   ('petrol', 'Petrol')],
                                  'Fuel Type', help='Fuel Used by the vehicle')
     color = fields.Char(string='Color', default='#FFFFFF')
-    residual_value = fields.Float(related='depreciacion_contable.book_value',string="Valor residual")
+        residual_value = fields.Monetary(related='depreciacion_contable.book_value',string="Valor residual")
     _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
                         ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
 
