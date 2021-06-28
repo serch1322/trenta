@@ -96,7 +96,7 @@ class CarRentalContract(models.Model):
     damage_cost = fields.Float(string="Costo de Daños", copy=False)
     damage_cost_sub = fields.Float(string="Costo de Daños", readonly=True, copy=False)
     total_cost = fields.Float(string="Total", readonly=True, copy=False)
-    invoice_count = fields.Integer(compute='_invoice_count', string='# Invoice', copy=False)
+    invoice_count = fields.Integer(compute='_invoice_count', string='# Factura', copy=False)
     check_verify = fields.Boolean(compute='check_action_verify', copy=False)
     sales_person = fields.Many2one('res.users', string='Encargado de Ventas', default=lambda self: self.env.uid,
                                    track_visibility='always')
@@ -311,7 +311,7 @@ class CarRentalContract(models.Model):
             raise UserError("Some Invoices are pending")
 
     def _invoice_count(self):
-        invoice_ids = self.env['account.move'].search([('invoice_origin', '=', self.name)])
+        invoice_ids = self.env['account.move'].search([('renta', '=', self.id)])
         self.invoice_count = len(invoice_ids)
 
     @api.constrains('state')

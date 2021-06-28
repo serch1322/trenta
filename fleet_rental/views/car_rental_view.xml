@@ -58,7 +58,7 @@
                     <sheet>
                         <div class="oe_button_box" name="buttons">
                             <button name='action_view_invoice' class="oe_stat_button" type="object" icon="fa-money">
-                                <field string="Invoice" name="invoice_count" widget="statinfo" />
+                                <field string="Facturas" name="invoice_count" widget="statinfo" />
                             </button>
                         </div>
                         <field name="image" widget='image' class="oe_avatar"/>
