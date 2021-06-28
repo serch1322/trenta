@@ -332,12 +332,12 @@ class CarRentalContract(models.Model):
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
-            start_date = datetime.strptime(str(record.rent_start_date), '%Y-%m-%d').date()
-            end_date = datetime.strptime(str(record.rent_end_date), '%Y-%m-%d').date()
+            start_date = fields.Date.from_string(self.rent_start_date)
+            end_date = fields.Date.from_string(self.rent_end_date)
             if record.state == 'running':
                 if record.cost_frequency == 'no':
                     if record.rent_end_date == today:
-                        dias_a_facturar = datetime.strptime(end_date - start_date,"%Y-%m-%d")
+                        dias_a_facturar = end_date - start_date
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
