@@ -95,7 +95,7 @@ class CarTools(models.Model):
             self.depreciacion_contable = contable_creado.id
             self.num_eco = vals
         else:
-            self.num_eco = vals
+            None
 
 
     def _get_responsible_for_approval(self):
