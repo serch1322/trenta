@@ -336,7 +336,7 @@ class CarRentalContract(models.Model):
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
-                            'type': 'out_invoice',
+                            'move_type': 'out_invoice',
                             'renta': record.id,
                             'journal_id': 1,
                         })
