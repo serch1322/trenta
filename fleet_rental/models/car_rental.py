@@ -237,8 +237,11 @@ class CarRentalContract(models.Model):
 
     @api.constrains('rent_start_date', 'rent_end_date')
     def validate_dates(self):
-        if self.rent_end_date < self.rent_start_date:
-            raise Warning("Seleccionar Fecha Final Valida.")
+        if self.cost_frequency == 'no':
+            if self.rent_end_date < self.rent_start_date:
+                raise Warning("Seleccionar Fecha Final Valida.")
+        else:
+            None
 
     def set_to_done(self):
         invoice_ids = self.env['account.move'].search([('invoice_origin', '=', self.name)])
