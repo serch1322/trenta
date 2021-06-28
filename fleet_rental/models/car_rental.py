@@ -332,8 +332,8 @@ class CarRentalContract(models.Model):
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
-            start_date = datetime.strptime(str(record.rent_start_date), '%Y-%m-%d').date()
-            end_date = datetime.strptime(str(record.rent_end_date), '%Y-%m-%d').date()
+            start_date = date.strptime(str(record.rent_start_date), '%Y-%m-%d').date()
+            end_date = date.strptime(str(record.rent_end_date), '%Y-%m-%d').date()
             if record.state == 'running':
                 if record.cost_frequency == 'no':
                     if record.rent_end_date == today:
