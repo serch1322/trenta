@@ -145,7 +145,7 @@ class CarRentalContract(models.Model):
                         'partner_id': self.customer_id.id,
                         'invoice_date': today,
                         'move_type': 'out_invoice',
-                        'renta': self.name.id,
+                        'renta': self.id,
                         'journal_id': 1,
                     })
                     lista_factu = []
@@ -190,7 +190,7 @@ class CarRentalContract(models.Model):
                         'partner_id': self.customer_id.id,
                         'invoice_date': today,
                         'move_type': 'out_invoice',
-                        'renta': self.name.id,
+                        'renta': self.id,
                         'journal_id': 1,
                     })
                     lista_factu = []
@@ -402,7 +402,7 @@ class CarRentalContract(models.Model):
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
                             'move_type': 'out_invoice',
-                            'renta': record.name.id,
+                            'renta': record.id,
                             'journal_id': 1,
                         })
                         lista_factu = []
@@ -447,7 +447,7 @@ class CarRentalContract(models.Model):
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
                             'move_type': 'out_invoice',
-                            'renta': record.name.id,
+                            'renta': record.id,
                             'journal_id': 1,
                         })
                         lista_factu = []
