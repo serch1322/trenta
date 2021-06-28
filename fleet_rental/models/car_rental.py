@@ -58,7 +58,7 @@ class CarRentalContract(models.Model):
                                 related='vehicle_id.model_id.brand_id', store=True, readonly=True)
     car_color = fields.Char(string="Color Vehiculo", size=50, related='vehicle_id.color', store=True, copy=False,
                             default='#FFFFFF', readonly=True)
-    rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=str(date.today()),
+    rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=datetime.datetime.today(),
                                   help="Start date of contract", track_visibility='onchange', readonly=True, states={'draft': [('readonly', False)]})
     rent_end_date = fields.Date(string="Fecha Fin de Renta", help="End date of contract",
                                 track_visibility='onchange')
@@ -129,7 +129,7 @@ class CarRentalContract(models.Model):
     def crear_factura(self):
         self.ensure_one()
         inv_obj = self.env['account.move']
-        today = date.today()
+        today = datetime.datetime.today()
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self:
@@ -386,7 +386,7 @@ class CarRentalContract(models.Model):
     @api.model
     def fleet_scheduler(self):
         inv_obj = self.env['account.move']
-        today = date.today()
+        today = datetime.datetime.today()
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
