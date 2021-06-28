@@ -145,7 +145,7 @@ class CarRentalContract(models.Model):
                         'partner_id': self.customer_id.id,
                         'invoice_date': today,
                         'move_type': 'out_invoice',
-                        'renta': self.id,
+                        'renta': self.name,
                         'journal_id': 1,
                     })
                     lista_factu = []
@@ -157,7 +157,7 @@ class CarRentalContract(models.Model):
                                 'quantity': '%s' % (dias_a_facturar),
                                 'price_unit': linea.price,
                                 'tax_ids': linea.name.taxes_id,
-                                'vehiculo': record.vehicle_id.id,
+                                'vehiculo': self.vehicle_id.id,
                             }
                             lista_factu.append((0, 0, lineas_conceptos))
                     if self.tools_line:
@@ -187,10 +187,10 @@ class CarRentalContract(models.Model):
                 if self.cost_frequency == 'monthly':
                     dias_a_facturar = end_date_day - start_date_day + 1
                     valores_fact.update({
-                        'partner_id': record.customer_id.id,
+                        'partner_id': self.customer_id.id,
                         'invoice_date': today,
                         'move_type': 'out_invoice',
-                        'renta': self.id,
+                        'renta': self.name,
                         'journal_id': 1,
                     })
                     lista_factu = []
@@ -202,7 +202,7 @@ class CarRentalContract(models.Model):
                                 'quantity': '%s' % (dias_a_facturar),
                                 'price_unit': linea.price,
                                 'tax_ids': linea.name.taxes_id,
-                                'vehiculo': record.vehicle_id.id,
+                                'vehiculo': self.vehicle_id.id,
                             }
                             lista_factu.append((0, 0, lineas_conceptos))
                     if self.tools_line:
