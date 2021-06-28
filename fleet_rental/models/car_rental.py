@@ -315,44 +315,45 @@ class CarRentalContract(models.Model):
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
-            if record.cost_frequency == 'no':
-                if record.rent_end_date == today:
-                    dias_a_facturar = record.rent_end_date - record.rent_start_date
-                    valores_fact.update({
-                        'partner_id': record.customer_id.id,
-                        'invoice_date': today,
-                        'type': 'out_invoice',
-                        'renta': record.id,
-                        'journal_id': 1,
-                    })
-                    lista_factu = []
-                    if record.rent_concepts:
-                        for linea in record.rent_concepts:
-                            lineas_conceptos = {
-                                'product_id': linea.name,
-                                'name': linea.description,
-                                'quantity': dias_a_facturar,
-                                'price_unit': linea.price,
-                                'tax_ids': linea.name.taxes_id,
-                                'vehiculo': record.vehicle_id.id,
-                            }
-                            lista_factu.append((0,0,lineas_conceptos))
-                    if record.tools_line:
-                        for linea in record.tools_line:
-                            lineas_accesorios = {
-                                'product_id': accesorio,
-                                'name': linea.name.name,
-                                'quantity': dias_a_facturar,
-                                'price_unit': linea.price,
-                                'tax_ids': accesorio.taxes_id,
-                                'aditamento': linea.name.id,
-                            }
-                            lista_factu.append((0,0,lineas_accesorios))
-                    if lista_factu:
+            if record.state == 'running':
+                if record.cost_frequency == 'no':
+                    if record.rent_end_date == today:
+                        dias_a_facturar = record.rent_end_date - record.rent_start_date
                         valores_fact.update({
-                            'invoice_line_ids': lista_factu,
+                            'partner_id': record.customer_id.id,
+                            'invoice_date': today,
+                            'type': 'out_invoice',
+                            'renta': record.id,
+                            'journal_id': 1,
                         })
-                    factura_creada = inv_obj.create(valores_fact)
+                        lista_factu = []
+                        if record.rent_concepts:
+                            for linea in record.rent_concepts:
+                                lineas_conceptos = {
+                                    'product_id': linea.name,
+                                    'name': linea.description,
+                                    'quantity': dias_a_facturar,
+                                    'price_unit': linea.price,
+                                    'tax_ids': linea.name.taxes_id,
+                                    'vehiculo': record.vehicle_id.id,
+                                }
+                                lista_factu.append((0,0,lineas_conceptos))
+                        if record.tools_line:
+                            for linea in record.tools_line:
+                                lineas_accesorios = {
+                                    'product_id': accesorio,
+                                    'name': linea.name.name,
+                                    'quantity': dias_a_facturar,
+                                    'price_unit': linea.price,
+                                    'tax_ids': accesorio.taxes_id,
+                                    'aditamento': linea.name.id,
+                                }
+                                lista_factu.append((0,0,lineas_accesorios))
+                        if lista_factu:
+                            valores_fact.update({
+                                'invoice_line_ids': lista_factu,
+                            })
+                        factura_creada = inv_obj.create(valores_fact)
 
 
 
