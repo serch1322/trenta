@@ -143,7 +143,7 @@ class CarRentalContract(models.Model):
                 lineas_conceptos = {
                     'product_id': linea.name,
                     'name': linea.description,
-                    'quantity': dias_a_facturar,
+                    'quantity': '%s' %(dias_a_facturar),
                     'price_unit': linea.price,
                     'tax_ids': linea.name.taxes_id,
                     'vehiculo': record.vehicle_id.id,
@@ -154,7 +154,7 @@ class CarRentalContract(models.Model):
                 lineas_accesorios = {
                     'product_id': accesorio,
                     'name': linea.name.name,
-                    'quantity': dias_a_facturar,
+                    'quantity': '%s' %(dias_a_facturar),
                     'price_unit': linea.price,
                     'tax_ids': accesorio.taxes_id,
                     'aditamento': linea.name.id,
@@ -346,7 +346,7 @@ class CarRentalContract(models.Model):
                                 lineas_conceptos = {
                                     'product_id': linea.name,
                                     'name': linea.description,
-                                    'quantity': dias_a_facturar,
+                                    'quantity': '%s' %(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': linea.name.taxes_id,
                                     'vehiculo': record.vehicle_id.id,
@@ -357,7 +357,7 @@ class CarRentalContract(models.Model):
                                 lineas_accesorios = {
                                     'product_id': accesorio,
                                     'name': linea.name.name,
-                                    'quantity': dias_a_facturar,
+                                    'quantity': '%s' %(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': accesorio.taxes_id,
                                     'aditamento': linea.name.id,
