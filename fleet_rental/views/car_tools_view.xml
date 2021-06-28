@@ -36,7 +36,7 @@
                                 <field name="tiempo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}" nolabel="1"/>
                                 <field name="depreciacion_contable" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}" readonly="1" force_save="1"/>
                                 <field name="depreciacion_fiscal" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}" readonly="1" force_save="1"/>
-                                <field name="residual_value"/>
+                                <field name="residual_value" widget="monetary"/>
                             </group>
                         </group>
                     </sheet>
