@@ -140,7 +140,7 @@ class CarRentalContract(models.Model):
             end_date_day = end_date_month.day
             if self.state == 'running':
                 if self.cost_frequency == 'monthly':
-                    dias_a_facturar = end_date_day - start_date_day
+                    dias_a_facturar = end_date_day - start_date_day + 1
                     valores_fact.update({
                         'partner_id': self.customer_id.id,
                         'invoice_date': today,
@@ -185,7 +185,7 @@ class CarRentalContract(models.Model):
             end_date_day = end_date_month.day
             if record.state == 'running':
                 if self.cost_frequency == 'monthly':
-                    dias_a_facturar = end_date_day - start_date_day
+                    dias_a_facturar = end_date_day - start_date_day + 1
                     valores_fact.update({
                         'partner_id': record.customer_id.id,
                         'invoice_date': today,
@@ -397,7 +397,7 @@ class CarRentalContract(models.Model):
                 end_date_day = end_date_month.day
                 if record.state == 'running':
                     if record.cost_frequency == 'monthly':
-                        dias_a_facturar = end_date_day - start_date_day
+                        dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
@@ -442,7 +442,7 @@ class CarRentalContract(models.Model):
                 end_date_day = end_date_month.day
                 if record.state == 'running':
                     if record.cost_frequency == 'monthly':
-                        dias_a_facturar = end_date_day - start_date_day
+                        dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
