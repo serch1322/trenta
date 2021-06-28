@@ -74,7 +74,7 @@ class CarRentalContract(models.Model):
                                    default=lambda self: self.env['account.journal'].search([('id', '=', 1)]))
     account_type = fields.Many2one('account.account', 'Account',
                                    default=lambda self: self.env['account.account'].search([('id', '=', 17)]))
-    rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', states={'draft': [('readonly',False)] })
+    rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', readonly=True,states={'draft': [('readonly',False)] })
     total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True)
     total_tools = fields.Float(string="Total (Accesorios/Aditamentos)", compute="_obtener_totales", store=True)
     first_payment = fields.Float(string='Anticipo',
@@ -89,7 +89,7 @@ class CarRentalContract(models.Model):
                                      states={'invoice': [('readonly', True)],
                                              'done': [('readonly', True)],
                                              'cancel': [('readonly', True)]})
-    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos", ondelete='cascade',
+    tools_line = fields.One2many('car.rental.tools', 'accesorios', string="Accesorios/Aditamentos", ondelete='cascade', readonly=True,
                                      states={'draft': [('readonly',False)] })
     tools_missing_cost = fields.Float(string="Costo Perdido", readonly=True, copy=False,
                                       help='This is the total amount of missing tools/accessories')
@@ -336,7 +336,7 @@ class CarRentalContract(models.Model):
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
             if not record.siguiente_fecha_de_factura:
-                start_date = record.rent_start_date.datetime()
+                start_date = record.rent_start_date
                 start_date_day = start_date.day
                 next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
                 end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
@@ -381,7 +381,7 @@ class CarRentalContract(models.Model):
                         factura_creada = inv_obj.create(valores_fact)
                         record.siguiente_fecha_de_factura = next_month
             else:
-                start_date = record.siguiente_fecha_de_factura.datetime()
+                start_date = record.siguiente_fecha_de_factura
                 start_date_day = start_date.day
                 next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
                 end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
