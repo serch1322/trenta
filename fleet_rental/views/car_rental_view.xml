@@ -94,9 +94,10 @@
                                 </div>
                                 <field name="deposito"/>
                                 <field name="account_type" invisible="1"/>
-                                <field name="cost" invisible="1"/>
                                 <field name="cost_frequency" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
-                            </group>
+                                <field name="fecha_ultima_factura"/>
+                                <field name="siguiente_fecha_de_factura"/>
+                           </group>
                         </group>
                         <notebook>
                             <page string="Conceptos">
