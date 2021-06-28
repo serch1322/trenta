@@ -3,6 +3,7 @@
 from datetime import datetime, date, timedelta
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
+import calendar
 
 
 class CarRentalContract(models.Model):
@@ -66,7 +67,7 @@ class CarRentalContract(models.Model):
          ('checking', 'Revisando'), ('invoice', 'Factura'), ('done', 'Hecho')], string="State",
         default="draft", copy=False, track_visibility='onchange')
     notes = fields.Text(string="Notas")
-    cost_frequency = fields.Selection([('no', 'No'), ('monthly', 'Mensual')],
+    cost_frequency = fields.Selection([('monthly', 'Mensual')],
                                       string="Intervalo de Factura",
                                       help='Frecuencia de Generación de Factura', required=True)
     journal_type = fields.Many2one('account.journal', 'Journal',
@@ -102,8 +103,7 @@ class CarRentalContract(models.Model):
     deposito = fields.Float(string="Deposito en Garantia", required=True, states={'draft': [('readonly',False)] })
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
-    fecha_ultima_factura = fields.Date(string="Fecha Última Factura")
-    siguiente_fecha_de_factura = fields.Date(string="Fecha de Próxima Factura", default=date.today())
+    siguiente_fecha_de_factura = fields.Date(string="Fecha de Próxima Factura")
 
     @api.onchange('vehicle_id')
     def modificar_accesorios(self):
@@ -332,12 +332,15 @@ class CarRentalContract(models.Model):
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
-            start_date = fields.Date.from_string(self.rent_start_date)
-            end_date = fields.Date.from_string(self.rent_end_date)
-            if record.state == 'running':
-                if record.cost_frequency == 'no':
-                    if record.rent_end_date == today:
-                        dias_a_facturar = end_date - start_date
+            if not record.siguiente_fecha_de_factura:
+                start_date = record.rent_start_date.date()
+                start_date_day = start_date.day
+                next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
+                end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
+                end_date_day = end_date_month.day
+                if record.state == 'running':
+                    if record.cost_frequency == 'monthly':
+                        dias_a_facturar = end_date_day - start_date_day
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
@@ -373,6 +376,52 @@ class CarRentalContract(models.Model):
                                 'invoice_line_ids': lista_factu,
                             })
                         factura_creada = inv_obj.create(valores_fact)
+                        record.siguiente_fecha_de_factura = next_month
+            else:
+                start_date = record.siguiente_fecha_de_factura.date()
+                start_date_day = start_date.day
+                next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
+                end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
+                end_date_day = end_date_month.day
+                if record.state == 'running':
+                    if record.cost_frequency == 'monthly':
+                        dias_a_facturar = end_date_day - start_date_day
+                        valores_fact.update({
+                            'partner_id': record.customer_id.id,
+                            'invoice_date': today,
+                            'move_type': 'out_invoice',
+                            'renta': record.id,
+                            'journal_id': 1,
+                        })
+                        lista_factu = []
+                        if record.rent_concepts:
+                            for linea in record.rent_concepts:
+                                lineas_conceptos = {
+                                    'product_id': linea.name,
+                                    'name': linea.description,
+                                    'quantity': '%s'%(dias_a_facturar),
+                                    'price_unit': linea.price,
+                                    'tax_ids': linea.name.taxes_id,
+                                    'vehiculo': record.vehicle_id.id,
+                                }
+                                lista_factu.append((0,0,lineas_conceptos))
+                        if record.tools_line:
+                            for linea in record.tools_line:
+                                lineas_accesorios = {
+                                    'product_id': accesorio,
+                                    'name': linea.name.name,
+                                    'quantity': '%s'%(dias_a_facturar),
+                                    'price_unit': linea.price,
+                                    'tax_ids': accesorio.taxes_id,
+                                    'aditamento': linea.name.id,
+                                }
+                                lista_factu.append((0,0,lineas_accesorios))
+                        if lista_factu:
+                            valores_fact.update({
+                                'invoice_line_ids': lista_factu,
+                            })
+                        factura_creada = inv_obj.create(valores_fact)
+                        self.siguiente_fecha_de_factura = next_month
 
 
 
