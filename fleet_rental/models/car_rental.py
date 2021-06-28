@@ -337,7 +337,7 @@ class CarRentalContract(models.Model):
             if record.state == 'running':
                 if record.cost_frequency == 'no':
                     if record.rent_end_date == today:
-                        dias_a_facturar = datetime.strftime(end_date - start_date,"%Y-%m-%d")
+                        dias_a_facturar = datetime.strptime(end_date - start_date,"%Y-%m-%d")
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
                             'invoice_date': today,
