@@ -99,7 +99,7 @@ class CarRentalContract(models.Model):
     check_verify = fields.Boolean(compute='check_action_verify', copy=False)
     sales_person = fields.Many2one('res.users', string='Encargado de Ventas', default=lambda self: self.env.uid,
                                    track_visibility='always')
-    deposito = fields.Float(string="Deposito en Garantia", required=True)
+    deposito = fields.Float(string="Deposito en Garantia", required=True, states={'draft': [('readonly',False)] })
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
     fecha_ultima_factura = fields.Date(string="Fecha Última Factura")
@@ -129,28 +129,42 @@ class CarRentalContract(models.Model):
     def crear_factura(self):
         self.ensure_one()
         factu_clien = self.env['account.move']
-        valores_factu_clien = {}
-        valores_factu_clien.update({
-            'partner_id': self.customer_id.id,
-            'invoice_date': date.today(),
-            'ref': self.name,
-            'move_type': 'out_invoice',
+        valores_fact = {}
+        valores_fact.update({
+            'partner_id': record.customer_id.id,
+            'invoice_date': today,
+            'type': 'out_invoice',
+            'renta': record.id,
+            'journal_id': 1,
         })
         lista_factu = []
-        if self.rent_concepts:
-            for linea in self.rent_concepts:
-                if linea.name:
-                    lineas_factu = {
-                        'product_id': linea.name,
-                        'quantity': linea.qty,
-                        'price_unit': linea.price,
-                    }
-                    lista_factu.append((0, 0, lineas_factu))
+        if record.rent_concepts:
+            for linea in record.rent_concepts:
+                lineas_conceptos = {
+                    'product_id': linea.name,
+                    'name': linea.description,
+                    'quantity': dias_a_facturar,
+                    'price_unit': linea.price,
+                    'tax_ids': linea.name.taxes_id,
+                    'vehiculo': record.vehicle_id.id,
+                }
+                lista_factu.append((0, 0, lineas_conceptos))
+        if record.tools_line:
+            for linea in record.tools_line:
+                lineas_accesorios = {
+                    'product_id': accesorio,
+                    'name': linea.name.name,
+                    'quantity': dias_a_facturar,
+                    'price_unit': linea.price,
+                    'tax_ids': accesorio.taxes_id,
+                    'aditamento': linea.name.id,
+                }
+                lista_factu.append((0, 0, lineas_accesorios))
         if lista_factu:
-            valores_factu_clien.update({
+            valores_fact.update({
                 'invoice_line_ids': lista_factu,
             })
-        factura_creada = factu_clien.create(valores_factu_clien)
+        factura_creada = inv_obj.create(valores_fact)
 
 
 
