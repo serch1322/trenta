@@ -95,7 +95,7 @@
                                 <field name="deposito"/>
                                 <field name="account_type" invisible="1"/>
                                 <field name="cost_frequency" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                <field name="siguiente_fecha_de_factura"/>
+                                <field name="siguiente_fecha_de_factura" readonly="1" force_save="1"/>
                            </group>
                         </group>
                         <notebook>

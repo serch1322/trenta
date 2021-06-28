@@ -333,7 +333,7 @@ class CarRentalContract(models.Model):
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         for record in self.search([]):
             if not record.siguiente_fecha_de_factura:
-                start_date = record.rent_start_date.date()
+                start_date = record.rent_start_date.datetime()
                 start_date_day = start_date.day
                 next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
                 end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
@@ -378,7 +378,7 @@ class CarRentalContract(models.Model):
                         factura_creada = inv_obj.create(valores_fact)
                         record.siguiente_fecha_de_factura = next_month
             else:
-                start_date = record.siguiente_fecha_de_factura.date()
+                start_date = record.siguiente_fecha_de_factura.datetime()
                 start_date_day = start_date.day
                 next_month = datetime.datetime(start_date.year, start_date.month+1, 1)
                 end_date_month = datetime.datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
