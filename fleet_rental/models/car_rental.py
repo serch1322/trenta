@@ -395,7 +395,7 @@ class CarRentalContract(models.Model):
                 next_month = datetime(start_date.year, start_date.month+1, 1)
                 end_date_month = datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
                 end_date_day = end_date_month.day
-                if record.state == 'running':
+                if record.state == 'running' and start_date <= today:
                     if record.cost_frequency == 'monthly':
                         dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
@@ -440,7 +440,7 @@ class CarRentalContract(models.Model):
                 next_month = datetime(start_date.year, start_date.month+1, 1)
                 end_date_month = datetime(start_date.year,start_date.month,calendar.mdays[start_date.month])
                 end_date_day = end_date_month.day
-                if record.state == 'running':
+                if record.state == 'running' and start_date <= today:
                     if record.cost_frequency == 'monthly':
                         dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
