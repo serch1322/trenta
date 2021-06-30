@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="renta_en_factura" model="ir.ui.view">
+                <field name="name">renta.en.factura</field>
+                <field name="model">account.move</field>
+                <field name="inherit_id" ref="account.view_move_form"/>
+                <field name="arch" type="xml">
+                    <field name="partner_bank_id" position="after">
+                        <field name="renta" readonly="1" attrs="{'invisible': [('renta', '==', False)]}"/>
+                    </field>
+                    <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
+                        <field name="vehiculo" attrs="{'column_invisible': [('parent.renta', '=', False)]}"/>
+                        <field name="aditamento" attrs="{'column_invisible': [('parent.renta', '=', False)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='line_ids']/tree" position="inside">
+                        <field name="vehiculo" invisible="1"/>
+                        <field name="aditamento" invisible="1"/>
+                    </xpath>
+                </field>
+        </record>
+    </data>
+</odoo>

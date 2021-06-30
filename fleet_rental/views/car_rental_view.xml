@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data noupdate="1">
-        <record id="sequence_car_rental" model="ir.sequence">
-            <field name="name">Car Rental Sequence</field>
-            <field name="code">car.rental.sequence</field>
-            <field name="prefix">RENT/%(range_year)s/</field>
-            <field eval="1" name="number_next"/>
-            <field eval="1" name="number_increment"/>
-            <field eval="True" name="use_date_range"/>
-            <field name="padding">4</field>
-        </record>
-    </data>
-
     <data>
         <record id="cron_scheduler_for_fleet" model="ir.cron">
           <field name="name">Fleet scheduler</field>
@@ -50,13 +38,13 @@
                         <button name="action_confirm" string="Confirmar" type="object"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight"/>
                         <button name="draft" string="Cambiar a Borrador" type="object"
-                                attrs="{'invisible': ['|',('state', '==', 'draft'),('state', '==', 'cancel'),('state', '==', 'done')]}" class="oe_highlight"/>
+                                attrs="{'invisible': ['|','|','|',('state', '=', 'draft'),('state', '=', 'running'),('state', '=', 'cancel'),('state', '=', 'done')]}" class="oe_highlight"/>
                         <button name="action_run" string="Rentado" type="object"
-                                attrs="{'invisible': [('state', '!=', 'reserved'),('state', '!=', 'service')]}" class="oe_highlight"/>
+                                attrs="{'invisible': [('state', '!=', 'reserved')]}" class="oe_highlight"/>
                         <button name="service" string="Servicio" type="object"
                                 attrs="{'invisible': [('state', '!=', 'running')]}" class="oe_highlight"/>
                         <button name="action_cancel" string="Cancelar" type="object"
-                                attrs="{'invisible': [('state', 'not in', ('draft', 'reserved'))]}" class="oe_highlight"/>
+                                attrs="{'invisible': ['|','|','|',('state', '=', 'draft'),('state', '=', 'running'),('state', '=', 'cancel'),('state', '=', 'done')]}" class="oe_highlight"/>
                         <button name="action_invoice_create" string="Crear Factura de Anticipo"
                                 attrs="{'invisible': ['|',('state', '!=', 'running'),
                                 ('first_invoice_created','=',True)]}" type="object" class="oe_highlight"/>
@@ -70,7 +58,7 @@
                     <sheet>
                         <div class="oe_button_box" name="buttons">
                             <button name='action_view_invoice' class="oe_stat_button" type="object" icon="fa-money">
-                                <field string="Invoice" name="invoice_count" widget="statinfo" />
+                                <field string="Facturas" name="invoice_count" widget="statinfo" />
                             </button>
                         </div>
                         <field name="image" widget='image' class="oe_avatar"/>
@@ -84,10 +72,10 @@
                             <group>
                                 <field name="customer_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="approved_driver"/>
-                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}" widget="daterange" options="{'related_end_date': 'rent_end_date'}"/>
-                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}" widget="daterange" options="{'related_start_date': 'rent_start_date'}"/>
+                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="vehicle_id" domain="[('insurance_count','!=',0)],[('rental_check_availability','=',True),
-                                ('state_id.name','!=','Inactive')]"
+                                ('state_id.name','==','Disponible')]"
                                    options="{'no_create': True}"/>
                                 <field name="journal_type" invisible="1" />
                                 <field name="check_verify" invisible="1" />
@@ -106,17 +94,9 @@
                                 </div>
                                 <field name="deposito"/>
                                 <field name="account_type" invisible="1"/>
-                                <field name="cost" invisible="1"/>
-                                <label for="cost_generated"/>
-                                    <div>
-                                        <field name="cost_frequency" class="oe_inline"
-                                               attrs="{'readonly': [('state','!=','draft')]}"/>
-                                        <field name="cost_generated" style="width:142px;"
-                                               attrs="{'invisible': [('cost_frequency','=','no')],
-                                                       'readonly': [('state','!=','draft')],
-                                                       'required': [('cost_frequency','not in',[None,False,'no'])]}"/>
-                                    </div>
-                            </group>
+                                <field name="cost_frequency" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="siguiente_fecha_de_factura" readonly="1" force_save="1"/>
+                           </group>
                         </group>
                         <notebook>
                             <page string="Conceptos">
@@ -136,33 +116,21 @@
                             <page string="Accesorios/Aditamentos">
                                 <group>
                                     <group>
-                                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
-                                    </group>
-                                    <group>
                                         <field name="damage_cost" attrs="{'invisible': [('state','!=','checking')]}"/>
                                     </group>
                                 </group>
-                                <field name="checklist_line">
-                                    <tree string="Fleet Checklist Lines" editable="bottom">
+                                <field name="tools_line">
+                                    <tree string="Fleet Checklist Lines" delete="false" editable="bottom">
                                         <field name="name" domain="[('car','=',parent.vehicle_id)]"/>
-                                        <field name="num_serie"/>
-                                        <field name="checklist_active" invisible="True"/>
-                                        <field name="checklist_number" invisible="True"/>
+                                        <field name="num_eco" readonly="1" force_save="1"/>
+                                        <field name="qty"/>
                                         <field name="price"/>
+                                        <field name="subtotal"/>
                                     </tree>
-                                    <form>
-                                        <sheet>
-                                            <group>
-                                                <field name="name"/>
-                                                <field name="checklist_active" invisible="1"/>
-                                                <field name="checklist_number" invisible="1"/>
-                                            </group>
-                                        </sheet>
-                                    </form>
                                 </field>
                                 <div>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <field name="total"/>
+                                        <field name="total_tools"/>
                                         <field name="tools_missing_cost" invisible="True"/>
                                         <field name="damage_cost_sub" invisible="True"/>
                                         <field name="total_cost" class="oe_subtotal_footer_separator" invisible="True"/>
@@ -174,20 +142,6 @@
                                             attrs="{'invisible': [('state', '!=', 'checking')]}"
                                             class="oe_subtotal_footer oe_right oe_highlight"/>
                                 </div>
-                            </page>
-                            <page string="Facturas Recurrentes" attrs="{'invisible': [('cost_frequency','in',[None,False,'no'])]}">
-                                <field name="recurring_line" mode="tree">
-                                    <tree string="Fleet Reccurring Lines"
-                                          colors="#0b7a35:payment_info=='paid';#f20b07:payment_info!='paid'">
-                                        <field name="date_today"/>
-                                        <field name="date_due"/>
-                                        <field name="name"/>
-                                        <field name="account_info"/>
-                                        <field name="recurring_amount"/>
-                                        <field name="payment_info"/>
-                                        <field name="invoice_ref"/>
-                                    </tree>
-                                </field>
                             </page>
                         </notebook>
                         <group class="oe_subtotal_footer oe_right">
@@ -214,7 +168,6 @@
                     <field name="name"/>
                     <field name="customer_id" string="Customer"/>
 			        <field name="vehicle_id"/>
-                    <field name="cost"/>
                     <field name="car_brand"/>
 					<field name="car_color"/>
                     <field name="rent_start_date"/>
@@ -225,15 +178,14 @@
         </record>
 
         <record id="action_car_rental_contract" model="ir.actions.act_window">
-            <field name="name">Rental Contract</field>
+            <field name="name">Contratos de Renta</field>
             <field name="res_model">car.rental.contract</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Fleet Rental" id="fleet.menu_root" sequence="115" groups="fleet.fleet_group_user"
-                  web_icon="fleet,static/description/icon.png"/>
-        <menuitem id="menu_car_parent" sequence="1" name="Rental Management" parent="fleet.menu_root"/>
-        <menuitem id="menu_car_rental_contract" parent="menu_car_parent" name="Rental Contract"
+        <menuitem name="Fleet Rental" id="fleet.menu_root" sequence="115" groups="fleet.fleet_group_user"/>
+        <menuitem id="menu_car_parent" sequence="1" name="Gestion de Rentas" parent="fleet.menu_root"/>
+        <menuitem id="menu_car_rental_contract" parent="menu_car_parent" name="Contratos de Renta"
                   action="action_car_rental_contract" sequence="1"/>
     </data>
 </odoo>

@@ -6,13 +6,17 @@
             <field name="model">fleet.vehicle</field>
             <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="delete">false</attribute>
+                    <attribute name="create">false</attribute>
+                </xpath>
                 <xpath expr="//button[@name='return_action_to_open']" position="after">
                     <button name="return_actions_to_open"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-puzzle-piece"
                             context="{'xml_id':'action_fleet_car_tools'}"
-                            help="show the tools for this vehicle">
+                            help="Muestra accesorios y aditamentos de este vehiculo">
                             <field name="tools_count" widget="statinfo" string="Accesorios/Aditamentos"/>
                     </button>
                     <button name="return_actions_to_open_seguro"
@@ -20,8 +24,16 @@
                             class="oe_stat_button"
                             icon="fa-shield"
                             context="{'xml_id':'action_fleet_car_insurance'}"
-                            help="show the insurance for this vehicle">
+                            help="Muestra seguro para este vehiculo">
                             <field name="insurance_count" widget="statinfo" string="Seguros"/>
+                    </button>
+                    <button name="return_actions_to_open_factura"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            context="{'xml_id':'account.action_move_out_invoice_type'}"
+                            help="Muestra los registros líneas en facturas generadas">
+                            <field name="facturas_count" widget="statinfo" string="Facturas"/>
                     </button>
                 </xpath>
                 <field name="future_driver_id" position="attributes">
@@ -41,7 +53,7 @@
                     <attribute name="clickable">0</attribute>
                 </field>
                 <field name="state_id" position="before">
-                    <button name="depreciacion" string="Depreciar Vehiculo" type="object" class="btn-primary"/>
+                    <button name="depreciacion" string="Depreciar Vehiculo" type="object" confirm="¿Estás seguro que quieres empezar a rentar y depreciar el equipo?" class="btn-primary" attrs="{'invisible': [('depreciado','==',True)]}"/>
                     <button name="return_actions_to_open_venta_vehiculo"
                             type="object"
                             class="btn-primary"
@@ -51,6 +63,7 @@
                     </button>
                 </field>
                 <field name="model_year" position="after">
+                    <field name="num_eco"/>
                     <field name="categoria" required="1"/>
                     <field name="tipo"/>
                     <field name="carga" attrs="{'required':[('tipo','==','carga')],'invisible': [('tipo', '!=', 'carga')]}"/>
@@ -60,11 +73,13 @@
                     <attribute name="nolabel">1</attribute>
                 </field>
                 <field name="company_id" position="after">
-                    <field name="depr" attrs="{'invisible':[('tipo','==','carga')]}"/>
+                    <field name="depr" attrs="{'required':[('tipo','!=','carga')],'invisible': [('tipo', '==', 'carga')]}"/>
+                    <field name="inventario"/>
                     <field name="entidad" string="Entidad de Placas" required="1"/>
-                    <field name="tiempo_de_depreciacion"/>
-                    <field name="periodo_de_depreciacion" nolabel="1"/>
-
+                    <field name="tiempo_de_depreciacion" attrs="{'invisible': [('depreciado', '=', True)]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': [('depreciado', '=', True)]}" nolabel="1"/>
+                    <field name="depreciacion_contable" readonly="1" force_save="1"/>
+                    <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
+                    <field name="depreciado" invisible="1"/>
                 </field>
                 <field name="transmission" position="before">
                     <field name="serie_motor" string="Numero de Serie Motor" />
@@ -81,6 +96,27 @@
                 <xpath expr="//kanban" position="attributes">
                     <attribute name="records_draggable">false</attribute>
                 </xpath>
+                <xpath expr="//t[@t-name='kanban-box']//field[@name='license_plate']" position="before">
+                    <field name="num_eco"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="tree_vehiculo" model="ir.ui.view">
+            <field name="name">tree_vehiculo</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="delete">false</attribute>
+                    <attribute name="create">false</attribute>
+                </xpath>
+                <field name="state_id" position="attributes">
+                    <attribute name="string">Estado</attribute>
+                </field>
+                <field name="license_plate" position="before">
+                    <field name="num_eco"/>
+                </field>
             </field>
         </record>
 

@@ -6,31 +6,39 @@
             <field name="model">car.tools</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Accesorios/Herramientas">
+                <form string="Aditamentos/Accesorios" delete="false" create="false">
                     <header>
                         <field name="state" widget="statusbar" statusbar_visible="disponible,reservado,renta"/>
                         <button name="vendido" string="Vender" type="object" class="oe_highlight"/>
-                        <button name="cambiar_disponible" string="Cambiar a Disponible" type="object"
-                                attrs="{'invisible': [('state', '==', 'disponible')]}" class="oe_highlight"/>
+                        <button name="depreciacion" string="Depreciar" confirm="¿Estás seguro que quieres empezar a rentar y depreciar el aditamento?" type="object"
+                                attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group>
                             <group>
                                 <field name="name"/>
+                                <field name="num_eco" force_save="1" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="user_id"/>
                                 <field name="marca" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="costo"/>
                                 <field name="descripcion"/>
                                 <field name="tipo"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="currency_id" invisible="1"/>
                             </group>
                             <group>
                                 <field name="modelo" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="categoria" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
-                                <field name="car"/>
+                                <field name="car" attrs="{'invisible': [('state', '=', 'almacen')],
+                                'required': [('state', '!=', 'almacen')], 'readonly': [('state', '!=', 'disponible')]}"/>
                                 <field name="date_compra" attrs="{'invisible': [('tipo', '=', 'aditamento')]}"/>
                                 <field name="date_fabric" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="num_serie" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
-                                <field name="rent_price" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
+                                <field name="rent_price" attrs="{'invisible': [('state', '=', 'almacen')]}"/>
+                                <field name="tiempo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}" nolabel="1"/>
+                                <field name="depreciacion_contable" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}" readonly="1" force_save="1"/>
+                                <field name="depreciacion_fiscal" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}" readonly="1" force_save="1"/>
+                                <field name="residual_value" widget="monetary"/>
                             </group>
                         </group>
                     </sheet>
@@ -48,21 +56,22 @@
             <field name="model">car.tools</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Accesorios/Herramientas" create="false" delete="false">
+                <tree string="Aditamentos/Accesorios" create="false" delete="false">
+                    <field name="num_eco"/>
                     <field name="name"/>
                     <field name="car"/>
-                    <field name="state"/>
+                    <field name="state" widget="badge"/>
                 </tree>
             </field>
         </record>
 
         <record id="action_fleet_car_tools" model="ir.actions.act_window">
-            <field name="name">Accessories/Tools</field>
+            <field name="name">Aditamentos/Accesorios</field>
             <field name="res_model">car.tools</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_car_tools" parent="menu_car_parent" name="Accessories/Tools"
-                  action="action_fleet_car_tools" sequence="3"/>
+        <menuitem id="menu_car_tools" parent="fleet.menu_root" name="Aditamentos/Accesorios"
+                  action="action_fleet_car_tools" sequence="2"/>
     </data>
 </odoo>

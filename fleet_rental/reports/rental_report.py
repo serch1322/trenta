@@ -1,27 +1,6 @@
 # -*- coding: utf-8 -*-
-#############################################################################
-#
-#    Cybrosys Technologies Pvt. Ltd.
-#
-#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Cybrosys Technogies @cybrosys(odoo@cybrosys.com)
-#
-#    You can modify it under the terms of the GNU AFFERO
-#    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU AFFERO GENERAL PUBLIC LICENSE (AGPL v3) for more details.
-#
-#    You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
-#    (AGPL v3) along with this program.
-#    If not, see <http://www.gnu.org/licenses/>.
-#
-#############################################################################
 
 from odoo import models, fields, tools
-
 
 class FleetRentalReport(models.Model):
     _name = "report.fleet.rental"
@@ -33,7 +12,6 @@ class FleetRentalReport(models.Model):
     vehicle_id = fields.Many2one('fleet.vehicle')
     car_brand = fields.Char(string="Car Brand")
     car_color = fields.Char(string="Car Color")
-    cost = fields.Float(string="Rent Cost")
     rent_start_date = fields.Date(string="Rent Start Date")
     rent_end_date = fields.Date(string="Rent End Date")
     state = fields.Selection([('draft', 'Draft'), ('running', 'Running'), ('cancel', 'Cancel'),
@@ -58,12 +36,11 @@ class FleetRentalReport(models.Model):
                     t.customer_id as customer_id,
                     t.vehicle_id as vehicle_id,
                     t.car_color as car_color,
-                    t.cost as cost,
                     t.rent_start_date as rent_start_date,
                     t.rent_end_date as rent_end_date,
                     t.state as state,
                     t.cost_frequency as cost_frequency,
-                    t.total as total,
+                    t.total_tools as total_tools,
                     t.tools_missing_cost as tools_missing_cost,
                     t.damage_cost as damage_cost,
                     t.damage_cost_sub as damage_cost_sub,
@@ -80,12 +57,11 @@ class FleetRentalReport(models.Model):
                     customer_id,
                     vehicle_id,
                     car_color,
-                    cost,
                     rent_start_date,
                     rent_end_date,
                     state,
                     cost_frequency,
-                    total,
+                    total_tools,
                     tools_missing_cost,
                     damage_cost,
                     damage_cost_sub,

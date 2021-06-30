@@ -3,14 +3,14 @@
 
     <data noupdate="0">
 
-        <record id="vehicle_state_active" model="fleet.vehicle.state">
-            <field name="name">Disponible</field>
-            <field name="sequence">2</field>
-        </record>
-
         <record id="vehicle_state_inventory" model="fleet.vehicle.state">
             <field name="name">Almacén</field>
             <field name="sequence">1</field>
+        </record>
+
+        <record id="vehicle_state_active" model="fleet.vehicle.state">
+            <field name="name">Disponible</field>
+            <field name="sequence">2</field>
         </record>
 
         <record id="vehicle_state_inactive" model="fleet.vehicle.state">
@@ -23,19 +23,29 @@
             <field name="sequence">4</field>
         </record>
 
-        <record id="vehicle_state_inshop" model="fleet.vehicle.state">
-            <field name="name">Servicio</field>
+        <record id="vehicle_state_recollection" model="fleet.vehicle.state">
+            <field name="name">Recepción</field>
             <field name="sequence">5</field>
         </record>
 
-        <record id="vehicle_state_siniestro" model="fleet.vehicle.state">
-            <field name="name">Siniestro</field>
+        <record id="vehicle_state_inshop" model="fleet.vehicle.state">
+            <field name="name">Servicio</field>
             <field name="sequence">6</field>
         </record>
 
         <record id="vehicle_state_stolen" model="fleet.vehicle.state">
-            <field name="name">Robado</field>
+            <field name="name">Interno</field>
             <field name="sequence">7</field>
+        </record>
+
+        <record id="vehicle_state_siniestro" model="fleet.vehicle.state">
+            <field name="name">Siniestro</field>
+            <field name="sequence">8</field>
+        </record>
+
+        <record id="vehicle_state_stolen" model="fleet.vehicle.state">
+            <field name="name">Robado</field>
+            <field name="sequence">9</field>
         </record>
 
         <record id="fleet.fleet_rule_vehicle_visibility_user" model="ir.rule">
@@ -75,6 +85,26 @@
             <field name="name">Asociar Vehiculo</field>
             <field name="icon">fa-car</field>
             <field name="res_model_id" ref="model_car_tools"/>
+        </record>
+
+        <record id="mantenimiento" model="fleet.service.type">
+            <field name="name">Mantenimiento</field>
+            <field name="category">service</field>
+        </record>
+
+        <record model="product.template" id="seguro_vehiculo">
+            <field name="name">Póliza de Seguro</field>
+            <field name="type">service</field>
+        </record>
+
+        <record model="product.template" id="anticipo">
+            <field name="name">Anticipo</field>
+            <field name="type">service</field>
+        </record>
+
+        <record model="product.template" id="accesorio/aditamento">
+            <field name="name">Accesorio/Aditamento</field>
+            <field name="type">service</field>
         </record>
 
     </data>

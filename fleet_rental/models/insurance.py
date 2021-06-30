@@ -2,9 +2,11 @@
 
 from datetime import datetime, date, timedelta
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError, Warning
 
 
-class RentContract(models.Model):
+
+class Seguros(models.Model):
     _name = 'car.insurance'
     _description = 'Seguros'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -30,12 +32,18 @@ class RentContract(models.Model):
     state = fields.Selection(
         [('nuevo', 'Nuevo'), ('corriendo', 'Corriendo'), ('terminado', 'Terminado'), ('cancelado', 'Cancelado')], string="Estado",
         default="nuevo", copy=False)
-    lineas_ids = fields.One2many('line.car.insurance','asegurado',readonly=False)
+    lineas_ids = fields.One2many('line.car.insurance','asegurado',readonly=False, states={'nuevo': [('readonly', False)]})
+
+    def unlink(self):
+        if self.state == 'corriendo' or self.state == 'terminado':
+            raise UserError('No se puede eliminar ningun seguro corriendo o terminado!')
+        return super(Seguros, self).unlink()
 
     def accion_aprobado(self):
         self.state = 'corriendo'
         self.ensure_one()
         factu_prov = self.env['account.move']
+        product_id = self.env['product.product'].search([("name", "=", "Póliza de Seguro")])
         valores_factu_prov = {}
         valores_factu_prov.update({
          'partner_id': self.supplier.id,
@@ -44,15 +52,14 @@ class RentContract(models.Model):
          'move_type': 'in_invoice',
         })
         lista_factu = []
-        if self.lineas_ids:
-         for linea in self.lineas_ids:
-             if linea.car:
-                 lineas_factu = {
-                     'name': linea.car.license_plate,
-                     'quantity': linea.qty,
-                     'price_unit': linea.price,
-                 }
-                 lista_factu.append((0, 0, lineas_factu))
+        lineas_factu = {
+            'product_id': product_id.id,
+            'name': product_id.name,
+            'quantity': 1,
+            'price_unit': self.total_concepts,
+            'tax_ids': product_id.supplier_taxes_id,
+         }
+        lista_factu.append((0, 0, lineas_factu))
         if lista_factu:
          valores_factu_prov.update({
              'invoice_line_ids': lista_factu,

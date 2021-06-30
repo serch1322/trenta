@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="activos_vehiculos" model="ir.ui.view">
+            <field name="name">activos.vehiculos</field>
+            <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+            <field name="arch" type="xml">
+                <field name="book_value" position="after">
+                    <field name="vehiculo" readonly="1" attrs="{'invisible': [('vehiculo', '==', False)]}"/>
+                    <field name="aditamento" readonly="1" attrs="{'invisible': [('aditamento', '==', False)]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

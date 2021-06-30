@@ -7,26 +7,25 @@
             <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
             <field name="arch" type="xml">
                 <header>
+                    <button name="validar" string="Validar Servicio" type="object"
+                            attrs="{'invisible': [('state', '!=', 'borrador')]}" class="oe_highlight"/>
                     <button name="crear_factura_servicio" string="Crear Factura" type="object"
-                            attrs="{'invisible': [('state', '!=', 'running')]}" class="oe_highlight"/>
+                            attrs="{'invisible': [('state', '!=', 'proceso')]}" class="oe_highlight"/>
                 </header>
+                <field name="state" position="attributes">
+                    <attribute name="clickable">false</attribute>
+                    <attribute name="statusbar_visible">borrador,proceso,facturado</attribute>
+                </field>
                 <field name="vehicle_id" position="after">
-                    <field name="ubicacion"/>
-                    <field name="mecanico"/>
+                    <field name="ubicacion" attrs="{'readonly': [('state', '!=', 'borrador')]}"/>
+                    <field name="mecanico" attrs="{'required':[('ubicacion','==','interno')],'invisible': [('ubicacion', '!=', 'interno')], 'readonly': [('state', '!=', 'borrador')]}"/>
+                    <field name="paga_cliente" attrs="{'readonly': [('state', '!=', 'borrador')]}"/>
                 </field>
                 <field name="vendor_id" position="attributes">
-                    <attribute name="attrs">{'invisible': [('ubicacion', '!=', 'externo')]}</attribute>
+                    <attribute name="attrs">{'required':[('ubicacion','==','externo')],'invisible': [('ubicacion', '!=', 'externo')],'readonly': [('state', '!=', 'borrador')]}</attribute>
                 </field>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="heredar_arbol_servicio_vehiculo">
-            <field name="name">heredar.arbol.servicio.vehiculo</field>
-            <field name="model">fleet.vehicle.log.services</field>
-            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_tree"/>
-            <field name="arch" type="xml">
-                <field name="amount" position="after">
-                    <field name="state"/>
+                <field name="description" position="attributes">
+                    <attribute name="required">1</attribute>
                 </field>
             </field>
         </record>

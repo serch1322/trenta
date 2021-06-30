@@ -47,19 +47,12 @@ class EmployeeFleet(models.Model):
     _inherit = 'fleet.vehicle'
 
     rental_check_availability = fields.Boolean(default=True, copy=False)
-    color = fields.Char(string='Color', default='#FFFFFF')
     rental_reserved_time = fields.One2many('rental.fleet.reserved', 'reserved_obj', String='Reserved Time', readonly=1,
                                            ondelete='cascade')
-    fuel_type = fields.Selection([('gasoline', 'Gasoline'),
-                                  ('diesel', 'Diesel'),
-                                  ('electric', 'Electric'),
-                                  ('hybrid', 'Hybrid'),
-                                  ('petrol', 'Petrol')],
-                                 'Fuel Type', help='Fuel Used by the vehicle')
 
 
-    _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
-                        ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
+
+
 
 
 
