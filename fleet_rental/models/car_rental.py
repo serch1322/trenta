@@ -157,6 +157,7 @@ class CarRentalContract(models.Model):
                                 'quantity': '%s' % (dias_a_facturar),
                                 'price_unit': linea.price,
                                 'tax_ids': linea.name.taxes_id,
+                                'product_uom_id': linea.name.uom_id.id,
                                 'vehiculo': self.vehicle_id.id,
                             }
                             lista_factu.append((0, 0, lineas_conceptos))
@@ -168,6 +169,7 @@ class CarRentalContract(models.Model):
                                 'quantity': '%s' % (dias_a_facturar),
                                 'price_unit': linea.price,
                                 'tax_ids': accesorio.taxes_id,
+                                'product_uom_id': accesorio.name.uom_id.id,
                                 'aditamento': linea.name.id,
                             }
                             lista_factu.append((0, 0, lineas_accesorios))
@@ -202,6 +204,7 @@ class CarRentalContract(models.Model):
                                 'quantity': '%s' % (dias_a_facturar),
                                 'price_unit': linea.price,
                                 'tax_ids': linea.name.taxes_id,
+                                'product_uom_id': linea.name.uom_id.id,
                                 'vehiculo': self.vehicle_id.id,
                             }
                             lista_factu.append((0, 0, lineas_conceptos))
@@ -213,6 +216,7 @@ class CarRentalContract(models.Model):
                                 'quantity': '%s' % (dias_a_facturar),
                                 'price_unit': linea.price,
                                 'tax_ids': accesorio.taxes_id,
+                                'product_uom_id': accesorio.name.uom_id.id,
                                 'aditamento': linea.name.id,
                             }
                             lista_factu.append((0, 0, lineas_accesorios))
@@ -414,6 +418,7 @@ class CarRentalContract(models.Model):
                                     'quantity': '%s'%(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': linea.name.taxes_id,
+                                    'product_uom_id': linea.name.uom_id.id,
                                     'vehiculo': record.vehicle_id.id,
                                 }
                                 lista_factu.append((0,0,lineas_conceptos))
@@ -425,6 +430,7 @@ class CarRentalContract(models.Model):
                                     'quantity': '%s'%(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': accesorio.taxes_id,
+                                    'product_uom_id': accesorio.name.uom_id.id,
                                     'aditamento': linea.name.id,
                                 }
                                 lista_factu.append((0,0,lineas_accesorios))
@@ -459,6 +465,7 @@ class CarRentalContract(models.Model):
                                     'quantity': '%s'%(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': linea.name.taxes_id,
+                                    'product_uom_id': linea.name.uom_id.id,
                                     'vehiculo': record.vehicle_id.id,
                                 }
                                 lista_factu.append((0,0,lineas_conceptos))
@@ -470,6 +477,7 @@ class CarRentalContract(models.Model):
                                     'quantity': '%s'%(dias_a_facturar),
                                     'price_unit': linea.price,
                                     'tax_ids': accesorio.taxes_id,
+                                    'product_uom_id': accesorio.name.uom_id.id,
                                     'aditamento': linea.name.id,
                                 }
                                 lista_factu.append((0,0,lineas_accesorios))
