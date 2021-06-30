@@ -27,7 +27,7 @@ class CarTools(models.Model):
     tipo = fields.Selection([('aditamento', 'Aditamento'), ('accesorio', 'Accesorio')],
                             string="Tipo", copy=False, required=True)
     car = fields.Many2one('fleet.vehicle', string="Vehículo Asociado")
-    tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable", required=True)
+    tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable")
     periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación',
                                                default='1')
     depreciacion_contable = fields.Many2one('account.asset', string="Depreciación Contable",
