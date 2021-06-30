@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from datetime import date
 
 class CarTools(models.Model):
     _name = 'car.tools'
