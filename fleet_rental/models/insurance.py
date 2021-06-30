@@ -5,6 +5,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 
 
+
 class Seguros(models.Model):
     _name = 'car.insurance'
     _description = 'Seguros'
