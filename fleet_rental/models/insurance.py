@@ -48,13 +48,12 @@ class Seguros(models.Model):
         valores_factu_prov.update({
          'partner_id': self.supplier.id,
          'invoice_date': self.invoice_date,
-         'ref': self.name,
          'move_type': 'in_invoice',
         })
         lista_factu = []
         lineas_factu = {
             'product_id': product_id.id,
-            'name': product_id.name,
+            'name': self.name,
             'quantity': 1,
             'price_unit': self.total_concepts,
             'tax_ids': product_id.supplier_taxes_id,
