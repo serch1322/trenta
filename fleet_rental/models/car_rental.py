@@ -143,9 +143,12 @@ class CarRentalContract(models.Model):
                     dias_a_facturar = end_date_day - start_date_day + 1
                     valores_fact.update({
                         'partner_id': self.customer_id.id,
+                        'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
                         'invoice_date': today,
                         'move_type': 'out_invoice',
                         'renta': self.id,
+                        'inicio': start_date,
+                        'fin': end_date_month,
                         'journal_id': 1,
                     })
                     lista_factu = []
@@ -190,9 +193,12 @@ class CarRentalContract(models.Model):
                     dias_a_facturar = end_date_day - start_date_day + 1
                     valores_fact.update({
                         'partner_id': self.customer_id.id,
+                        'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
                         'invoice_date': today,
                         'move_type': 'out_invoice',
                         'renta': self.id,
+                        'inicio': start_date,
+                        'fin': end_date_month,
                         'journal_id': 1,
                     })
                     lista_factu = []
@@ -404,7 +410,10 @@ class CarRentalContract(models.Model):
                         dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
+                            'invoice_payment_term_id': record.customer_id.property_payment_term_id.id,
                             'invoice_date': today,
+                            'inicio': start_date,
+                            'fin': end_date_month,
                             'move_type': 'out_invoice',
                             'renta': record.id,
                             'journal_id': 1,
@@ -451,8 +460,11 @@ class CarRentalContract(models.Model):
                         dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
+                            'invoice_payment_term_id': record.customer_id.property_payment_term_id.id,
                             'invoice_date': today,
                             'move_type': 'out_invoice',
+                            'inicio': start_date,
+                            'fin': end_date_month,
                             'renta': record.id,
                             'journal_id': 1,
                         })

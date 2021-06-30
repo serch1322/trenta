@@ -8,6 +8,8 @@
                 <field name="arch" type="xml">
                     <field name="partner_bank_id" position="after">
                         <field name="renta" readonly="1" attrs="{'invisible': [('renta', '==', False)]}"/>
+                        <field name="inicio" attrs="{'invisible': [('renta', '==', False)]}" force_save="1"/>
+                        <field name="fin" attrs="{'invisible': [('renta', '==', False)]}" force_save="1"/>
                     </field>
                     <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
                         <field name="vehiculo" attrs="{'column_invisible': [('parent.renta', '=', False)]}"/>

@@ -6,6 +6,8 @@ class FacturacionporRenta(models.Model):
     _inherit = ['account.move']
 
     renta = fields.Many2one('car.rental.contract',string="Renta de Vehiculo", store=True, copy=False)
+    inicio = fields.Date(string="Periodo Inicio", readonly=True)
+    fin = fields.Date(string="Periodo Final", readonly=True)
 
 class FacturacionporVehiculo(models.Model):
     _inherit = ['account.move.line']
