@@ -74,8 +74,8 @@ class CarRentalContract(models.Model):
                                    default=lambda self: self.env['account.journal'].search([('id', '=', 1)]))
     account_type = fields.Many2one('account.account', 'Account',
                                    default=lambda self: self.env['account.account'].search([('id', '=', 17)]))
-    rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', readonly=True,states={'draft': [('readonly',False)] })
-    total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True, copy=True)
+    rent_concepts = fields.One2many('rent.concepts.line','sale_order_id',copy=True, readonly=True,states={'draft': [('readonly',False)] })
+    total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True)
     total_tools = fields.Float(string="Total (Accesorios/Aditamentos)", compute="_obtener_totales", store=True)
     first_payment = fields.Float(string='Anticipo',
                                  help="Transaction/Office/Contract charge amount, must paid by customer side other "
