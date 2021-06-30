@@ -50,7 +50,7 @@ class CarRentalContract(models.Model):
     reserved_fleet_id = fields.Many2one('rental.fleet.reserved', invisible=True, copy=False)
     name = fields.Char(string="Name", default="Draft Contract", readonly=True, copy=False)
     customer_id = fields.Many2one('res.partner', required=True, string='Cliente', help="Customer")
-    vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle",
+    vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle", copy=False,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]}
                                  )
@@ -75,7 +75,7 @@ class CarRentalContract(models.Model):
     account_type = fields.Many2one('account.account', 'Account',
                                    default=lambda self: self.env['account.account'].search([('id', '=', 17)]))
     rent_concepts = fields.One2many('rent.concepts.line','sale_order_id', readonly=True,states={'draft': [('readonly',False)] })
-    total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True)
+    total_concepts = fields.Float(string="Total (Conceptos)", compute="_obtener_totales", store=True, copy=True)
     total_tools = fields.Float(string="Total (Accesorios/Aditamentos)", compute="_obtener_totales", store=True)
     first_payment = fields.Float(string='Anticipo',
                                  help="Transaction/Office/Contract charge amount, must paid by customer side other "
