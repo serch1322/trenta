@@ -9,9 +9,9 @@
                 <form string="Aditamentos/Accesorios" delete="false" create="false">
                     <header>
                         <field name="state" widget="statusbar" statusbar_visible="disponible,reservado,renta"/>
+                        <button name="depreciacion" string="Depreciar/Rentar" confirm="¿Estás seguro que quieres empezar a rentar y depreciar el aditamento?" type="object"
+                                attrs="{'invisible': [('state', '!=', 'almacen')]}" class="oe_highlight"/>
                         <button name="vendido" string="Vender" type="object" class="oe_highlight"/>
-                        <button name="depreciacion" string="Depreciar" confirm="¿Estás seguro que quieres empezar a rentar y depreciar el aditamento?" type="object"
-                                attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group>
@@ -35,7 +35,7 @@
                                 <field name="date_fabric" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="num_serie" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}"/>
                                 <field name="rent_price" attrs="{'invisible': [('state', '=', 'almacen')]}"/>
-                                <field name="tiempo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}" nolabel="1"/>
+                                <field name="tiempo_de_depreciacion" attrs="{'required': [('tipo', '==', 'aditamento')],'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': ['|',('state', '!=', 'almacen'),('tipo', '!=', 'aditamento')]}" nolabel="1"/>
                                 <field name="depreciacion_contable" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}" readonly="1" force_save="1"/>
                                 <field name="depreciacion_fiscal" attrs="{'invisible': [('tipo', '!=', 'aditamento')]}" readonly="1" force_save="1"/>
                                 <field name="residual_value" widget="monetary"/>
