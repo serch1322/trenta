@@ -47,7 +47,6 @@
              'views/tools_modelo.xml',
              'views/tools_categoria.xml',
              'views/vehiculo.xml',
-             'views/venta_vehiculos.xml',
              'views/facturacion.xml',
              'reports/rental_report.xml',
              'data/fleet_rental_data.xml',
