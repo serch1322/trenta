@@ -33,6 +33,7 @@
     'depends': ['base', 'account', 'fleet', 'mail','account_asset'],
     'data': ['security/rental_security.xml',
              'security/ir.model.access.csv',
+             'wizard/venta_de_vehiculo.xml',
              'views/car_rental_view.xml',
              'views/checklist_view.xml',
              'views/car_tools_view.xml',

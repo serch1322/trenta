@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_venta_vehiculo" model="ir.ui.view">
+        <field name="name">Wizard Venta Vehiculo</field>
+        <field name="model">venta.vehiculo</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+            <footer>
+                <button name="vender_vehiculo" type="object" class="btn-primary" string="Vender"/>
+                <button string="Cerrar" special="cancel"/>
+            </footer>
+        </field>
+    </record>
+
+    <record id="action_vender_vehiculo" model="ir.actions.act_window">
+        <field name="name">Vender Vehiculo</field>
+        <field name="res_model">venta.vehiculo</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
