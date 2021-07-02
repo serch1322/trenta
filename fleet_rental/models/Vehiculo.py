@@ -240,14 +240,5 @@ class ventaVehiculo(models.Model):
     numero_bastidor = fields.Char(string="Numero de Serie de Vehículo", required=True)
 
 
-    def vender(self, cr, uid, ids, context=None):
-        tools = self.env['car.tools'].search([])
-        if self.venta == 'sin':
-            for tool in tools:
-                if tool.car == self.name.id:
-                    tl_ids = tool.search(cr, uid, [('car', '=', self.name.id)], context=context)
-                    tools.unlink(cr, uid, tl_ids, context=context)
-
-
 
 

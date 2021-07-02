@@ -7,9 +7,6 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Venta Vehiculo">
-                    <header>
-                        <button name="vender" string="Confirmar Venta" type="object" class="btn-primary"/>
-                    </header>
                     <sheet>
                         <group>
                             <separator string="Venta de Vehiculos" colspan="4" />
