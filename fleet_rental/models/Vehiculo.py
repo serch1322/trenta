@@ -230,15 +230,6 @@ class DepreciacionModelos(models.Model):
     gasto = fields.Many2one('account.account', string="Cuenta de Gasto", required=True)
     diario = fields.Many2one('account.journal', string="Diario", required=True, domain="[('type', '=', 'general')]")
 
-class ventaVehiculo(models.Model):
-    _name = 'venta.vehiculo'
-    _description = 'Venta'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    venta = fields.Selection([('sin', 'Sin Accesorios/Aditamentos'), ('con', 'Con Accesorios/Aditamentos')], string="Tipo de Venta", copy=False)
-    name = fields.Many2one('fleet.vehicle',string="Vehículo", required=True, domain="[('insurance_count','=','0')]")
-    numero_bastidor = fields.Char(string="Numero de Serie de Vehículo", required=True)
-
 
 
 
