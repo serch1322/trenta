@@ -5,6 +5,8 @@ from odoo import models, fields, api
 class Venta(models.TransientModel):
     _name = 'venta.vehiculo'
 
+
+
     name = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True)
 
     def vender_vehiculo(self):
