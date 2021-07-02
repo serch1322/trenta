@@ -9,11 +9,11 @@
                 <group>
                     <field name="name"/>
                 </group>
-            </form>
-            <footer>
+                <footer>
                 <button name="vender_vehiculo" type="object" class="btn-primary" string="Vender"/>
                 <button string="Cerrar" special="cancel"/>
             </footer>
+            </form>
         </field>
     </record>
 
