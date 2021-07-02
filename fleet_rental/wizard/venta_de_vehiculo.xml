@@ -10,9 +10,9 @@
                     <field name="name"/>
                 </group>
                 <footer>
-                <button name="vender_vehiculo" type="object" class="btn-primary" string="Vender"/>
-                <button string="Cerrar" special="cancel"/>
-            </footer>
+                    <button name="vender_vehiculo" type="object" class="btn-primary" string="Vender"/>
+                    <button string="Cerrar" special="cancel"/>
+                </footer>
             </form>
         </field>
     </record>
