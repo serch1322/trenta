@@ -57,7 +57,7 @@
                     <button name="%(action_vender_vehiculo)d"
                             type="action"
                             class="btn-primary"
-                            string="Vender Vehiculo">
+                            string="Vender Vehiculo" groups="fleet.fleet_group_manager">
                     </button>
                 </field>
                 <field name="model_year" position="after">
