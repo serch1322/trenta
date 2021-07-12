@@ -139,102 +139,58 @@ class CarRentalContract(models.Model):
             next_month = datetime(start_date.year, start_date.month + 1, 1)
             end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
             end_date_day = end_date_month.day
-            if self.state == 'running':
-                if self.cost_frequency == 'monthly':
-                    dias_a_facturar = end_date_day - start_date_day + 1
-                    valores_fact.update({
-                        'partner_id': self.customer_id.id,
-                        'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
-                        'invoice_date': today,
-                        'move_type': 'out_invoice',
-                        'renta': self.id,
-                        'inicio': start_date,
-                        'fin': end_date_month,
-                        'journal_id': 1,
-                        'invoice_user_id': self.sales_person.id,
-                    })
-                    lista_factu = []
-                    if self.rent_concepts:
-                        for linea in self.rent_concepts:
-                            lineas_conceptos = {
-                                'product_id': linea.name,
-                                'name': linea.description,
-                                'quantity': '%s' % (dias_a_facturar),
-                                'price_unit': linea.price,
-                                'tax_ids': linea.name.taxes_id,
-                                #'product_uom_id': linea.name.uom_id,
-                                'vehiculo': self.vehicle_id.id,
-                            }
-                            lista_factu.append((0, 0, lineas_conceptos))
-                    if self.tools_line:
-                        for linea in self.tools_line:
-                            lineas_accesorios = {
-                                'product_id': accesorio,
-                                'name': linea.name.name,
-                                'quantity': '%s' % (dias_a_facturar),
-                                'price_unit': linea.price,
-                                'tax_ids': accesorio.taxes_id,
-                                #'product_uom_id': accesorio.name.uom_id,
-                                'aditamento': linea.name.id,
-                            }
-                            lista_factu.append((0, 0, lineas_accesorios))
-                    if lista_factu:
-                        valores_fact.update({
-                            'invoice_line_ids': lista_factu,
-                        })
-                    factura_creada = inv_obj.create(valores_fact)
-                    self.siguiente_fecha_de_factura = next_month
         else:
             start_date = self.siguiente_fecha_de_factura
             start_date_day = start_date.day
             next_month = datetime(start_date.year, start_date.month + 1, 1)
             end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
             end_date_day = end_date_month.day
-            if self.state == 'running':
-                if self.cost_frequency == 'monthly':
-                    dias_a_facturar = end_date_day - start_date_day + 1
+        if self.state == 'running':
+            self.siguiente_fecha_de_factura = next_month
+            if self.cost_frequency == 'monthly':
+                dias_a_facturar = end_date_day - start_date_day + 1
+                valores_fact.update({
+                    'partner_id': self.customer_id.id,
+                    'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
+                    'invoice_date': today,
+                    'move_type': 'out_invoice',
+                    'renta': self.id,
+                    'inicio': start_date,
+                    'fin': end_date_month,
+                    'journal_id': 1,
+                    'invoice_user_id': self.sales_person.id,
+                })
+                lista_factu = []
+                if self.rent_concepts:
+                    for linea in self.rent_concepts:
+                        lineas_conceptos = {
+                            'product_id': linea.name,
+                            'name': linea.description,
+                            'quantity': '%s' % (dias_a_facturar),
+                            'price_unit': linea.price,
+                            'tax_ids': linea.name.taxes_id,
+                            #'product_uom_id': linea.name.uom_id,
+                            'vehiculo': self.vehicle_id.id,
+                        }
+                        lista_factu.append((0, 0, lineas_conceptos))
+                if self.tools_line:
+                    for linea in self.tools_line:
+                        lineas_accesorios = {
+                            'product_id': accesorio,
+                            'name': linea.name.name,
+                            'quantity': '%s' % (dias_a_facturar),
+                            'price_unit': linea.price,
+                            'tax_ids': accesorio.taxes_id,
+                            #'product_uom_id': accesorio.name.uom_id,
+                            'aditamento': linea.name.id,
+                        }
+                        lista_factu.append((0, 0, lineas_accesorios))
+                if lista_factu:
                     valores_fact.update({
-                        'partner_id': self.customer_id.id,
-                        'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
-                        'invoice_date': today,
-                        'move_type': 'out_invoice',
-                        'renta': self.id,
-                        'inicio': start_date,
-                        'fin': end_date_month,
-                        'journal_id': 1,
-                        'invoice_user_id': self.sales_person.id,
+                        'invoice_line_ids': lista_factu,
                     })
-                    lista_factu = []
-                    if self.rent_concepts:
-                        for linea in self.rent_concepts:
-                            lineas_conceptos = {
-                                'product_id': linea.name,
-                                'name': linea.description,
-                                'quantity': '%s' % (dias_a_facturar),
-                                'price_unit': linea.price,
-                                'tax_ids': linea.name.taxes_id,
-                                #'product_uom_id': linea.name.uom_id,
-                                'vehiculo': self.vehicle_id.id,
-                            }
-                            lista_factu.append((0, 0, lineas_conceptos))
-                    if self.tools_line:
-                        for linea in self.tools_line:
-                            lineas_accesorios = {
-                                'product_id': accesorio,
-                                'name': linea.name.name,
-                                'quantity': '%s' % (dias_a_facturar),
-                                'price_unit': linea.price,
-                                'tax_ids': accesorio.taxes_id,
-                                #'product_uom_id': accesorio.name.uom_id,
-                                'aditamento': linea.name.id,
-                            }
-                            lista_factu.append((0, 0, lineas_accesorios))
-                    if lista_factu:
-                        valores_fact.update({
-                            'invoice_line_ids': lista_factu,
-                        })
-                    factura_creada = inv_obj.create(valores_fact)
-                    self.siguiente_fecha_de_factura = next_month
+                factura_creada = inv_obj.create(valores_fact)
+
 
 
 
