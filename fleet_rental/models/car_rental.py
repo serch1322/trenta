@@ -104,6 +104,7 @@ class CarRentalContract(models.Model):
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
     siguiente_fecha_de_factura = fields.Date(string="Fecha de Próxima Factura")
+    sucursal = fields.Many2one('res.partner',string="Centro de Negocio", copy=False)
 
     @api.onchange('vehicle_id')
     def modificar_accesorios(self):
@@ -150,6 +151,7 @@ class CarRentalContract(models.Model):
                         'inicio': start_date,
                         'fin': end_date_month,
                         'journal_id': 1,
+                        'invoice_user_id': self.sales_person.id,
                     })
                     lista_factu = []
                     if self.rent_concepts:
@@ -200,6 +202,7 @@ class CarRentalContract(models.Model):
                         'inicio': start_date,
                         'fin': end_date_month,
                         'journal_id': 1,
+                        'invoice_user_id': self.sales_person.id,
                     })
                     lista_factu = []
                     if self.rent_concepts:
@@ -417,6 +420,7 @@ class CarRentalContract(models.Model):
                             'move_type': 'out_invoice',
                             'renta': record.id,
                             'journal_id': 1,
+                            'invoice_user_id': self.sales_person.id,
                         })
                         lista_factu = []
                         if record.rent_concepts:
@@ -467,6 +471,7 @@ class CarRentalContract(models.Model):
                             'fin': end_date_month,
                             'renta': record.id,
                             'journal_id': 1,
+                            'invoice_user_id': self.sales_person.id,
                         })
                         lista_factu = []
                         if record.rent_concepts:
