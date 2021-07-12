@@ -133,13 +133,13 @@ class CarRentalContract(models.Model):
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
-            start_date_day = start_date.day()
+            start_date_day = start_date.day
         else:
             start_date = self.siguiente_fecha_de_factura
-            start_date_day = start_date.day()
+            start_date_day = start_date.day
         next_month = datetime(start_date.year, start_date.month + 1, 1)
         end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
-        end_date_day = end_date_month.day()
+        end_date_day = end_date_month.day
         if self.state == 'running':
             self.siguiente_fecha_de_factura = next_month
             if self.cost_frequency == 'monthly':
@@ -196,13 +196,13 @@ class CarRentalContract(models.Model):
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
-            start_date_day = start_date.day()
+            start_date_day = start_date.date.day
         else:
             start_date = self.siguiente_fecha_de_factura
-            start_date_day = start_date.day()
+            start_date_day = start_date.date.day
         next_month = datetime(start_date.year, start_date.month + 1, 1)
         end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
-        end_date_day = end_date_month.day()
+        end_date_day = end_date_month.date.day
         if self.state == 'running':
             self.siguiente_fecha_de_factura = next_month
             if self.cost_frequency == 'monthly':
