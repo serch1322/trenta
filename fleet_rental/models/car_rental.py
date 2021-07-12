@@ -59,9 +59,9 @@ class CarRentalContract(models.Model):
     car_color = fields.Char(string="Color Vehiculo", size=50, related='vehicle_id.color', store=True, copy=False,
                             default='#FFFFFF', readonly=True)
     rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=str(date.today()),
-                                  help="Start date of contract", track_visibility='onchange', readonly=True, states={'draft': [('readonly', False)]})
+                                  help="Start date of contract", track_visibility='onchange', store=True, readonly=True, states={'draft': [('readonly', False)]})
     rent_end_date = fields.Date(string="Fecha Fin de Renta", help="End date of contract",
-                                track_visibility='onchange')
+                                track_visibility='onchange', store=True)
     state = fields.Selection(
         [('draft', 'Borrador'), ('reserved', 'Reservado'), ('running', 'Corriendo'), ('cancel', 'Cancelar'), ('service','Servicio'),
          ('checking', 'Revisando'), ('invoice', 'Factura'), ('done', 'Hecho')], string="State",
@@ -196,13 +196,13 @@ class CarRentalContract(models.Model):
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
-            start_date_day = start_date.date.day
+            start_date_day = start_date.day
         else:
             start_date = self.siguiente_fecha_de_factura
-            start_date_day = start_date.date.day
+            start_date_day = start_date.day
         next_month = datetime(start_date.year, start_date.month + 1, 1)
         end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
-        end_date_day = end_date_month.date.day
+        end_date_day = end_date_month.day
         if self.state == 'running':
             self.siguiente_fecha_de_factura = next_month
             if self.cost_frequency == 'monthly':
