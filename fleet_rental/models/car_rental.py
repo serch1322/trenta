@@ -194,9 +194,9 @@ class CarRentalContract(models.Model):
         valores_fact = {}
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         if not self.siguiente_fecha_de_factura:
-            start_date = self.rent_start_date.date()
+            start_date = date(self.rent_start_date)
         else:
-            start_date = self.siguiente_fecha_de_factura.date()
+            start_date = date(self.siguiente_fecha_de_factura)
         start_date_day = start_date.day
         next_month = datetime(start_date.year, start_date.month + 1, 1)
         end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
