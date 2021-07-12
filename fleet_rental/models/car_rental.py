@@ -125,8 +125,8 @@ class CarRentalContract(models.Model):
             })
         valores_accesorios = record.update(lista_accesorios)
 
-    @api.model
-    def fleet_scheduler(self):
+    def crear_factura(self):
+        self.ensure_one()
         inv_obj = self.env['account.move']
         today = date.today()
         valores_fact = {}
@@ -191,8 +191,8 @@ class CarRentalContract(models.Model):
                     })
                 factura_creada = inv_obj.create(valores_fact)
 
-    def crear_factura(self):
-        self.ensure_one()
+    @api.model
+    def fleet_scheduler(self):
         inv_obj = self.env['account.move']
         today = date.today()
         valores_fact = {}
