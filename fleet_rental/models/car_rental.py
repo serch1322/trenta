@@ -134,7 +134,6 @@ class CarRentalContract(models.Model):
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
             start_date_day = start_date.day()
-
         else:
             start_date = self.siguiente_fecha_de_factura
             start_date_day = start_date.day()
@@ -198,7 +197,6 @@ class CarRentalContract(models.Model):
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
             start_date_day = start_date.day()
-
         else:
             start_date = self.siguiente_fecha_de_factura
             start_date_day = start_date.day()
