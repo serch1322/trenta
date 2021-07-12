@@ -133,10 +133,9 @@ class CarRentalContract(models.Model):
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
-            start_date_day = start_date.day
         else:
             start_date = self.siguiente_fecha_de_factura
-            start_date_day = start_date.day
+        start_date_day = start_date.day
         next_month = datetime(start_date.year, start_date.month + 1, 1)
         end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
         end_date_day = end_date_month.day
@@ -187,6 +186,69 @@ class CarRentalContract(models.Model):
                         'invoice_line_ids': lista_factu,
                     })
                 factura_creada = inv_obj.create(valores_fact)
+
+    @api.model
+    def fleet_scheduler(self):
+        inv_obj = self.env['account.move']
+        today = date.today()
+        valores_fact = {}
+        accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
+        if not self.siguiente_fecha_de_factura:
+            start_date = self.rent_start_date
+        else:
+            start_date = self.siguiente_fecha_de_factura
+        start_date_day = start_date.day
+        next_month = datetime(start_date.year, start_date.month + 1, 1)
+        end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
+        end_date_day = end_date_month.day
+        if self.state == 'running':
+            self.siguiente_fecha_de_factura = next_month
+            if self.cost_frequency == 'monthly':
+                dias_a_facturar = end_date_day - start_date_day + 1
+                valores_fact.update({
+                    'partner_id': self.customer_id.id,
+                    'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
+                    'invoice_date': today,
+                    'move_type': 'out_invoice',
+                    'renta': self.id,
+                    'inicio': start_date,
+                    'fin': end_date_month,
+                    'journal_id': 1,
+                    'sucursal': self.sucursal.id,
+                    'invoice_user_id': self.sales_person.id,
+                })
+                lista_factu = []
+                if self.rent_concepts:
+                    for linea in self.rent_concepts:
+                        lineas_conceptos = {
+                            'product_id': linea.name,
+                            'name': linea.description,
+                            'quantity': '%s' % (dias_a_facturar),
+                            'price_unit': linea.price,
+                            'tax_ids': linea.name.taxes_id,
+                            'product_uom_id': linea.name.uom_id.id,
+                            'vehiculo': self.vehicle_id.id,
+                        }
+                        lista_factu.append((0, 0, lineas_conceptos))
+                if self.tools_line:
+                    for linea in self.tools_line:
+                        if linea.price != 0:
+                            lineas_accesorios = {
+                                'product_id': accesorio,
+                                'name': linea.name.name,
+                                'quantity': '%s' % (dias_a_facturar),
+                                'price_unit': linea.price,
+                                'tax_ids': accesorio.taxes_id,
+                                'product_uom_id': accesorio.uom_id.id,
+                                'aditamento': linea.name.id,
+                            }
+                            lista_factu.append((0, 0, lineas_accesorios))
+                if lista_factu:
+                    valores_fact.update({
+                        'invoice_line_ids': lista_factu,
+                    })
+                factura_creada = inv_obj.create(valores_fact)
+
 
     def action_view_invoice(self):
         inv_obj = self.env['account.move'].search([('renta', '=', self.id)])
@@ -411,69 +473,6 @@ class CarRentalContract(models.Model):
             else:
                 result = {'type': 'ir.actions.act_window_close'}
             return result
-
-    @api.model
-    def fleet_scheduler(self):
-        inv_obj = self.env['account.move']
-        today = date.today()
-        valores_fact = {}
-        accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
-        if not self.siguiente_fecha_de_factura:
-            start_date = self.rent_start_date
-            start_date_day = start_date.day
-        else:
-            start_date = self.siguiente_fecha_de_factura
-            start_date_day = start_date.day
-        next_month = datetime(start_date.year, start_date.month + 1, 1)
-        end_date_month = datetime(start_date.year, start_date.month, calendar.mdays[start_date.month])
-        end_date_day = end_date_month.day
-        if self.state == 'running':
-            self.siguiente_fecha_de_factura = next_month
-            if self.cost_frequency == 'monthly':
-                dias_a_facturar = end_date_day - start_date_day + 1
-                valores_fact.update({
-                    'partner_id': self.customer_id.id,
-                    'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
-                    'invoice_date': today,
-                    'move_type': 'out_invoice',
-                    'renta': self.id,
-                    'inicio': start_date,
-                    'fin': end_date_month,
-                    'journal_id': 1,
-                    'sucursal': self.sucursal.id,
-                    'invoice_user_id': self.sales_person.id,
-                })
-                lista_factu = []
-                if self.rent_concepts:
-                    for linea in self.rent_concepts:
-                        lineas_conceptos = {
-                            'product_id': linea.name,
-                            'name': linea.description,
-                            'quantity': '%s' % (dias_a_facturar),
-                            'price_unit': linea.price,
-                            'tax_ids': linea.name.taxes_id,
-                            'product_uom_id': linea.name.uom_id.id,
-                            'vehiculo': self.vehicle_id.id,
-                        }
-                        lista_factu.append((0, 0, lineas_conceptos))
-                if self.tools_line:
-                    for linea in self.tools_line:
-                        if linea.price != 0:
-                            lineas_accesorios = {
-                                'product_id': accesorio,
-                                'name': linea.name.name,
-                                'quantity': '%s' % (dias_a_facturar),
-                                'price_unit': linea.price,
-                                'tax_ids': accesorio.taxes_id,
-                                'product_uom_id': accesorio.uom_id.id,
-                                'aditamento': linea.name.id,
-                            }
-                            lista_factu.append((0, 0, lineas_accesorios))
-                if lista_factu:
-                    valores_fact.update({
-                        'invoice_line_ids': lista_factu,
-                    })
-                factura_creada = inv_obj.create(valores_fact)
 
     def action_confirm(self):
         check_availability = 0
