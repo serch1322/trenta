@@ -82,6 +82,7 @@
                                 <field name="sales_person" attrs="{'readonly': [('state','!=','draft')]}"/>
                             </group>
                            <group>
+                                <field name="sucursal" domain="[('type','=','delivery')]"/>
                                 <field name="car_brand"/>
                                 <field name="car_color"/>
                                 <field name="first_invoice_created" invisible="1"/>
