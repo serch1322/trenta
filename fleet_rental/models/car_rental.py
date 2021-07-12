@@ -168,7 +168,7 @@ class CarRentalContract(models.Model):
                             'quantity': '%s' % (dias_a_facturar),
                             'price_unit': linea.price,
                             'tax_ids': linea.name.taxes_id,
-                            #'product_uom_id': linea.name.uom_id.id,
+                            # 'product_uom_id': linea.name.uom_id.id,
                             'vehiculo': self.vehicle_id.id,
                         }
                         lista_factu.append((0, 0, lineas_conceptos))
@@ -412,8 +412,6 @@ class CarRentalContract(models.Model):
             'move_id': inv_id.id,
         }
         inv_line_obj.update(inv_line_data)
-
-
 
     def action_verify(self):
         self.state = "invoice"
