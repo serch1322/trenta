@@ -193,6 +193,8 @@ class CarRentalContract(models.Model):
         inv_obj = self.env['account.move']
         today = date.today()
         valores_fact = {}
+        start_date = None
+        start_date_day = None
         accesorio = self.env['product.product'].search([("name", "=", "Accesorio/Aditamento")])
         if not self.siguiente_fecha_de_factura:
             start_date = self.rent_start_date
