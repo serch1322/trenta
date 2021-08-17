@@ -21,7 +21,7 @@ class EntidadMatricula(models.Model):
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
     facturas_count = fields.Integer(compute="_compute_count_all", string="Facturas", store=True)
-    tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable",required=True)
+    tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable")
     periodo_de_depreciacion = fields.Selection([('1', 'Meses'), ('12', 'Años')], string='Periodo de Depreciación', default='1')
     depreciacion_contable =  fields.Many2one('account.asset',string="Depreciación Contable", context="{'form_view_ref':'account_asset.view_account_asset_form'}")
     depreciacion_fiscal = fields.Many2one('account.asset', string="Depreciación Fiscal", context="{'form_view_ref':'account_asset.view_account_asset_form'}")
@@ -126,6 +126,24 @@ class EntidadMatricula(models.Model):
         self.ensure_one()
         activo = self.env['account.asset']
         valores_activo = {}
+        poliza = self.env['account.move']
+        valores_poliza = {}
+        valores_poliza.update({
+            'move_type': 'entry',
+            'ref': 'Póliza de Inventario a Activo de Vehículo %s %s %s' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
+            'date': date.today(),
+            'journal_id': 3,
+            'line_ids': [(0,0, {
+                'account_id': self.model_id.activo.id,
+                'debit': self.net_car_value,
+                'name': '%s %s %s' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
+            }), (0,0,{
+                'account_id': self.inventario.id,
+                'credit': self.net_car_value,
+                'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
+            })]
+        })
+        poliza_creada = poliza.create(valores_poliza)
         if self.tipo == 'carga':
             valores_activo.update({
                 'name': '%s %s %s Fiscal' % (self.model_id.name,self.model_id.brand_id.name,self.license_plate),
