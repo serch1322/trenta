@@ -61,7 +61,7 @@
                     </button>
                 </field>
                 <field name="model_year" position="after">
-                    <field name="num_eco"/>
+                    <field name="num_eco" force_save="1"/>
                     <field name="categoria" required="1"/>
                     <field name="tipo"/>
                     <field name="carga" attrs="{'required':[('tipo','==','carga')],'invisible': [('tipo', '!=', 'carga')]}"/>

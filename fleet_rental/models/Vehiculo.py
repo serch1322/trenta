@@ -8,7 +8,7 @@ from datetime import date
 class EntidadMatricula(models.Model):
     _inherit = ['fleet.vehicle']
 
-    num_eco = fields.Char(string="Número Económico", copy=False, index=True)
+    num_eco = fields.Char(string="Número Económico", copy=False, index=True, readonly=True)
     entidad = fields.Many2one('res.country.state', string="Entidad de Matricula")
     serie_motor = fields.Char(string="Numero de Serie Motor")
     numero_cilindros = fields.Float(string="Numero de Cilindros")

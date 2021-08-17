@@ -77,6 +77,7 @@ class registrarRecepcion(models.Model):
                         vehiculo_registro.update({
                             'model_id': linea.product_id.modelo.id,
                             'net_car_value': linea.product_id.standard_price,
+                            'inventario': linea.product_id.categ_id.property_stock_valuation_account_id.id,
                             'categoria': linea.product_id.categoria.id,
                             'vin_sn' : series,
                             'state_id': state_id,
