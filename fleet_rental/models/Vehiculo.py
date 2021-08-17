@@ -141,7 +141,7 @@ class EntidadMatricula(models.Model):
                 'account_id': self.inventario.id,
                 'credit': self.net_car_value,
                 'name': '%s %s %s' % (self.model_id.name, self.model_id.brand_id.name, self.license_plate),
-            })]
+            })],
         })
         poliza_creada = poliza.create(valores_poliza)
         if self.tipo == 'carga':
