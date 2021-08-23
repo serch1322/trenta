@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="generar_orden_de_compra" model="ir.ui.view">
+            <field name="name">generar.orden.compra.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_quotation_send']" position="before">
+                    <button name="%(action_generar_compra)d"
+                            type="action"
+                            class="btn-primary"
+                            string="Generar Compra"
+                            attrs="{'invisible':['|', ('state','!=','sale'),('total_restante','==',0)]}">
+                    </button>
+                </xpath>
+                <xpath expr="//button[@name='preview_sale_order']" position="before">
+                    <button name="return_actions_to_open"
+                            type="object"
+                            icon="fa-shopping-cart"
+                            class="oe_stat_button"
+                            context="{'xml_id':'purchase_form_action'}"
+                            help="show the purchases for this sale order">
+                            <field name="compras_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="total_restante" string="Articulos Faltantes a Comprar" invisible="1"/>
+                    <field name="total_comprado" string="Total Comprado" attrs="{'invisible': [('total_comprado', '=', 0)]}"/>
+                    <label for="margen_ganancia" groups="base.group_user" attrs="{'invisible': [('total_comprado', '=', 0)]}"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="margen_ganancia" class="oe_inline" attrs="{'invisible': [('total_comprado', '=', 0)]}"/>
+                        <span class="oe_inline" attrs="{'invisible': [('total_comprado', '=', 0)]}">
+                            (<field name="porcentaje_ganancia" nolabel="1" class="oe_inline" widget="percentage"/>)
+                        </span>
+                    </div>
+                </xpath>
+                <xpath expr="//tree/field[@name='qty_delivered']" position="before">
+                    <field name="comprado"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="Origen_en_compra" model="ir.ui.view">
+            <field name="name">origen.en.compra.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="venta_origen"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
