@@ -6,8 +6,8 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="name" position="after">
-                    <field name="conductor"/>
+                <field name="company_name" position="after">
+                    <field name="conductor" string="¿Es Conductor?"/>
                 </field>
                 <field name="vat" position="after">
                     <field name="tipo_de_licencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
