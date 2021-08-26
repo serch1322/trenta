@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b70878b2-eb1c-41b9-bf12-96a75b074fb9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/fleet_rental/models/licencia_contacto.py" beforeDir="false" afterPath="$PROJECT_DIR$/fleet_rental/models/licencia_contacto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fleet_rental/views/licencia_contacto.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fleet_rental/views/licencia_contacto.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fleet_rental/views/vehiculo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fleet_rental/views/vehiculo.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1xErmbrfBvl7x05gi544lvWH3kF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b70878b2-eb1c-41b9-bf12-96a75b074fb9" name="Changes" comment="" />
+      <created>1629931249516</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629931249516</updated>
+    </task>
+    <servers />
+  </component>
+</project>
