@@ -10,15 +10,15 @@
                     <field name="conductor" string="¿Es Conductor?"/>
                 </field>
                 <field name="vat" position="after">
-                    <field name="tipo_de_licencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
-                    <field name="vigencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
+                    <field name="tipo_de_licencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
+                    <field name="vigencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
                 </field>
                 <field name="function" position="after">
-                    <field name="sexo" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
-                    <field name="edad" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
-                    <field name="tipo_sangre" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
-                    <field name="numero_emergencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
-                    <field name="curp" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','==','True')]}"/>
+                    <field name="sexo" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
+                    <field name="edad" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
+                    <field name="tipo_sangre" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
+                    <field name="numero_emergencia" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
+                    <field name="curp" attrs="{'required':['|',('company_type','==','person'),('conductor','==','True')],'invisible': ['|',('company_type', '==', 'company'),('conductor','!=','True')]}"/>
                 </field>
             </field>
         </record>
