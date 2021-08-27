@@ -71,12 +71,12 @@
                     <attribute name="nolabel">1</attribute>
                 </field>
                 <field name="company_id" position="after">
-                    <field name="depr" attrs="{'required':[('tipo','!=','carga')],'invisible': [('tipo', '==', 'carga')]}"/>
+                    <field name="depr" attrs="{'invisible': [('tipo', '==', 'carga')]}"/>
                     <field name="inventario"/>
                     <field name="entidad" string="Entidad de Placas" required="0"/>
                     <field name="tiempo_de_depreciacion" attrs="{'invisible': [('depreciado', '=', True)]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': [('depreciado', '=', True)]}" nolabel="1"/>
                     <field name="depreciacion_contable" readonly="1" force_save="1"/>
-                    <field name="depreciacion_fiscal" required="0" readonly="1" force_save="1"/>
+                    <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
                     <field name="depreciado" invisible="1"/>
                 </field>
                 <field name="transmission" position="before">
