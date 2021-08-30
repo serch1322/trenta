@@ -53,7 +53,7 @@ class CarRentalContract(models.Model):
     vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle", copy=False,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]},
-                                 domain=[('state_id','=','fleet_rental.vehicle_state_active')]
+                                 domain=[('state_id','=','vehicle_state_active')]
                                  )
     car_brand = fields.Many2one('fleet.vehicle.model.brand', string="Marca Vehiculo", size=50,
                                 related='vehicle_id.model_id.brand_id', store=True, readonly=True)
