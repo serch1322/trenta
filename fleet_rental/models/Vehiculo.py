@@ -40,7 +40,7 @@ class EntidadMatricula(models.Model):
 
 
     def uso_interno(self):
-        state_id = self.env.ref('fleet_rental.vehicle_state_active').id
+        state_id = self.env.ref('fleet_rental.vehicle_state_intern').id
         self.write({'state_id': state_id})
 
     def return_actions_to_open_seguro(self):
