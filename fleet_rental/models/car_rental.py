@@ -14,22 +14,23 @@ class CarRentalContract(models.Model):
     @api.onchange('rent_start_date', 'rent_end_date')
     def check_availability(self):
         self.vehicle_id = ''
-        fleet_obj = self.env['fleet.vehicle'].search([])
+        fleet_obj = self.env['fleet.vehicle'].search([('state_id', '=', 'fleet_rental.vehicle_state_active')])
         for i in fleet_obj:
-            # print("fleet_obj", i.read())
-            for each in i.rental_reserved_time:
-
-                if str(each.date_from) <= str(self.rent_start_date) <= str(each.date_to):
-                    i.write({'rental_check_availability': False})
-                elif str(self.rent_start_date) < str(each.date_from):
-                    if str(each.date_from) <= str(self.rent_end_date) <= str(each.date_to):
-                        i.write({'rental_check_availability': False})
-                    elif str(self.rent_end_date) > str(each.date_to):
-                        i.write({'rental_check_availability': False})
-                    else:
-                        i.write({'rental_check_availability': True})
-                else:
-                    i.write({'rental_check_availability': True})
+            i.write({'rental_check_availability': True})
+        #     # print("fleet_obj", i.read())
+        #     for each in i.rental_reserved_time:
+        #
+        #         if str(each.date_from) <= str(self.rent_start_date) <= str(each.date_to):
+        #             i.write({'rental_check_availability': False})
+        #         elif str(self.rent_start_date) < str(each.date_from):
+        #             if str(each.date_from) <= str(self.rent_end_date) <= str(each.date_to):
+        #                 i.write({'rental_check_availability': False})
+        #             elif str(self.rent_end_date) > str(each.date_to):
+        #                 i.write({'rental_check_availability': False})
+        #             else:
+        #                 i.write({'rental_check_availability': True})
+        #         else:
+        #             i.write({'rental_check_availability': True})
 
     @api.depends('rent_concepts.subtotal','tools_line.subtotal')
     def _obtener_totales(self):
