@@ -11,26 +11,25 @@ class CarRentalContract(models.Model):
     _description = 'Fleet Rental Management'
     _inherit = 'mail.thread'
 
-    #@api.onchange('rent_start_date', 'rent_end_date')
+    @api.onchange('rent_start_date', 'rent_end_date')
     def check_availability(self):
         self.vehicle_id = ''
-        fleet_obj = self.env['fleet.vehicle'].search([('state_id', '=', 'fleet_rental.vehicle_state_active')])
+        fleet_obj = self.env['fleet.vehicle'].search([])
         for i in fleet_obj:
-            i.write({'rental_check_availability': True})
-        #     # print("fleet_obj", i.read())
-        #     for each in i.rental_reserved_time:
-        #
-        #         if str(each.date_from) <= str(self.rent_start_date) <= str(each.date_to):
-        #             i.write({'rental_check_availability': False})
-        #         elif str(self.rent_start_date) < str(each.date_from):
-        #             if str(each.date_from) <= str(self.rent_end_date) <= str(each.date_to):
-        #                 i.write({'rental_check_availability': False})
-        #             elif str(self.rent_end_date) > str(each.date_to):
-        #                 i.write({'rental_check_availability': False})
-        #             else:
-        #                 i.write({'rental_check_availability': True})
-        #         else:
-        #             i.write({'rental_check_availability': True})
+            # print("fleet_obj", i.read())
+            for each in i.rental_reserved_time:
+
+                if str(each.date_from) <= str(self.rent_start_date) <= str(each.date_to):
+                    i.write({'rental_check_availability': False})
+                elif str(self.rent_start_date) < str(each.date_from):
+                    if str(each.date_from) <= str(self.rent_end_date) <= str(each.date_to):
+                        i.write({'rental_check_availability': False})
+                    elif str(self.rent_end_date) > str(each.date_to):
+                        i.write({'rental_check_availability': False})
+                    else:
+                        i.write({'rental_check_availability': True})
+                else:
+                    i.write({'rental_check_availability': True})
 
     @api.depends('rent_concepts.subtotal','tools_line.subtotal')
     def _obtener_totales(self):
@@ -51,7 +50,11 @@ class CarRentalContract(models.Model):
     reserved_fleet_id = fields.Many2one('rental.fleet.reserved', invisible=True, copy=False)
     name = fields.Char(string="Name", default="Draft Contract", readonly=True, copy=False)
     customer_id = fields.Many2one('res.partner', required=True, string='Cliente', help="Customer")
-    vehicle_id = fields.Many2one('fleet.vehicle',compute="check_availability", string="Vehiculo", required=True, help="Vehicle", copy=False,
+    # vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle", copy=False,
+    #                              readonly=True,
+    #                              states={'draft': [('readonly', False)]}
+    #                              )
+    vehicle_id = fields.Many2one(compute="vehiculos_disponibles", string="Vehiculo", required=True, help="Vehicle", copy=False,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]}
                                  )
@@ -106,6 +109,12 @@ class CarRentalContract(models.Model):
                                      domain="[('company_id', '=', False)]")
     siguiente_fecha_de_factura = fields.Date(string="Fecha de Próxima Factura")
     sucursal = fields.Many2one('res.partner',string="Centro de Negocio", copy=False)
+
+    def vehiculos_disponibles(self):
+        fleet_obj = self.env['fleet.vehicle'].search(['fleet_rental.vehicle_state_active'])
+        for i in fleet_obj:
+            i.write({'rental_check_availability': True})
+            self.vehicle_id = i.id
 
     @api.onchange('vehicle_id')
     def modificar_accesorios(self):
