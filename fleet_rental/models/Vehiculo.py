@@ -43,6 +43,10 @@ class EntidadMatricula(models.Model):
         state_id = self.env.ref('fleet_rental.vehicle_state_intern').id
         self.write({'state_id': state_id})
 
+    def disponible(self):
+        state_id = self.env.ref('fleet_rental.vehicle_state_active').id
+        self.write({'state_id': state_id})
+
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
         self.ensure_one()
