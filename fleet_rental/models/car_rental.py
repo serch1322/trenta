@@ -11,7 +11,7 @@ class CarRentalContract(models.Model):
     _description = 'Fleet Rental Management'
     _inherit = 'mail.thread'
 
-    @api.onchange('rent_start_date', 'rent_end_date')
+    #@api.onchange('rent_start_date', 'rent_end_date')
     def check_availability(self):
         self.vehicle_id = ''
         fleet_obj = self.env['fleet.vehicle'].search([('state_id', '=', 'fleet_rental.vehicle_state_active')])
@@ -51,7 +51,7 @@ class CarRentalContract(models.Model):
     reserved_fleet_id = fields.Many2one('rental.fleet.reserved', invisible=True, copy=False)
     name = fields.Char(string="Name", default="Draft Contract", readonly=True, copy=False)
     customer_id = fields.Many2one('res.partner', required=True, string='Cliente', help="Customer")
-    vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle", copy=False,
+    vehicle_id = fields.Many2one('fleet.vehicle',compute="check_availability", string="Vehiculo", required=True, help="Vehicle", copy=False,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]}
                                  )
