@@ -38,6 +38,11 @@ class EntidadMatricula(models.Model):
     _sql_constraints = [('vin_sn_unique', 'unique (vin_sn)', "Chassis Number already exists !"),
                         ('license_plate_unique', 'unique (license_plate)', "License plate already exists !")]
 
+
+    def uso_interno(self):
+        return False
+
+
     def return_actions_to_open_seguro(self):
         """ This opens the xml view specified in xml_id for the current vehicle """
         self.ensure_one()
