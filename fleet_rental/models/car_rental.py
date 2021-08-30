@@ -14,10 +14,11 @@ class CarRentalContract(models.Model):
     #@api.onchange('rent_start_date', 'rent_end_date')
     @api.depends('vehicle_id.state_id')
     def check_availability(self):
-        self.vehicle_id = ''
+        #self.vehicle_id = ''
         fleet_obj = self.env['fleet.vehicle'].search(['fleet_rental.vehicle_state_active'])
         for i in fleet_obj:
             i.write({'rental_check_availability': True})
+            self.vehicle_id = fleet_obj
             # print("fleet_obj", i.read())
             # for each in i.rental_reserved_time:
             #
