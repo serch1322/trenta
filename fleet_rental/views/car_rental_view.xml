@@ -78,7 +78,6 @@
                                 ('state_id.name','=','Disponible')]"
                                    options="{'no_create': True}"/>-->
                                 <field name="vehicle_id"/>
-                                <field name="vehiculo"/>
                                 <field name="journal_type" invisible="1" />
                                 <field name="check_verify" invisible="1" />
                                 <field name="sales_person" attrs="{'readonly': [('state','!=','draft')]}"/>
