@@ -75,7 +75,7 @@
                     <field name="depr" attrs="{'invisible': [('tipo', '==', 'carga')]}"/>
                     <field name="inventario"/>
                     <field name="entidad" string="Entidad de Placas" required="0"/>
-                    <field name="tiempo_de_depreciacion" attrs="{'invisible': [('depreciado', '=', True)]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': [('depreciado', '=', True)]}" nolabel="1"/>
+                    <field name="tiempo_de_depreciacion" attrs="{'invisible': [('state_id', '!=', 6)]}"/> <field name="periodo_de_depreciacion" attrs="{'invisible': [('state_id', '!=', 6)]}" nolabel="1"/>
                     <field name="depreciacion_contable" readonly="1" force_save="1"/>
                     <field name="depreciacion_fiscal" readonly="1" force_save="1"/>
                 </field>
