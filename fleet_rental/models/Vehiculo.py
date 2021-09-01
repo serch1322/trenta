@@ -243,7 +243,6 @@ class EntidadMatricula(models.Model):
         })
         contable_creado = activo.create(valores_contable)
         self.depreciacion_contable = contable_creado.id
-        self.depreciado = True
         self.num_eco = vals
 
 
