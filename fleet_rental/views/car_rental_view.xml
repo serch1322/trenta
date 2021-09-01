@@ -75,8 +75,9 @@
                                 <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="vehicle_id" domain="[('insurance_count','!=',0)],[('rental_check_availability','=',True),
-                                ('state_id.name','==','Disponible')]"
+                                ('state_id.name','=','Disponible')]"
                                    options="{'no_create': True}"/>
+                                <field name="vehiculo"/>
                                 <field name="journal_type" invisible="1" />
                                 <field name="check_verify" invisible="1" />
                                 <field name="sales_person" attrs="{'readonly': [('state','!=','draft')]}"/>
