@@ -59,8 +59,8 @@
                             class="btn-primary"
                             string="Vender Vehiculo" groups="fleet.fleet_group_manager">
                     </button>
-                    <button name="uso_interno" string="Uso Interno" type="object" confirm="¿Estás seguro que quieres mandar a uso interno?" class="btn-primary" attrs="{'invisible': [('state_id.name', '=', 'Disponible')]}"/>
-                    <button name="disponible" string="Disponible" type="object" confirm="¿Estás seguro que quieres mandar a Disponoble?" class="btn-primary" attrs="{'invisible': [('state_id.name', '=', 'Interno')]}"/>
+                    <button name="uso_interno" string="Uso Interno" type="object" confirm="¿Estás seguro que quieres mandar a uso interno?" class="btn-primary"/>
+                    <button name="disponible" string="Disponible" type="object" confirm="¿Estás seguro que quieres mandar a Disponoble?" class="btn-primary"/>
                 </field>
                 <field name="model_year" position="after">
                     <field name="num_eco" force_save="1"/>
