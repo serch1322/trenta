@@ -55,12 +55,12 @@ class CarRentalContract(models.Model):
     #                              )
     vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle", copy=False,
                                  readonly=True, states={'draft': [('readonly', False)]}, options="{'no_create': True}",
-                                 domain="[('state_id.name', '=', 'Disponible')]"
+                                 domain="[('state_id.name', '=', 'Disponible'),('insurance_count','!=',0)]"
                                  )
     vehiculo = fields.Many2one('fleet.vehicle', string="Vehiculo1", required=True, help="Vehicle", copy=False,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]},
-                                 domain=[('state_id.name', '=', 'Disponible')],
+                                 domain=[('state_id.name', '=', 'Disponible')]
                                  )
     car_brand = fields.Many2one('fleet.vehicle.model.brand', string="Marca Vehiculo", size=50,
                                 related='vehicle_id.model_id.brand_id', store=True, readonly=True)
