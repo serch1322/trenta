@@ -18,7 +18,6 @@ class CarRentalContract(models.Model):
         for i in fleet_obj:
             # print("fleet_obj", i.read())
             for each in i.rental_reserved_time:
-
                 if str(each.date_from) <= str(self.rent_start_date) <= str(each.date_to):
                     i.write({'rental_check_availability': False})
                 elif str(self.rent_start_date) < str(each.date_from):
@@ -53,7 +52,7 @@ class CarRentalContract(models.Model):
     vehicle_id = fields.Many2one('fleet.vehicle', string="Vehiculo", required=True, help="Vehicle", copy=False,
                                  readonly=True,
                                  states={'draft': [('readonly', False)]},
-                                 domain=[('state_id','=','Disponible')],
+                                 domain=[('state_id.id','=','vehicle_state_active')],
                                  )
     car_brand = fields.Many2one('fleet.vehicle.model.brand', string="Marca Vehiculo", size=50,
                                 related='vehicle_id.model_id.brand_id', store=True, readonly=True)
