@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <data>
+    <data noupdate="0">
 
         <record id="vehicle_state_inventory" model="fleet.vehicle.state">
             <field name="name">Almacén</field>
@@ -109,6 +109,11 @@
 
         <record model="product.template" id="renta_unidad">
             <field name="name">Renta de Unidad</field>
+            <field name="type">service</field>
+        </record>
+
+        <record model="product.template" id="mantenimiento">
+            <field name="name">Mantenimiento</field>
             <field name="type">service</field>
         </record>
 
