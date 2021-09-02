@@ -24,7 +24,7 @@ class ServicioaFactura(models.Model):
 
 
     def crear_factura_servicio(self):
-        mantenimiento = self.env['product.product'].search([("id", "=", "mantenimiento")])
+        mantenimiento = self.env['product.product'].search([("name", "=", "Mantenimiento")])
         self.state = 'facturado'
         self.ensure_one()
         factu_prov = self.env['account.move']
