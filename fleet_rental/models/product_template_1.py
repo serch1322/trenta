@@ -58,6 +58,7 @@ class registrarRecepcion(models.Model):
                          'num_serie': series,
                         })
                         aditamento_creado = registro_tools.create(aditamento_registro)
+                return self.button_validate(True)
             elif linea.product_id.tipo_product == 'accesorio':
                 i = 0
                 while i < linea.quantity_done:
@@ -70,6 +71,7 @@ class registrarRecepcion(models.Model):
                     })
                     accesorio_creado = registro_tools.create(accesorio_registro)
                 continue
+                return self.button_validate(True)
             elif linea.product_id.tipo_product == 'vehiculo':
                 for serie in linea.lot_ids:
                     if serie.name:
@@ -83,3 +85,4 @@ class registrarRecepcion(models.Model):
                             'state_id': state_id,
                         })
                         vehiculo_creado = registro_vehiculo.create(vehiculo_registro)
+                        return self.button_validate(True)
