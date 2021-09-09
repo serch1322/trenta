@@ -23,9 +23,7 @@
                 <button name="button_validate" position="after">
                     <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':[('state','!=','done')]}"/>
                 </button>
-                <button expr="//header/button[@name='action_view_picking']" position="attributes">
-                    <attribute name="invisible">['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]</attribute>
-                </button>
+                
             </field>
         </record>
     </data>
