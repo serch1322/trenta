@@ -19,6 +19,8 @@ class Producto(models.Model):
 class registrarRecepcion(models.Model):
     _inherit = ['stock.picking']
 
+    registradoFlota = ('purchase.order', string="Registrar en Flota")
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('waiting', 'Waiting Another Operation'),
@@ -58,7 +60,7 @@ class registrarRecepcion(models.Model):
                          'num_serie': series,
                         })
                         aditamento_creado = registro_tools.create(aditamento_registro)
-                return self.button_validate(True)
+                        self.registradoFlota.registrado = True
             elif linea.product_id.tipo_product == 'accesorio':
                 i = 0
                 while i < linea.quantity_done:
@@ -70,8 +72,8 @@ class registrarRecepcion(models.Model):
                         'tipo': linea.product_id.tipo_product,
                     })
                     accesorio_creado = registro_tools.create(accesorio_registro)
+                    self.registradoFlota.registrado = True
                 continue
-                return self.button_validate(True)
             elif linea.product_id.tipo_product == 'vehiculo':
                 for serie in linea.lot_ids:
                     if serie.name:
@@ -85,4 +87,9 @@ class registrarRecepcion(models.Model):
                             'state_id': state_id,
                         })
                         vehiculo_creado = registro_vehiculo.create(vehiculo_registro)
-                        return self.button_validate(True)
+                        self.registradoFlota.registrado = True
+
+class QuitarrecibirProductos(models.Model):
+    _inherit = ['purchase.order']
+
+    registrado = fields.Boolean(string="Regstrado en Flota",default=False, store=True)
