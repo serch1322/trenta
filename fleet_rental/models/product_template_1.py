@@ -83,5 +83,3 @@ class registrarRecepcion(models.Model):
                             'state_id': state_id,
                         })
                         vehiculo_creado = registro_vehiculo.create(vehiculo_registro)
-
-
