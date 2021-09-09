@@ -32,7 +32,7 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//header/button[@name='action_view_picking']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', '|' , ('registrado','=',True),('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|',  ('registrado','=',True),('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0)]}</attribute>
                 </xpath>
                 <field name="partner_id" position="before">
                     <field name="registrado"/>
