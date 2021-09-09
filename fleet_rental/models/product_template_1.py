@@ -19,7 +19,7 @@ class Producto(models.Model):
 class registrarRecepcion(models.Model):
     _inherit = ['stock.picking']
 
-    registradoFlota = ('purchase.order', string="Registrar en Flota")
+    registradoFlota = ('purchase.order')
 
     state = fields.Selection([
         ('draft', 'Draft'),
