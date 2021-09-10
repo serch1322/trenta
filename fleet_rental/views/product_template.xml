@@ -35,7 +35,7 @@
                     <attribute name="attrs">{'invisible': ['|', '|' , '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0),('registrado','=',True)]}</attribute>
                 </xpath>
                 <field name="partner_id" position="before">
-                    <field name="registrado" invisible="0"/>
+                    <field name="registrado" invisible="1"/>
                 </field>
             </field>
         </record>
