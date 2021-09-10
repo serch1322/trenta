@@ -62,6 +62,14 @@ class registrarRecepcion(models.Model):
                          'num_serie': series,
                         })
                         aditamento_creado = registro_tools.create(aditamento_registro)
+                        # Regresar lo registrado a modulo de compras
+                        for linea in self:
+                            for compra in orden:
+                                if linea.state == 'registrado':
+                                    lineas_compradas = {
+                                        'registrado': linea.registradoFlota,
+                                    }
+                                    locomprado_creado = compra.write(lineas_compradas)
             elif linea.product_id.tipo_product == 'accesorio':
                 i = 0
                 while i < linea.quantity_done:
@@ -73,6 +81,14 @@ class registrarRecepcion(models.Model):
                         'tipo': linea.product_id.tipo_product,
                     })
                     accesorio_creado = registro_tools.create(accesorio_registro)
+                    # Regresar lo registrado a modulo de compras
+                    for linea in self:
+                        for compra in orden:
+                            if linea.state == 'registrado':
+                                lineas_compradas = {
+                                    'registrado': linea.registradoFlota,
+                                }
+                                locomprado_creado = compra.write(lineas_compradas)
                 continue
             elif linea.product_id.tipo_product == 'vehiculo':
                 for serie in linea.lot_ids:
