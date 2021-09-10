@@ -47,6 +47,8 @@ class registrarRecepcion(models.Model):
         aditamento_registro = {}
         accesorio_registro = {}
         vehiculo_registro = {}
+        comprado = self._context
+        orden = self.env['purchase.order'].browse(comprado['active_id'])
         for linea in self.move_ids_without_package:
             if linea.product_id.tipo_product == 'aditamento':
                 for serie in linea.lot_ids:
@@ -87,15 +89,10 @@ class registrarRecepcion(models.Model):
                         vehiculo_creado = registro_vehiculo.create(vehiculo_registro)
                         #self.registradoFlota.registrado = True
                         # Regresar lo registrado a modulo de compras
-                        comprado = self._context
-                        orden = self.env['purchase.order'].browse(comprado['active_id'])
-                        for linea in self:
-                            for compra in orden:
-                                if linea.state == 'registrado':
-                                    lineas_compradas = {
-                                        'registrado': True,
-                                    }
-                                    locomprado_creado = compra.write(lineas_compradas)
+                        lineas_compradas = {
+                            'registrado': True,
+                        }
+                        locomprado_creado = orden.write(lineas_compradas)
 
 class QuitarrecibirProductos(models.Model):
     _inherit = ['purchase.order']
