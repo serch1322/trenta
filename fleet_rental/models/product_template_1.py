@@ -61,11 +61,12 @@ class registrarRecepcion(models.Model):
                         })
                         aditamento_creado = registro_tools.create(aditamento_registro)
 
-                        # Regresar lo registrado a modulo de compras
-                        lineas_compradas = {
-                            'registrado': True,
-                        }
-                        locomprado_creado = orden.write(lineas_compradas)
+                    # Regresar lo registrado a modulo de compras
+                    lineas_compradas = {
+                        'registrado': True,
+                    }
+                    locomprado_creado = orden.write(lineas_compradas)
+
             elif linea.product_id.tipo_product == 'accesorio':
                 i = 0
                 while i < linea.quantity_done:
@@ -84,6 +85,7 @@ class registrarRecepcion(models.Model):
                     }
                     locomprado_creado = orden.write(lineas_compradas)
                 continue
+
             elif linea.product_id.tipo_product == 'vehiculo':
                 for serie in linea.lot_ids:
                     if serie.name:
