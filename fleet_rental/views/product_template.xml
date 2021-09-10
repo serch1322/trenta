@@ -35,7 +35,7 @@
                     <attribute name="attrs">{'invisible': [('registrado','=',True)]}</attribute>
                 </xpath>
                 <field name="partner_id" position="before">
-                    <field name="registrado"/>
+                    <field name="registrado" invisible="1"/>
                 </field>
             </field>
         </record>

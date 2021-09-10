@@ -118,4 +118,4 @@ class registrarRecepcion(models.Model):
 class QuitarrecibirProductos(models.Model):
     _inherit = ['purchase.order']
 
-    registrado = fields.Boolean(string="Regstrado en Flota",default=False,store=True, invisible=1)
+    registrado = fields.Boolean(string="Regstrado en Flota",default=False,store=True)
