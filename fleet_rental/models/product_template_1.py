@@ -47,8 +47,6 @@ class registrarRecepcion(models.Model):
         aditamento_registro = {}
         accesorio_registro = {}
         vehiculo_registro = {}
-        comprado = self._context
-        orden = self.env['purchase.order'].browse(comprado['active_id'])
         for linea in self.move_ids_without_package:
             if linea.product_id.tipo_product == 'aditamento':
                 for serie in linea.lot_ids:
@@ -62,13 +60,6 @@ class registrarRecepcion(models.Model):
                          'num_serie': series,
                         })
                         aditamento_creado = registro_tools.create(aditamento_registro)
-                        # Regresar lo registrado a modulo de compras
-                        for linea in self:
-                            for compra in orden:
-                                lineas_compradas = {
-                                    'registrado': linea.registradoFlota,
-                                }
-                                locomprado_creado = compra.write(lineas_compradas)
             elif linea.product_id.tipo_product == 'accesorio':
                 i = 0
                 while i < linea.quantity_done:
@@ -80,13 +71,6 @@ class registrarRecepcion(models.Model):
                         'tipo': linea.product_id.tipo_product,
                     })
                     accesorio_creado = registro_tools.create(accesorio_registro)
-                    # Regresar lo registrado a modulo de compras
-                    for linea in self:
-                        for compra in orden:
-                            lineas_compradas = {
-                                'registrado': linea.registradoFlota,
-                            }
-                            locomprado_creado = compra.write(lineas_compradas)
                 continue
             elif linea.product_id.tipo_product == 'vehiculo':
                 for serie in linea.lot_ids:
@@ -103,12 +87,15 @@ class registrarRecepcion(models.Model):
                         vehiculo_creado = registro_vehiculo.create(vehiculo_registro)
                         #self.registradoFlota.registrado = True
                         # Regresar lo registrado a modulo de compras
+                        comprado = self._context
+                        orden = self.env['purchase.order'].browse(comprado['active_id'])
                         for linea in self:
                             for compra in orden:
-                                lineas_compradas = {
-                                    'registrado': linea.registradoFlota,
-                                }
-                                locomprado_creado = compra.write(lineas_compradas)
+                                if linea.state == 'registrado':
+                                    lineas_compradas = {
+                                        'registrado': True,
+                                    }
+                                    locomprado_creado = compra.write(lineas_compradas)
 
 class QuitarrecibirProductos(models.Model):
     _inherit = ['purchase.order']
