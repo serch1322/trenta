@@ -21,7 +21,7 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <button name="button_validate" position="after">
-                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':['|',('state','!=','done'),('self.move_ids_without_package.product_id.tipo_product','=','aditamento')]}"/>
+                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':[('state','!=','done')]}"/>
                 </button>
             </field>
         </record>
