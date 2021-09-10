@@ -65,11 +65,10 @@ class registrarRecepcion(models.Model):
                         # Regresar lo registrado a modulo de compras
                         for linea in self:
                             for compra in orden:
-                                if linea.state == 'registrado':
-                                    lineas_compradas = {
-                                        'registrado': linea.registradoFlota,
-                                    }
-                                    locomprado_creado = compra.write(lineas_compradas)
+                                lineas_compradas = {
+                                    'registrado': linea.registradoFlota,
+                                }
+                                locomprado_creado = compra.write(lineas_compradas)
             elif linea.product_id.tipo_product == 'accesorio':
                 i = 0
                 while i < linea.quantity_done:
@@ -84,11 +83,10 @@ class registrarRecepcion(models.Model):
                     # Regresar lo registrado a modulo de compras
                     for linea in self:
                         for compra in orden:
-                            if linea.state == 'registrado':
-                                lineas_compradas = {
-                                    'registrado': linea.registradoFlota,
-                                }
-                                locomprado_creado = compra.write(lineas_compradas)
+                            lineas_compradas = {
+                                'registrado': linea.registradoFlota,
+                            }
+                            locomprado_creado = compra.write(lineas_compradas)
                 continue
             elif linea.product_id.tipo_product == 'vehiculo':
                 for serie in linea.lot_ids:
@@ -107,11 +105,10 @@ class registrarRecepcion(models.Model):
                         # Regresar lo registrado a modulo de compras
                         for linea in self:
                             for compra in orden:
-                                if linea.state == 'registrado':
-                                    lineas_compradas = {
-                                        'registrado': linea.registradoFlota,
-                                    }
-                                    locomprado_creado = compra.write(lineas_compradas)
+                                lineas_compradas = {
+                                    'registrado': linea.registradoFlota,
+                                }
+                                locomprado_creado = compra.write(lineas_compradas)
 
 class QuitarrecibirProductos(models.Model):
     _inherit = ['purchase.order']
