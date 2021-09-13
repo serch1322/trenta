@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b70878b2-eb1c-41b9-bf12-96a75b074fb9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fleet_rental/views/product_template.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fleet_rental/views/product_template.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
