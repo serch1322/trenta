@@ -15,13 +15,24 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="producto_con_tipo_flota">
+            <field name="name">producto.con.tipo.flota</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="tipo_product"/>
+                </field>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="registrar_producto">
             <field name="name">registro.producto</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <button name="button_validate" position="after">
-                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':['|',('state','!=','done'),('product_id.product_tmpl_id.tipo_product','=','aditamento')]}"/>
+                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':['|',('state','!=','done'),('product_id.tipo_product','=','aditamento')]}"/>
                 </button>
             </field>
         </record>
