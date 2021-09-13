@@ -16,7 +16,8 @@ class Producto(models.Model):
 
 class ProductoProducto(models.Model):
     _inherit = ['product.product']
-    tipo_product = fields.Selection('product.template', related="tipo_product",string="Tipo de Flota")
+
+    tipo_product = fields.Selection('product.template', related="tipo_product", string="Tipo de Flota")
 
 class registrarRecepcion(models.Model):
     _inherit = ['stock.picking']
