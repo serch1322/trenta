@@ -15,7 +15,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="producto_con_tipo_flota">
+        <!--<record model="ir.ui.view" id="producto_con_tipo_flota">
             <field name="name">producto.con.tipo.flota</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
@@ -24,7 +24,7 @@
                     <field name="tipo_product"/>
                 </field>
             </field>
-        </record>
+        </record>-->
 
         <record model="ir.ui.view" id="registrar_producto">
             <field name="name">registro.producto</field>
