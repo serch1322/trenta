@@ -12,7 +12,8 @@
                         class="oe_stat_button"
                         icon="fa-wrench"
                         context="{'xml_id':'fleet_vehicle_log_services_action'}"
-                        help="show the services logs for this vehicle" >
+                        help="show the services logs for this vehicle"
+                        attrs="{'invisible': [('service_count', '=', 0)]}">
                         <field name="service_count" widget="statinfo" string="Services"/>
                     </button>
                 </button>
