@@ -34,6 +34,9 @@
                 <button name="button_validate" position="after">
                     <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':[('state','!=','done')]}"/>
                 </button>
+                <field name="origin" position="before">
+                    <field name="flota" invisible="1"/>
+                </field>
             </field>
         </record>
 
