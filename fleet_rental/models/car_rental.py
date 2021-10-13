@@ -63,55 +63,55 @@ class CarRentalContract(models.Model):
 
     # Campos a Validar
     # Exterior Recepcion
-    r_unidad_luces = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Unidad de Luces", default=None,
+    r_unidad_luces = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Unidad de Luces", default='bien',
                                       copy=False)
-    r_antena = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Antena", default=None, copy=False)
-    r_espejo_izdo = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Izquierdo", default=None)
-    r_espejo_dcho = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Derecho", default=None,
+    r_antena = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Antena", default='bien', copy=False)
+    r_espejo_izdo = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Izquierdo", default='bien')
+    r_espejo_dcho = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Derecho", default='bien',
                                      copy=False)
-    r_cristales = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Cristales", default=None, copy=False)
-    r_tapones_rines = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapones Rines", default=None,
+    r_cristales = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Cristales", default='bien', copy=False)
+    r_tapones_rines = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapones Rines", default='bien',
                                        copy=False)
-    r_limpiadores = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Limpiadores", default=None, copy=False)
-    r_placa_d = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Delantera", default=None, copy=False)
-    r_placa_t = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Trasera", default=None, copy=False)
+    r_limpiadores = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Limpiadores", default='bien', copy=False)
+    r_placa_d = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Delantera", default='bien', copy=False)
+    r_placa_t = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Trasera", default='bien', copy=False)
 
     # Interior Recepcion
-    r_radio = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Radio", default=None, copy=False)
-    r_encendedor = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Encendedor", default=None, copy=False)
-    r_espejo_r = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Retrovisor", default=None,
+    r_radio = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Radio", default='bien', copy=False)
+    r_encendedor = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Encendedor", default='bien', copy=False)
+    r_espejo_r = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Retrovisor", default='bien',
                                   copy=False)
-    r_tapete = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapete", default=None, copy=False)
-    r_alfombra = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Alfombra", default=None, copy=False)
-    r_tarjeta_c = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tarjeta de Circulacion", default=None,
+    r_tapete = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapete", default='bien', copy=False)
+    r_alfombra = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Alfombra", default='bien', copy=False)
+    r_tarjeta_c = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tarjeta de Circulacion", default='bien',
                                    copy=False)
-    r_poliza_s = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Poliza de Seguro", default=None,
+    r_poliza_s = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Poliza de Seguro", default='bien',
                                   copy=False)
 
     # Exterior Entrega
-    unidad_luces = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Unidad de Luces", default=None,
+    unidad_luces = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Unidad de Luces", default='bien',
                                     copy=False)
-    antena = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Antena", default=None, copy=False)
-    espejo_izdo = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Izquierdo", default=None)
-    espejo_dcho = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Derecho", default=None,
+    antena = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Antena", default='bien', copy=False)
+    espejo_izdo = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Izquierdo", default='bien')
+    espejo_dcho = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Derecho", default='bien',
                                    copy=False)
-    cristales = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Cristales", default=None, copy=False)
-    tapones_rines = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapones Rines", default=None,
+    cristales = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Cristales", default='bien', copy=False)
+    tapones_rines = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapones Rines", default='bien',
                                      copy=False)
-    limpiadores = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Limpiadores", default=None, copy=False)
-    placa_d = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Delantera", default=None, copy=False)
-    placa_t = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Trasera", default=None, copy=False)
+    limpiadores = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Limpiadores", default='bien', copy=False)
+    placa_d = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Delantera", default='bien', copy=False)
+    placa_t = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Placa Trasera", default='bien', copy=False)
 
     # Interior Entrega
-    radio = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Radio", default=None, copy=False)
-    encendedor = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Encendedor", default=None, copy=False)
-    espejo_r = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Retrovisor", default=None,
+    radio = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Radio", default='bien', copy=False)
+    encendedor = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Encendedor", default='bien', copy=False)
+    espejo_r = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Espejo Retrovisor", default='bien',
                                 copy=False)
-    tapete = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapete", default=None, copy=False)
-    alfombra = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Alfombra", default=None, copy=False)
-    tarjeta_c = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tarjeta de Circulacion", default=None,
+    tapete = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tapete", default='bien', copy=False)
+    alfombra = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Alfombra", default='bien', copy=False)
+    tarjeta_c = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Tarjeta de Circulacion", default='bien',
                                  copy=False)
-    poliza_s = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Poliza de Seguro", default=None, copy=False)
+    poliza_s = fields.Selection([('bien', 'Bien'), ('mal', 'Mal')], string="Poliza de Seguro", default='bien', copy=False)
 
     # imagenes Entrega vehiculo
     e_superior = fields.Binary(string="Superior")
