@@ -66,8 +66,8 @@ class CarRentalContract(models.Model):
     rent_end_date = fields.Date(string="Fecha Fin de Renta", help="End date of contract",
                                 track_visibility='onchange', store=True)
     state = fields.Selection(
-        [('draft', 'Borrador'), ('reserved', 'Reservado'), ('running', 'Corriendo'), ('cancel', 'Cancelar'), ('service','Servicio'),
-         ('checking', 'Revisando'), ('invoice', 'Factura'), ('done', 'Hecho')], string="State",
+        [('draft', 'Borrador'), ('reserved', 'Reservado'), ('running', 'En Renta'), ('cancel', 'Cancelar'), ('service','Servicio'),
+         ('checking', 'En Revisión'), ('invoice', 'Factura'), ('done', 'Finalizado')], string="State",
         default="draft", copy=False, track_visibility='onchange')
     notes = fields.Text(string="Notas")
     cost_frequency = fields.Selection([('monthly', 'Mensual')],
@@ -291,6 +291,9 @@ class CarRentalContract(models.Model):
     def action_run(self):
         self.state = 'running'
 
+    def revision(self):
+        self.state = 'checking'
+
     def service(self):
         self.state = 'service'
         self.ensure_one()
@@ -329,17 +332,8 @@ class CarRentalContract(models.Model):
             None
 
     def set_to_done(self):
-        invoice_ids = self.env['account.move'].search([('invoice_origin', '=', self.name)])
-        print("self.name", self.name)
-        f = 0
-        for each in invoice_ids:
-            if each.payment_state != 'paid':
-                f = 1
-                break
-        if f == 0:
-            self.state = 'done'
-        else:
-            raise UserError("Some Invoices are pending")
+        self.state = 'done'
+        
 
     def _invoice_count(self):
         invoice_ids = self.env['account.move'].search([('renta', '=', self.id)])
@@ -366,6 +360,10 @@ class CarRentalContract(models.Model):
         elif self.state == "service":
             state_id = self.env.ref('fleet_rental.vehicle_state_inshop').id
             self.vehicle_id.write({'state_id': state_id})
+        elif self.state == "checking":
+            state_id = self.env.ref('fleet_rental.vehicle_state_recollection').id
+            self.vehicle_id.write({'state_id': state_id})
+
 
     def fleet_scheduler1(self, rent_date):
         inv_obj = self.env['account.move']

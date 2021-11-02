@@ -51,8 +51,9 @@
                         <button name="force_checking" string="Forzar Revisión"
                                 attrs="{'invisible': ['|',('state','!=','running'),
                                 ('first_invoice_created','=',False)]}" type="object" class="oe_highlight"/>
-                        <button name="set_to_done" string="Marcar como Hecho"
-                                states="invoice" type="object" class="oe_highlight"/>
+                        <button name="revision" string="Finalizar Renta" type="object" attrs="{'invisible': [('state', '!=', 'running')]}" class="oe_highlight"/>
+                        <button name="set_to_done" string="Marcar como Finalizado"
+                                states="checking" type="object" class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,running,done"/>
                     </header>
                     <sheet>
