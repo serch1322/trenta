@@ -19,6 +19,7 @@ class EntidadMatricula(models.Model):
     depr = fields.Selection([('total', 'Depreciación Total (100%)'), ('parcial', 'Depreciación Parcial ($175,000)')],string="Tipo de Depreciación Fiscal",default=False)
     inventario = fields.Many2one('account.account',string="Cuenta de Inventario")
     insurance_count = fields.Integer(compute="_compute_count_all", string="Seguro", store=True)
+    insurance = fields.Many2one('car.insurance', string="Seguro")
     tools_count = fields.Integer(compute="_compute_count_all", string="Accesorios/Aditamentos", store=True)
     facturas_count = fields.Integer(compute="_compute_count_all", string="Facturas", store=True)
     tiempo_de_depreciacion = fields.Integer(string="Duración de Depreciación Contable")

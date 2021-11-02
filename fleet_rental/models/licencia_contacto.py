@@ -19,5 +19,23 @@ class HeredadContacto(models.Model):
 
     curp = fields.Char(string="CURP de Chofer")
 
+    service_count = fields.Integer(compute="_compute_count_all", string='Services')
 
+    def return_action_to_open(self):
+        """ This opens the xml view specified in xml_id for the current vehicle """
+        self.ensure_one()
+        xml_id = self.env.context.get('xml_id')
+        if xml_id:
+            res = self.env['ir.actions.act_window']._for_xml_id('fleet.%s' % xml_id)
+            res.update(
+                context=dict(self.env.context, default_vehicle_id=self.id, group_by=False),
+                domain=[('vendor_id', '=', self.id)]
+            )
+            return res
+        return False
+
+    def _compute_count_all(self):
+        LogService = self.env['fleet.vehicle.log.services']
+        for record in self:
+            record.service_count = LogService.search_count([('vendor_id', '=', record.id)])
 

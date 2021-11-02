@@ -15,14 +15,42 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="producto_con_tipo_flota">
+            <field name="name">producto.con.tipo.flota</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="tipo_products"/>
+                </field>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="registrar_producto">
             <field name="name">registro.producto</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <button name="button_validate" position="after">
-                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':[('state','!=','done')]}"/>
+                    <button name="registro_flota" type="object"  class="oe_highlight" string="Registrar en Flota" attrs="{'invisible':['|',('state','!=','done'),('flota','=',False)]}"/>
                 </button>
+                <field name="origin" position="before">
+                    <field name="flota" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="orden_de_compra">
+            <field name="name">orden.de.compra</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_view_picking']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|' , '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0),('registrado','=',True)]}</attribute>
+                </xpath>
+                <field name="partner_id" position="before">
+                    <field name="registrado" invisible="1"/>
+                </field>
             </field>
         </record>
     </data>
