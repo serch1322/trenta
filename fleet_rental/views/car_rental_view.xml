@@ -143,6 +143,239 @@
                                             class="oe_subtotal_footer oe_right oe_highlight"/>
                                 </div>
                             </page>
+                            <page string="Checklist Vehiculo">
+                                <group>
+                                    <group string="Entrega" class="text-center p-3">
+                                        <group string="Exterior" class="text-left">
+                                            <field name="unidad_luces" widget="state_selection"/>
+                                            <field name="antena" widget="state_selection"/>
+                                            <field name="espejo_izdo" widget="state_selection"/>
+                                            <field name="espejo_dcho" widget="state_selection"/>
+                                            <field name="cristales" widget="state_selection"/>
+                                            <field name="tapones_rines" widget="state_selection"/>
+                                            <field name="limpiadores" widget="state_selection"/>
+                                            <field name="placa_d" widget="state_selection"/>
+                                        </group>
+                                        <group string="Interior" class="text-left">
+                                            <field name="radio" widget="state_selection"/>
+                                            <field name="encendedor" widget="state_selection"/>
+                                            <field name="espejo_r" widget="state_selection"/>
+                                            <field name="tapete" widget="state_selection"/>
+                                            <field name="alfombra" widget="state_selection"/>
+                                            <field name="tarjeta_c" widget="state_selection"/>
+                                            <field name="poliza_s" widget="state_selection"/>
+                                        </group>
+                                    </group>
+                                    <group string="Recepción" class="text-center p-3">
+                                        <group string="Exterior" class="text-left">
+                                            <field name="r_unidad_luces" widget="state_selection"/>
+                                            <field name="r_antena" widget="state_selection"/>
+                                            <field name="r_espejo_izdo" widget="state_selection"/>
+                                            <field name="r_espejo_dcho" widget="state_selection"/>
+                                            <field name="r_cristales" widget="state_selection"/>
+                                            <field name="r_tapones_rines" widget="state_selection"/>
+                                            <field name="r_limpiadores" widget="state_selection"/>
+                                            <field name="r_placa_d" widget="state_selection"/>
+                                        </group>
+                                        <group string="Interior" class="text-left">
+                                            <field name="r_radio" widget="state_selection"/>
+                                            <field name="r_encendedor" widget="state_selection"/>
+                                            <field name="r_espejo_r" widget="state_selection"/>
+                                            <field name="r_tapete" widget="state_selection"/>
+                                            <field name="r_alfombra" widget="state_selection"/>
+                                            <field name="r_tarjeta_c" widget="state_selection"/>
+                                            <field name="r_poliza_s" widget="state_selection"/>
+                                        </group>
+                                    </group>
+                                </group>
+                                <h1 class="text-center p-3">Fotos Vehiculo Entrega/Recepcion</h1>
+                                <div class="container">
+                                    <div class="row p-3 text-center">
+                                        <div class="col-6">
+                                            <h1 class="p-3">Entrega</h1>
+                                            <h3>Frente</h3>
+                                            <field name="e_frente" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario1"/>
+                                            <h3>Lado Derecho</h3>
+                                            <field name="e_l_derecho" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario2"/>
+                                            <h3>Trasero</h3>
+                                            <field name="e_trasero" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario3"/>
+                                            <h3>Lado Izquierdo</h3>
+                                            <field name="e_l_izquierdo" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario4"/>
+                                            <h3>Superior</h3>
+                                            <field name="e_superior" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario5"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <h1 class="p-3">Recepción</h1>
+                                            <h3>Frente</h3>
+                                            <field name="r_frente" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario1r"/>
+                                            <h3>Lado Derecho</h3>
+                                            <field name="r_l_derecho" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario2r"/>
+                                            <h3>Trasero</h3>
+                                            <field name="r_trasero" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario3r"/>
+                                            <h3>Lado Izquierdo</h3>
+                                            <field name="r_l_izquierdo" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario4r"/>
+                                            <h3>Superior</h3>
+                                            <field name="r_superior" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentario5r"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h1 class="text-center p-3">Fotos de Daños</h1>
+                                <div class="container">
+                                    <div class="row p-3 text-center">
+                                        <div class="col-4">
+                                            <h3>Daño 1</h3>
+                                            <field name="imgd1" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentariod1"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <h3>Daño 2</h3>
+                                            <field name="imgd2" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentariod2"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <h3>Daño 3</h3>
+                                            <field name="imgd3" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="comentariod3"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row p-3 text-center">
+                                        <div class="col-6">
+                                            <h1>Entregó</h1>
+                                            <field name="firma_entrego" widget="signature"/>
+                                            <p>Nombre y Firma</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <h1>Recibió</h1>
+                                            <field name="firma_recibio" widget="signature"/>
+                                            <p>Nombre y Firma</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </page>
+                            <page string="Checklist Aditamento">
+                                <field name="cant_aditamento" invisible="1"/>
+                                <div class="container">
+                                    <h1 class="text-center p-3">Fotos Aditamentos Entrega/Recepcion</h1>
+                                    <div class="row p-3 text-center">
+                                        <div class="col-6">
+                                            <h1 class="p-3">Entrega</h1>
+                                            <h3>Aditamento 1</h3>
+                                            <field name="adit_1" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="aditcom1"/>
+                                            <h3>Aditamento 2</h3>
+                                            <field name="adit_2" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="aditcom2"/>
+                                            <h3>Aditamento 3</h3>
+                                            <field name="adit_3" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="aditcom3"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <h1 class="p-3">Recepción</h1>
+                                            <h3>Aditamento 1</h3>
+                                            <field name="adit_1_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="aditcom1_r"/>
+                                            <h3>Aditamento 2</h3>
+                                            <field name="adit_2_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="aditcom2_r"/>
+                                            <h3>Aditamento 3</h3>
+                                            <field name="adit_3_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="aditcom3_r"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<group class="text-center p-3">
+                                    <group string="Entrega">
+                                        <field name="adit_1" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="adit_2" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="adit_3" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                    </group>
+                                    <group string="Recepción">
+                                        <field name="adit_1_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="adit_2_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="adit_3_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                    </group>
+                                </group>-->
+                            </page>
+                            <page string="Checklist Accesorio">
+                                <field name="cant_accesorio" invisible="1"/>
+                                <div class="container">
+                                    <h1 class="text-center p-3">Fotos Accesorios Entrega/Recepcion</h1>
+                                    <div class="row p-3 text-center">
+                                        <div class="col-6">
+                                            <h1 class="p-3">Entrega</h1>
+                                            <h3>Accesorio 1</h3>
+                                            <field name="acces_1" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom1"/>
+                                            <h3>Accesorio 2</h3>
+                                            <field name="acces_2" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom2"/>
+                                            <h3>Accesorio 3</h3>
+                                            <field name="acces_3" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom3"/>
+                                            <h3>Accesorio 4</h3>
+                                            <field name="acces_4" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom4"/>
+                                            <h3>Accesorio 5</h3>
+                                            <field name="acces_5" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom5"/>
+                                            <h3>Accesorio 6</h3>
+                                            <field name="acces_6" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom6"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <h1 class="p-3">Recepción</h1>
+                                            <h3>Accesorio 1</h3>
+                                            <field name="acces_1_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom1_r"/>
+                                            <h3>Accesorio 2</h3>
+                                            <field name="acces_2_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom2_r"/>
+                                            <h3>Accesorio 3</h3>
+                                            <field name="acces_3_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom3_r"/>
+                                            <h3>Accesorio 4</h3>
+                                            <field name="acces_4_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom4_r"/>
+                                            <h3>Accesorio 5</h3>
+                                            <field name="acces_5_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom5_r"/>
+                                            <h3>Accesorio 6</h3>
+                                            <field name="acces_6_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
+                                            <field name="accescom6_r"/>
+                                        </div>
+                                    </div>
+                                </div>
+                               <!-- <group class="text-center p-3">
+                                    <group string="Entrega">
+                                        <field name="acces_1" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_2" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_3" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_4" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_5" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_6" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                    </group>
+                                    <group string="Recepción">
+                                        <field name="acces_1_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_2_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_3_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_4_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_5_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                        <field name="acces_6_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
+                                    </group>
+                                </group>-->
+                            </page>
                         </notebook>
                         <group class="oe_subtotal_footer oe_right">
                             <field name="grand_total"/>
