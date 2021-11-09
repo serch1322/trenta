@@ -143,7 +143,7 @@
                                             class="oe_subtotal_footer oe_right oe_highlight"/>
                                 </div>
                             </page>
-                            <page string="Checklist Vehiculo">
+                            <!--<page string="Checklist Vehiculo">
                                 <group>
                                     <group string="Entrega" class="text-center p-3">
                                         <group string="Exterior" class="text-left">
@@ -295,7 +295,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<group class="text-center p-3">
+                                &lt;!&ndash;<group class="text-center p-3">
                                     <group string="Entrega">
                                         <field name="adit_1" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
                                         <field name="adit_2" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
@@ -306,7 +306,7 @@
                                         <field name="adit_2_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
                                         <field name="adit_3_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
                                     </group>
-                                </group>-->
+                                </group>&ndash;&gt;
                             </page>
                             <page string="Checklist Accesorio">
                                 <field name="cant_accesorio" invisible="1"/>
@@ -357,7 +357,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               <!-- <group class="text-center p-3">
+                               &lt;!&ndash; <group class="text-center p-3">
                                     <group string="Entrega">
                                         <field name="acces_1" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
                                         <field name="acces_2" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
@@ -374,8 +374,8 @@
                                         <field name="acces_5_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
                                         <field name="acces_6_r" widget="image" options="{&quot;size&quot;: [0, 90]}"/>
                                     </group>
-                                </group>-->
-                            </page>
+                                </group>&ndash;&gt;
+                            </page>-->
                         </notebook>
                         <group class="oe_subtotal_footer oe_right">
                             <field name="grand_total"/>
