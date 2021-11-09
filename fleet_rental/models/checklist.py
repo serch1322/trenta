@@ -66,7 +66,7 @@ class ChecklistRenta(models.Model):
     #Funciones para Jalar imagenes de static/img base64
     # superior
     def _get_default_image_superior(self):
-        image_path = modules.get_module_resource('ChecklistTrenta', 'static/img', 'arriba.png')
+        image_path = modules.get_module_resource('fleet_rental', 'static/img', 'arriba.png')
         return base64.b64encode(open(image_path, 'rb').read())
 
     # Izquierdo
