@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='view_sale_order_form' model='ir.ui.view' >
+        <field name='name'>sale_order_line</field>
+        <field name='model'>sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name='arch' type='xml'>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="after">
+                    <field name="bordado" string="Bordado"/>
+                    <field name="tinta" string="Tinta"/>
+                    <field name="proceso_especial" string="Procesos Especiales"/>
+                    <field name="precio_proceso_especial" string="Precio Proceso Especial"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--
+    <record id="agregar_precios" model="ir.ui.view">
+        <field name="name">agregar.precios</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-string='Sales']/div[2]/div[5]" position="after">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_right_pane">
+                        <group>
+                            <h4> Variables de Servicio </h4>
+                            <field name="precio_bordado"/>
+                            <field name="precio_tinta"/>
+                        </group>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+-->
+</odoo>
