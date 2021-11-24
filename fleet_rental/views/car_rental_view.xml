@@ -143,7 +143,7 @@
                                             class="oe_subtotal_footer oe_right oe_highlight"/>
                                 </div>
                             </page>
-                            <page string="Checklist Vehiculo" attrs="{'invisible': [('state', '==', 'draft')]}">
+                            <page string="Checklist Vehiculo" attrs="{'invisible': [('state', '=', 'draft')]}">
                                 <div class="container">
                                     <div class="row text-center p-3">
                                         <div class="col-6">
