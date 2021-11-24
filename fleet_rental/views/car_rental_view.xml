@@ -80,7 +80,7 @@
                                 <field name="check_verify" invisible="1" />
                                 <field name="sales_person" attrs="{'readonly': [('state','!=','draft')]}"/>
                             </group>
-                           <group>
+                            <group>
                                 <field name="sucursal" domain="[('type','=','delivery')]" options="{'no_create': True}"/>
                                 <field name="car_brand"/>
                                 <field name="car_color"/>
@@ -96,7 +96,7 @@
                                 <field name="account_type" invisible="1"/>
                                 <field name="cost_frequency" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="siguiente_fecha_de_factura" readonly="1" force_save="1"/>
-                           </group>
+                            </group>
                         </group>
                         <notebook>
                             <page string="Conceptos">
@@ -143,7 +143,7 @@
                                             class="oe_subtotal_footer oe_right oe_highlight"/>
                                 </div>
                             </page>
-                            <page string="Checklist Vehiculo" attrs="{'invisible': [('state', '=', 'draft')]}">
+                            <page string="Checklist Vehiculo" attrs="{'invisible': [('state', '==', 'draft')]}">
                                 <div class="container">
                                     <div class="row text-center p-3">
                                         <div class="col-6">
