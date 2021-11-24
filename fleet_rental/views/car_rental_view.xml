@@ -149,7 +149,7 @@
                                         <div class="col-6">
                                             <h1 style="background:gray;color:white;">Entrega</h1>
                                         </div>
-                                        <div class="col-6" attrs="{'invisible': [('state', '!=', 'checking,invoice,done')]}">
+                                        <div class="col-6" attrs="{'invisible': ['|','|',('state', '==', 'draft'),('state', '==', 'checking'),('state', '==', 'running')]}">
                                             <h1 style="background:gray;color:white;">Recepcion</h1>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                             <field name="poliza_s" widget="boolean_toggle"/>
                                         </group>
                                     </group>
-                                    <group attrs="{'invisible': [('state', '!=', 'checking,invoice,done')]}">
+                                    <group attrs="{'invisible': ['|','|',('state', '==', 'draft'),('state', '==', 'checking'),('state', '==', 'running')]}">
                                         <group string="Exterior" class="text-left">
                                             <field name="r_unidad_luces" widget="boolean_toggle"/>
                                             <field name="r_antena" widget="boolean_toggle"/>
@@ -223,7 +223,7 @@
                                             <field name="e_superior" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
                                             <field name="comentario5" placeholder="Agregar Comentario"/>
                                         </div>
-                                        <div class="col-6" attrs="{'invisible': [('state', '!=', 'checking,invoice,done')]}">
+                                        <div class="col-6" attrs="{'invisible': ['|','|',('state', '==', 'draft'),('state', '==', 'checking'),('state', '==', 'running')]}">
                                             <h1 style="background:gray;color:white;">Recepcion</h1>
                                             <h3>Frente</h3>
                                             <field name="r_frente" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
@@ -279,7 +279,7 @@
                                                 <p>Nombre y Firma</p>
                                             </div>
                                         </div>
-                                        <div class="col-6" attrs="{'invisible': [('state', '!=', 'checking,invoice,done')]}">
+                                        <div class="col-6" attrs="{'invisible': ['|','|',('state', '==', 'draft'),('state', '==', 'checking'),('state', '==', 'running')]}">
                                             <h2 class="p-3">Recepción</h2>
                                             <div class="col">
                                                 <h5>Entregó</h5>
@@ -312,7 +312,7 @@
                                             <field name="adit_3" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
                                             <field name="aditcom3" placeholder="Agregar Comentario"/>
                                         </div>
-                                        <div class="col-6" attrs="{'invisible': [('state', '!=', 'checking,invoice,done')]}">
+                                        <div class="col-6" attrs="{'invisible': ['|','|',('state', '==', 'draft'),('state', '==', 'checking'),('state', '==', 'running')]}">
                                             <h1 style="background:gray;color:white;">Recepcion</h1>
                                             <h3>Aditamento 1</h3>
                                             <field name="adit_1_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
@@ -353,7 +353,7 @@
                                             <field name="acces_6" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
                                             <field name="accescom6" placeholder="Agregar Comentario"/>
                                         </div>
-                                        <div class="col-6" attrs="{'invisible': [('state', '!=', 'checking,invoice,done')]}">
+                                        <div class="col-6" attrs="{'invisible': ['|','|',('state', '==', 'draft'),('state', '==', 'checking'),('state', '==', 'running')]}">
                                             <h1 style="background:gray;color:white;">Recepcion</h1>
                                             <h3>Accesorio 1</h3>
                                             <field name="acces_1_r" widget="image" options="{&quot;size&quot;: [0, 120]}"/>
