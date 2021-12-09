@@ -485,6 +485,12 @@ class CarRentalContract(models.Model):
             return result
 
     def action_confirm(self):
+        reserved_id = self.vehicle_id.rental_reserved_time.create({'customer_id': self.customer_id.id,
+                                                                       'date_from': self.rent_start_date,
+                                                                       'date_to': self.rent_end_date,
+                                                                       'reserved_obj': self.vehicle_id.id
+                                                                       })
+        self.write({'reserved_fleet_id': reserved_id.id})
         self.state = "reserved"
         sequence_code = 'secuencia.renta.de.carro'
         order_date = self.create_date
