@@ -485,28 +485,12 @@ class CarRentalContract(models.Model):
             return result
 
     def action_confirm(self):
-        check_availability = 0
-        for each in self.vehicle_id.rental_reserved_time:
-            if each.date_from <= self.rent_start_date <= each.date_to:
-                check_availability = 1
-            elif self.rent_start_date < each.date_from:
-                if each.date_from <= self.rent_end_date <= each.date_to:
-                    check_availability = 1
-                elif self.rent_end_date > each.date_to:
-                    check_availability = 1
-                else:
-                    check_availability = 0
-            else:
-                check_availability = 0
-        if check_availability == 0:
-            reserved_id = self.vehicle_id.rental_reserved_time.create({'customer_id': self.customer_id.id,
+        reserved_id = self.vehicle_id.rental_reserved_time.create({'customer_id': self.customer_id.id,
                                                                        'date_from': self.rent_start_date,
                                                                        'date_to': self.rent_end_date,
                                                                        'reserved_obj': self.vehicle_id.id
                                                                        })
-            self.write({'reserved_fleet_id': reserved_id.id})
-        else:
-            raise Warning('Sorry This vehicle is already booked by another customer')
+        self.write({'reserved_fleet_id': reserved_id.id})
         self.state = "reserved"
         sequence_code = 'secuencia.renta.de.carro'
         order_date = self.create_date
