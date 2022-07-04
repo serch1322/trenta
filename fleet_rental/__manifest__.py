@@ -21,15 +21,11 @@
 #############################################################################
 
 {
-    'name': 'Fleet Rental Management',
+    'name': 'Manejo de Renta de Vehiculos',
     'version': '14.0.1.0.0',
-    'summary': """This module will helps you to give the vehicles for Rent.""",
-    'description': "Module Helps You To Manage Rental Contracts, Odoo13, Odoo 13, Fleet, Rental, Rent, Vehicle management",
-    'category': "Industries",
-    'live_test_url': 'https://youtu.be/chN-n7nB3Ac',
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
+    'author': 'IT Reingenierias',
+    'company': 'IT Reingenierias',
+    'website': "https://www.itreingenierias.com",
     'depends': ['base', 'account', 'fleet', 'mail','account_asset'],
     'data': ['security/rental_security.xml',
              'security/ir.model.access.csv',
@@ -48,6 +44,7 @@
              'views/tools_categoria.xml',
              'views/vehiculo.xml',
              'views/facturacion.xml',
+             'views/res_partner.xml',
              'reports/rental_report.xml',
              'data/fleet_rental_data.xml',
              'data/secuencias.xml',

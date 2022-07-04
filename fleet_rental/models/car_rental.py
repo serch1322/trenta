@@ -150,6 +150,8 @@ class CarRentalContract(models.Model):
                 dias_a_facturar = end_date_day - start_date_day + 1
                 valores_fact.update({
                     'partner_id': self.customer_id.id,
+                    'l10n_mx_edi_payment_method_id': self.customer_id.l10n_mx_edi_payment_method_id.id,
+                    'l10n_mx_edi_usage': self.customer_id.l10n_mx_edi_usage,
                     'invoice_payment_term_id': self.customer_id.property_payment_term_id.id,
                     'invoice_date': today,
                     'move_type': 'out_invoice',
@@ -219,6 +221,8 @@ class CarRentalContract(models.Model):
                         dias_a_facturar = end_date_day - start_date_day + 1
                         valores_fact.update({
                             'partner_id': record.customer_id.id,
+                            'l10n_mx_edi_payment_method_id': record.customer_id.l10n_mx_edi_payment_method_id.id,
+                            'l10n_mx_edi_usage': record.customer_id.l10n_mx_edi_usage,
                             'invoice_payment_term_id': record.customer_id.property_payment_term_id.id,
                             'invoice_date': today,
                             'move_type': 'out_invoice',
