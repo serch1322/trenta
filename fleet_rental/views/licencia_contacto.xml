@@ -6,7 +6,7 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <button name="%(sale.act_res_partner_2_sale_order)d" position="before">
+                <!--<button name="%(sale.act_res_partner_2_sale_order)d" position="before">
                     <button name="return_action_to_open"
                         type="object"
                         class="oe_stat_button"
@@ -16,7 +16,7 @@
                         attrs="{'invisible': [('service_count', '=', 0)]}">
                         <field name="service_count" widget="statinfo" string="Services"/>
                     </button>
-                </button>
+                </button>-->
                 <field name="type" position="before">
                     <field name="conductor" string="¿Es Conductor?" attrs="{'invisible': [('company_type', '==', 'company')]}"/>
                 </field>
