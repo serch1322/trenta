@@ -40,7 +40,7 @@ class ServicioaFactura(models.Model):
             'name': self.description,
             'quantity': 1,
             'price_unit': self.amount,
-            'tax_ids': mantenimiento.taxes_id,
+            'tax_ids': mantenimiento.supplier_taxes_id,
             'product_uom_id': mantenimiento.uom_id.id,
             'account_id':mantenimiento.property_account_expense_id.id,
         }
