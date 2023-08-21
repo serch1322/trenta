@@ -22,11 +22,11 @@
 
 {
     'name': 'Manejo de Renta de Vehiculos',
-    'version': '14.0.1.0.0',
+    'version': '15.0.1.0.0',
     'author': 'IT Reingenierias',
     'company': 'IT Reingenierias',
     'website': "https://www.itreingenierias.com",
-    'depends': ['base', 'account', 'fleet', 'mail','account_asset'],
+    'depends': ['base', 'account', 'fleet', 'mail','account_asset','stock','purchase','sale'],
     'data': ['security/rental_security.xml',
              'security/ir.model.access.csv',
              'wizard/venta_de_vehiculo.xml',

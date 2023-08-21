@@ -6,7 +6,7 @@
             <field name="model">fleet.vehicle.log.contract</field>
             <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_form"/>
             <field name="arch" type="xml">
-                <button name="contract_open" position="before">
+                <button name="action_open" position="before">
                     <button name="crear_factura_contrato" type="object" string="Crear Factura" class="oe_highlight"/>
                 </button>
             </field>

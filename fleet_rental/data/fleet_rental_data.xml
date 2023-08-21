@@ -84,7 +84,7 @@
         <record id="ligar_vehiculo_tools" model="mail.activity.type">
             <field name="name">Asociar Vehiculo</field>
             <field name="icon">fa-car</field>
-            <field name="res_model_id" ref="model_car_tools"/>
+            <field name="res_model">car.tools</field>
         </record>
 
         <record id="mantenimiento" model="fleet.service.type">
@@ -112,7 +112,7 @@
             <field name="type">service</field>
         </record>
 
-        <record model="product.template" id="mantenimiento">
+        <record model="product.template" id="producto_mantenimiento">
             <field name="name">Mantenimiento</field>
             <field name="type">service</field>
         </record>
