@@ -87,7 +87,7 @@
             <field name="res_model">car.tools</field>
         </record>
 
-        <record id="mantenimiento" model="fleet.service.type">
+        <record id="servicio_mantenimiento" model="fleet.service.type">
             <field name="name">Mantenimiento</field>
             <field name="category">service</field>
         </record>
