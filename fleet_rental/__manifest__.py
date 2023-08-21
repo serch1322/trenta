@@ -26,7 +26,7 @@
     'author': 'IT Reingenierias',
     'company': 'IT Reingenierias',
     'website': "https://www.itreingenierias.com",
-    'depends': ['base', 'account', 'fleet', 'mail','account_asset','stock','purchase','sale'],
+    'depends': ['base', 'account', 'fleet', 'mail','account_asset','stock','purchase','sale','l10n_mx_edi_40'],
     'data': ['security/rental_security.xml',
              'security/ir.model.access.csv',
              'wizard/venta_de_vehiculo.xml',
