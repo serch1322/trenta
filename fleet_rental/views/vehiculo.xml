@@ -134,10 +134,10 @@
                     </page>
                     <page name="cuentas" string="Depreciación Contable">
                         <group>
-                            <field name="activo"/>
-                            <field name="amortizacion"/>
-                            <field name="gasto"/>
-                            <field name="diario"/>
+                            <field name="activo" required="True"/>
+                            <field name="amortizacion" required="True"/>
+                            <field name="gasto" required="True"/>
+                            <field name="diario" required="True"/>
                         </group>
                     </page>
                 </page>
