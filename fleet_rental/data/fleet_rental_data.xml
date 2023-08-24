@@ -87,6 +87,12 @@
             <field name="res_model">car.tools</field>
         </record>
 
+        <record id="renovar_seguro_vehiculo" model="mail.activity.type">
+            <field name="name">Renovar Vehiculo</field>
+            <field name="icon">fa-car</field>
+            <field name="res_model">car.insurance</field>
+        </record>
+
         <record id="servicio_mantenimiento" model="fleet.service.type">
             <field name="name">Mantenimiento</field>
             <field name="category">service</field>
