@@ -32,7 +32,7 @@ class Seguros(models.Model):
     state = fields.Selection(
         [('nuevo', 'Nuevo'), ('corriendo', 'Corriendo'), ('terminado', 'Terminado'), ('cancelado', 'Cancelado')], string="Estado",
         default="nuevo", copy=False)
-    lineas_ids = fields.One2many('line.car.insurance','asegurado',readonly=False, states={'nuevo': [('readonly', False)]})
+    lineas_ids = fields.One2many('line.car.insurance','asegurado',readonly=False, copy=True, states={'nuevo': [('readonly', False)]})
 
     def unlink(self):
         if self.state == 'corriendo' or self.state == 'terminado':
@@ -88,7 +88,7 @@ class CarrosAsegurados(models.Model):
         for line in self:
             line.subtotal = line.qty * line.price
 
-    asegurado = fields.Many2one('car.insurance', string="Carros Asegurados")
+    asegurado = fields.Many2one('car.insurance', string="Carros Asegurados", copy=False)
     car = fields.Many2one('fleet.vehicle',string="Vehículo", required=True, domain="[('insurance_count','=','0')]")
     price = fields.Float(string="Costo de Poliza")
     qty = fields.Float(default= 1 ,string="Cantidad", readonly= True)
