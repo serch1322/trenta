@@ -252,10 +252,10 @@ class EntidadMatricula(models.Model):
 class DepreciacionModelos(models.Model):
     _inherit = ['fleet.vehicle.model']
 
-    activo = fields.Many2one('account.account', string="Cuenta de Activo", required=True)
-    amortizacion = fields.Many2one('account.account', string="Cuenta de Amortizacion", required=True)
-    gasto = fields.Many2one('account.account', string="Cuenta de Gasto", required=True)
-    diario = fields.Many2one('account.journal', string="Diario", required=True, domain="[('type', '=', 'general')]")
+    activo = fields.Many2one('account.account', string="Cuenta de Activo")
+    amortizacion = fields.Many2one('account.account', string="Cuenta de Amortizacion")
+    gasto = fields.Many2one('account.account', string="Cuenta de Gasto")
+    diario = fields.Many2one('account.journal', string="Diario", domain="[('type', '=', 'general')]")
 
 
 
