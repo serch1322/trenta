@@ -21,6 +21,7 @@
                                 <field name="supplier" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
                                 <field name="invoice_date" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
 		                        <field name="end_date" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
+                                <field name="user_id"/>
                             </group>
                             <group>
                                 <field name="siniestro" attrs="{'readonly': [('state', '!=', 'nuevo')]}"/>
@@ -63,7 +64,7 @@
                     <field name="supplier"/>
                     <field name="invoice_date"/>
                     <field name="inciso"/>
-
+                    <field name="user_id"/>
                     <field name="end_date"/>
                     <field name="state"/>
                 </tree>

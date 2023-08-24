@@ -33,6 +33,7 @@ class Seguros(models.Model):
         [('nuevo', 'Nuevo'), ('corriendo', 'Corriendo'), ('terminado', 'Terminado'), ('cancelado', 'Cancelado')], string="Estado",
         default="nuevo", copy=False)
     lineas_ids = fields.One2many('line.car.insurance','asegurado',readonly=False, copy=True, states={'nuevo': [('readonly', False)]})
+    user_id = fields.Many2one('res.users', 'Responsable', default=lambda self: self.env.user, index=True)
 
     def unlink(self):
         if self.state == 'corriendo' or self.state == 'terminado':
@@ -78,6 +79,8 @@ class Seguros(models.Model):
         for seguro in seguros:
             if seguro.state == 'corriendo'and seguro.end_date < today:
                 seguro.state = 'terminado'
+            if seguro.state == 'corriendo' and seguro.end_date - timedelta(days = 30) < today and seguro.activity_schedule == False:
+                seguro.activity_schedule('renovar_seguro_vehiculo',user_id=seguro.env['res.users'].id)
 
 
 class CarrosAsegurados(models.Model):
