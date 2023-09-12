@@ -61,13 +61,13 @@ class CarRentalContract(models.Model):
     car_color = fields.Char(string="Color Vehiculo", size=50, related='vehicle_id.color', store=True, copy=False,
                             default='#FFFFFF', readonly=True)
     rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=str(date.today()),
-                                  help="Start date of contract", track_visibility='onchange', store=True, readonly=True, states={'draft': [('readonly', False)]})
+                                  help="Start date of contract", tracking=1, store=True, readonly=True, states={'draft': [('readonly', False)]})
     rent_end_date = fields.Date(string="Fecha Fin de Renta", help="End date of contract",
-                                track_visibility='onchange', store=True)
+                                tracking=2, store=True)
     state = fields.Selection(
         [('draft', 'Borrador'), ('reserved', 'Reservado'), ('running', 'En Renta'), ('cancel', 'Cancelar'), ('service','Servicio'),
          ('checking', 'En Revisión'), ('invoice', 'Factura'), ('done', 'Finalizado')], string="State",
-        default="draft", copy=False, track_visibility='onchange')
+        default="draft", copy=False, tracking=3)
     notes = fields.Text(string="Notas")
     cost_frequency = fields.Selection([('monthly', 'Mensual')],
                                       string="Intervalo de Factura",
@@ -82,7 +82,6 @@ class CarRentalContract(models.Model):
     first_payment = fields.Float(string='Anticipo',
                                  help="Transaction/Office/Contract charge amount, must paid by customer side other "
                                       "than recurrent payments",
-                                 track_visibility='onchange',
                                  required=True)
     first_payment_inv = fields.Many2one('account.move', copy=False)
     first_invoice_created = fields.Boolean(string="First Invoice Created", invisible=True, copy=False)
@@ -101,7 +100,7 @@ class CarRentalContract(models.Model):
     invoice_count = fields.Integer(compute='_invoice_count', string='# Factura', copy=False)
     check_verify = fields.Boolean(compute='check_action_verify', copy=False)
     sales_person = fields.Many2one('res.users', string='Encargado de Ventas', default=lambda self: self.env.uid,
-                                   track_visibility='always')
+                                   tracking=4)
     deposito = fields.Float(string="Deposito en Garantia", required=True, states={'draft': [('readonly',False)] })
     approved_driver = fields.Many2many('res.partner', string="Conductores Aprobados", tracking=True, copy=False,
                                      domain="[('company_id', '=', False)]")
