@@ -27,7 +27,7 @@ class EmployeeFleet(models.Model):
     _inherit = 'fleet.vehicle'
 
     rental_check_availability = fields.Boolean(default=True, copy=False)
-    rental_reserved_time = fields.One2many('rental.fleet.reserved', 'reserved_obj', String='Reserved Time', readonly=1,
+    rental_reserved_time = fields.One2many('rental.fleet.reserved', 'reserved_obj', string='Reserved Time', readonly=1,
                                            ondelete='cascade')
 
 
