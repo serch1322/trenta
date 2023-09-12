@@ -58,8 +58,7 @@ class CarRentalContract(models.Model):
                                  )
     car_brand = fields.Many2one('fleet.vehicle.model.brand', string="Marca Vehiculo", size=50,
                                 related='vehicle_id.model_id.brand_id', store=True, readonly=True)
-    car_color = fields.Char(string="Color Vehiculo", size=50, related='vehicle_id.color', store=True, copy=False,
-                            default='#FFFFFF', readonly=True)
+    car_color = fields.Char(string="Color Vehiculo", size=50, related='vehicle_id.color', store=True, copy=False, readonly=True)
     rent_start_date = fields.Date(string="Fecha Inicio de Renta", required=True, default=str(date.today()),
                                   help="Start date of contract", tracking=1, store=True, readonly=True, states={'draft': [('readonly', False)]})
     rent_end_date = fields.Date(string="Fecha Fin de Renta", help="End date of contract",
